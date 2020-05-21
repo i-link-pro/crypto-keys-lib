@@ -1,4 +1,4 @@
-enum Blockchain {
+export enum Blockchain {
   BITCOIN,
   ETHEREUM,
   EOS,
@@ -8,13 +8,13 @@ enum Blockchain {
   RIPPLE,
 }
 
-enum Network {
+export enum Network {
   TESTNET,
   MAINNET,
   REGTEST,
 }
 
-enum SeedDictionaryLang {
+export enum SeedDictionaryLang {
   ENGLISH, // default value
   JAPANESE,
   SPANISH,
@@ -26,50 +26,49 @@ enum SeedDictionaryLang {
   CZECH,
 }
 
-type Address = string;
-type PublicKey = string;
-type PrivateKey = string;
+export type Address = string;
+export type PublicKey = string;
+export type PrivateKey = string;
 
-type SeedWithKeys = {
+export type SeedWithKeys = {
   seedPhrase: string;
   seed: string;
   masterPublicKey: PublicKey;
   masterPrivateKey: PrivateKey;
 };
 
-type PathCursor = {
+export type PathCursor = {
   path: string; // m/44'/0'/0'/0
   limit: Number;
   skip: Number;
 };
 
-type FromMasterPrivateKey = {
+export type FromMasterPrivateKey = {
   masterPrivateKey: PrivateKey;
 };
 
-type FromMasterPublicKey = {
+export type FromMasterPublicKey = {
   masterPublicKey: PublicKey;
 };
 
-type FromSeedPhrase = {
+export type FromSeedPhrase = {
   seedPhrase: string;
 };
 
-type KeysWithPath = {
+export type KeysWithPath = {
   path: string;
   address: Address;
   publicKey: PublicKey;
   privateKey?: PrivateKey;
 };
 
-type Path = {
+export type Path = {
   blockchain: Blockchain;
   network: Network;
   path: string;
 };
 
-interface Keys {
-  constructor(blockchain: Blockchain, network: Network): boolean | Error;
+export interface IKeys {
   generateSeedPhrase(
     wordCount: number,
     lang?: SeedDictionaryLang,
@@ -84,5 +83,6 @@ interface Keys {
   getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error;
   getAddressFromPublic(publicKey: PublicKey, format?: string): Address | Error;
   checkSign(publicKey: PublicKey, data: string, sign: string): boolean | Error;
+  checkSeedPhrase(seedPhrase: string): boolean | Error;
   getDefaultPaths(): [Path];
 }
