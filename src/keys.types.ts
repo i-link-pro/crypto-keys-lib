@@ -1,29 +1,28 @@
 export enum Blockchain {
-  BITCOIN,
-  ETHEREUM,
-  EOS,
-  BITCOIN_CASH,
-  BITCOIN_SV,
-  LITECOIN,
-  RIPPLE,
+  BITCOIN = 'bitcoin',
+  ETHEREUM = 'ethereum',
+  EOS = 'eos',
+  BITCOIN_CASH = 'bitcoin_cash',
+  BITCOIN_SV = 'bitcoin_sv',
+  LITECOIN = 'litecoin',
+  RIPPLE = 'ripple',
 }
 
 export enum Network {
-  TESTNET,
-  MAINNET,
-  REGTEST,
+  MAINNET = 'mainnet',
+  TESTNET = 'testnet',
 }
 
 export enum SeedDictionaryLang {
-  ENGLISH, // default value
-  JAPANESE,
-  SPANISH,
-  CHINESE_SIMPLE,
-  CHINESE_TRADITIONAL,
-  FRENCH,
-  ITALIAN,
-  KOREAN,
-  CZECH,
+  ENGLISH = 'english', // default value
+  JAPANESE = 'japanese',
+  SPANISH = 'spanish',
+  CHINESE_SIMPLE = 'chinese_simple',
+  CHINESE_TRADITIONAL = 'chinese_traditional',
+  FRENCH = 'french',
+  ITALIAN = 'italian',
+  KOREAN = 'korean',
+  CZECH = 'czech',
 }
 
 export type Address = string;
@@ -38,9 +37,9 @@ export type SeedWithKeys = {
 };
 
 export type PathCursor = {
-  path: string; // m/44'/0'/0'/0
-  limit: Number;
-  skip: Number;
+  skip: number;
+  limit: number;
+  path?: string; // m/44'/0'/0'/0/0
 };
 
 export type FromMasterPrivateKey = {
@@ -53,6 +52,7 @@ export type FromMasterPublicKey = {
 
 export type FromSeedPhrase = {
   seedPhrase: string;
+  password?: string;
 };
 
 export type KeysWithPath = {
@@ -72,17 +72,22 @@ export interface IKeys {
   generateSeedPhrase(
     wordCount: number,
     lang?: SeedDictionaryLang,
-    password?: string
+    path?: string,
+    password?: string,
   ): SeedWithKeys | Error;
-  getDataFromSeed(seedPhrase: string): SeedWithKeys | Error;
+  getDataFromSeed(
+    seedPhrase: string,
+    path?: string,
+    password?: string,
+  ): SeedWithKeys | Error;
   derivateKeys(
     from: FromSeedPhrase | FromMasterPublicKey | FromMasterPrivateKey,
-    pathCursor: PathCursor
-  ): [KeysWithPath] | Error;
+    pathCursor: PathCursor,
+  ): KeysWithPath[] | Error;
   sign(data: string, privateKey: PrivateKey): string | Error;
   getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error;
   getAddressFromPublic(publicKey: PublicKey, format?: string): Address | Error;
   checkSign(publicKey: PublicKey, data: string, sign: string): boolean | Error;
   checkSeedPhrase(seedPhrase: string): boolean | Error;
-  getDefaultPaths(): [Path];
+  getDefaultPaths(): Path[];
 }
