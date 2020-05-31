@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bchaddrjs": "^0.4.8",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.1.8",

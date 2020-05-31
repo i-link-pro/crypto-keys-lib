@@ -1,6 +1,7 @@
 import { BitcoinBase } from './bitcoin-base'
 import { bitcoin } from './network-configs'
 import { Network, Blockchain } from './keys.types'
+import { toCashAddress, toBitpayAddress } from 'bchaddrjs'
 
 export class BitcoinCash extends BitcoinBase {
     protected networks = {
@@ -21,5 +22,19 @@ export class BitcoinCash extends BitcoinBase {
         super(network)
         this.networkConfig = this.networks[network].config
         this.defaultPath = this.networks[network].path
+    }
+    getAddressFromPublic(
+        publicKey: string,
+        format?: string, // legacy | bitpay | cashaddr = cashaddr
+    ): string {
+        const legacy = super.getAddressFromPublic(publicKey)
+        let address = toCashAddress(legacy)
+        if (format === 'legacy') {
+            address = legacy
+        }
+        if (format === 'bitpay') {
+            address = toBitpayAddress(address)
+        }
+        return address
     }
 }

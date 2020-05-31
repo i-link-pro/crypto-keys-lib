@@ -59,10 +59,9 @@ export class BitcoinBase {
 
             return {
                 path: currentPath,
-                address: payments.p2pkh({
-                    pubkey: derived.publicKey,
-                    network: this.networkConfig,
-                }).address,
+                address: this.getAddressFromPublic(
+                    derived.publicKey.toString('hex'),
+                ),
                 publicKey: derived.publicKey.toString('hex'),
                 privateKey: derived.toWIF(),
             }
@@ -86,10 +85,9 @@ export class BitcoinBase {
 
             return {
                 path: currentPath,
-                address: payments.p2pkh({
-                    pubkey: derived.publicKey,
-                    network: this.networkConfig,
-                }).address,
+                address: this.getAddressFromPublic(
+                    derived.publicKey.toString('hex'),
+                ),
                 publicKey: derived.publicKey.toString('hex'),
             }
         })
