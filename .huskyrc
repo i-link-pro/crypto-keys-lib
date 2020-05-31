@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    "commit-msg": "npm run format && npm run lint:ts && commitlint -E HUSKY_GIT_PARAMS"
   }
 }

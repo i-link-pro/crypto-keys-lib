@@ -6,7 +6,8 @@ import {
   SeedWithKeys,
 } from './keys.types';
 
-const keys = new Keys(Blockchain.BITCOIN, Network.MAINNET);
+const bitcoinKeys = new Keys(Blockchain.BITCOIN, Network.MAINNET);
+const litecoinKeys = new Keys(Blockchain.LITECOIN, Network.MAINNET);
 const privKey = 'Kx44mfmTaidMc4Kq1tmWJ3vV1ZjkoXPDnRKdFm2wWhb3LzjD2Vyp';
 const adr = '1D3LsaTayUt9rzUgq1NTxRTuCfHjsN3tU3';
 const path = "m/44'/0'/0'/0/0";
@@ -28,24 +29,35 @@ const publicKey =
 // console.log(keys.generateSeedPhrase(24, SeedDictionaryLang.ITALIAN));
 // console.log(keys.generateSeedPhrase(24, SeedDictionaryLang.ITALIAN, '123'));
 
-const seedWithKeys = keys.generateSeedPhrase(12);
+const seedWithKeys = bitcoinKeys.generateSeedPhrase(12);
+console.log({ seedWithKeys, pa: bitcoinKeys.getDefaultPaths() });
+
 console.log(
-  keys.derivateKeys(
+  bitcoinKeys.derivateKeys(
     { seedPhrase: (seedWithKeys as SeedWithKeys).seedPhrase },
     { skip: 3, limit: 1, path },
   ),
 );
+const seedWithKeysl = litecoinKeys.generateSeedPhrase(12);
+console.log({ seedWithKeysl, pa: litecoinKeys.getDefaultPaths() });
 
 console.log(
-  keys.derivateKeys(
-    { masterPrivateKey: (seedWithKeys as SeedWithKeys).masterPrivateKey },
-    { skip: 3, limit: 1, path },
+  litecoinKeys.derivateKeys(
+    { seedPhrase: (seedWithKeysl as SeedWithKeys).seedPhrase },
+    { skip: 3, limit: 1 },
   ),
 );
 
-console.log(
-  keys.derivateKeys(
-    { masterPublicKey: (seedWithKeys as SeedWithKeys).masterPublicKey },
-    { skip: 3, limit: 1, path },
-  ),
-);
+// console.log(
+//   keys.derivateKeys(
+//     { masterPrivateKey: (seedWithKeys as SeedWithKeys).masterPrivateKey },
+//     { skip: 3, limit: 1, path },
+//   ),
+// );
+
+// console.log(
+//   keys.derivateKeys(
+//     { masterPublicKey: (seedWithKeys as SeedWithKeys).masterPublicKey },
+//     { skip: 3, limit: 1, path },
+//   ),
+// );

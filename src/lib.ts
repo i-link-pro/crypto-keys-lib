@@ -16,24 +16,37 @@ import {
 } from './keys.types';
 
 import { generateMnemonic, validateMnemonic, mnemonicToSeedHex } from './utils';
-import {
-  getMasterAddressFromSeed,
-  getPublicFromPrivate,
-  getAddressFromPublic,
-  sign,
-  checkSign,
-  derivateFromPrivate,
-  derivateFromPublic,
-} from './bitcoin';
+import { Bitcoin } from './bitcoin';
+import { BitcoinSV } from './bitcoinsv';
+import { BitcoinCash } from './bitcoin-cash';
+import { Litecoin } from './litecoin';
+
+const blockchainLibs = {
+  bitcoin: Bitcoin,
+  litecoin: Litecoin,
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  bitcoin_sv: BitcoinSV,
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  bitcoin_cash: BitcoinCash,
+};
 
 export class Keys implements IKeys {
+  private lib;
   constructor(blockchain: Blockchain, network: Network) {
-    // Load params from dicts
+    if (blockchainLibs[blockchain]) {
+      this.lib = new blockchainLibs[blockchain](network);
+    } else {
+      throw new Error('Blockchain not implemented yet!');
+    }
   }
 
-  private getMasterFromSeed(seedPhrase: string, path?: string, password?: string) {
+  private getMasterFromSeed(
+    seedPhrase: string,
+    path?: string,
+    password?: string,
+  ) {
     const seed = mnemonicToSeedHex(seedPhrase, password);
-    const keys = getMasterAddressFromSeed(seed, path);
+    const keys = this.lib.getMasterAddressFromSeed(seed, path);
     return {
       seedPhrase,
       seed,
@@ -60,11 +73,15 @@ export class Keys implements IKeys {
     password?: string,
   ): SeedWithKeys | Error {
     const seedPhrase = generateMnemonic(wordCount, lang);
-    
+
     return this.getMasterFromSeed(seedPhrase, path, password);
   }
 
-  getDataFromSeed(seedPhrase: string, path?: string, password?: string): SeedWithKeys | Error {
+  getDataFromSeed(
+    seedPhrase: string,
+    path?: string,
+    password?: string,
+  ): SeedWithKeys | Error {
     return this.getMasterFromSeed(seedPhrase, path, password);
   }
 
@@ -72,34 +89,34 @@ export class Keys implements IKeys {
     from: FromSeedPhrase | FromMasterPublicKey | FromMasterPrivateKey,
     pathCursor: PathCursor,
   ): KeysWithPath[] | Error {
-
     if (this.isSeed(from)) {
       const seedData = this.getMasterFromSeed(from.seedPhrase, from.password);
-    
-      return derivateFromPrivate(seedData.masterPrivateKey, pathCursor);
+
+      return this.lib.derivateFromPrivate(
+        seedData.masterPrivateKey,
+        pathCursor,
+      );
     } else if (this.isMasterPrivate(from)) {
-    
-      return derivateFromPrivate(from.masterPrivateKey, pathCursor);
+      return this.lib.derivateFromPrivate(from.masterPrivateKey, pathCursor);
     } else {
-    
-      return derivateFromPublic(from.masterPublicKey, pathCursor);
+      return this.lib.derivateFromPublic(from.masterPublicKey, pathCursor);
     }
   }
 
   sign(data: string, privateKey: PrivateKey): string | Error {
-    return sign(data, privateKey);
+    return this.lib.sign(data, privateKey);
   }
 
   getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error {
-    return getPublicFromPrivate(privateKey);
+    return this.lib.getPublicFromPrivate(privateKey);
   }
 
   getAddressFromPublic(publicKey: PublicKey, format?: string): Address | Error {
-    return getAddressFromPublic(publicKey, format);
+    return this.lib.getAddressFromPublic(publicKey, format);
   }
 
   checkSign(publicKey: PublicKey, data: string, sign: string): boolean | Error {
-    return checkSign(publicKey, data, sign);
+    return this.lib.checkSign(publicKey, data, sign);
   }
 
   checkSeedPhrase(seedPhrase: string): boolean | Error {
@@ -107,12 +124,6 @@ export class Keys implements IKeys {
   }
 
   getDefaultPaths(): Path[] {
-    return [
-      {
-        blockchain: Blockchain.BITCOIN,
-        network: Network.MAINNET,
-        path: "m/44'/0'/0'/0/0",
-      },
-    ];
+    return this.lib.getPaths();
   }
 }
