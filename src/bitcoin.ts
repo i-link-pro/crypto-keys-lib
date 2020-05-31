@@ -1,3 +1,3 @@
-import { BitcoinBase } from './bitcoin-base';
+import { BitcoinBase } from './bitcoin-base'
 
 export class Bitcoin extends BitcoinBase {}
