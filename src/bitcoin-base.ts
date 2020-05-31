@@ -1,5 +1,5 @@
 import HDKey from 'hdkey'
-import { payments, ECPair, networks } from 'bitcoinjs-lib'
+import { payments, ECPair } from 'bitcoinjs-lib'
 import * as bip32 from 'bip32'
 import createHash from 'create-hash'
 import { PathCursor, Blockchain, Network, Path } from './keys.types'
@@ -48,6 +48,14 @@ export class BitcoinBase {
         return derived
     }
 
+    protected getPrivateKey(privateKey: bip32.BIP32Interface): string {
+        return privateKey.toWIF()
+    }
+
+    protected getPublicKey(publicKey: string): string {
+        return publicKey
+    }
+
     derivateFromPrivate(masterPrivateKey: string, cursor: PathCursor) {
         const wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
@@ -60,10 +68,10 @@ export class BitcoinBase {
             return {
                 path: currentPath,
                 address: this.getAddressFromPublic(
-                    derived.publicKey.toString('hex'),
+                    this.getPublicKey(derived.publicKey.toString('hex')),
                 ),
-                publicKey: derived.publicKey.toString('hex'),
-                privateKey: derived.toWIF(),
+                publicKey: this.getPublicKey(derived.publicKey.toString('hex')),
+                privateKey: this.getPrivateKey(derived),
             }
         })
     }
@@ -86,9 +94,9 @@ export class BitcoinBase {
             return {
                 path: currentPath,
                 address: this.getAddressFromPublic(
-                    derived.publicKey.toString('hex'),
+                    this.getPublicKey(derived.publicKey.toString('hex')),
                 ),
-                publicKey: derived.publicKey.toString('hex'),
+                publicKey: this.getPublicKey(derived.publicKey.toString('hex')),
             }
         })
     }
@@ -123,8 +131,13 @@ export class BitcoinBase {
         }
     }
 
-    getPublicFromPrivate(privateKey: string): string {
-        const key = ECPair.fromWIF(privateKey, this.networkConfig)
+    getPublicFromPrivate(privateKey: string, isWIF = true): string {
+        let key
+        if (isWIF) {
+            key = ECPair.fromWIF(privateKey, this.networkConfig)
+        } else {
+            key = ECPair.fromPrivateKey(Buffer.from(privateKey, 'hex'))
+        }
         return key.publicKey.toString('hex')
     }
 

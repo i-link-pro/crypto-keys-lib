@@ -11,13 +11,17 @@ Object.keys(Blockchain).forEach(chain => {
         const keys = new Keys(Blockchain[chain], Network.MAINNET)
         const seedWithKeys = keys.generateSeedPhrase(12)
         console.log({ seedWithKeys, pa: keys.getDefaultPaths() })
-
-        console.log(
-            keys.derivateKeys(
-                { seedPhrase: (seedWithKeys as SeedWithKeys).seedPhrase },
-                { skip: 3, limit: 1 },
-            ),
+        const pack = keys.derivateKeys(
+            { seedPhrase: (seedWithKeys as SeedWithKeys).seedPhrase },
+            { skip: 3, limit: 1 },
         )
+        const publicKey = keys.getPublicFromPrivate(pack[0].privateKey)
+        console.log('pub same', pack[0].publicKey === publicKey)
+        if (!(publicKey instanceof Error)) {
+            const address = keys.getAddressFromPublic(publicKey)
+            console.log('addr same', address === pack[0].address)
+        }
+        console.log(pack[0])
     } catch (err) {
         console.log({ err })
     }

@@ -20,6 +20,7 @@ import { Bitcoin } from './bitcoin'
 import { BitcoinSV } from './bitcoinsv'
 import { BitcoinCash } from './bitcoin-cash'
 import { Litecoin } from './litecoin'
+import { Ethereum } from './ethereum'
 
 const blockchainLibs = {
     bitcoin: Bitcoin,
@@ -28,6 +29,7 @@ const blockchainLibs = {
     bitcoin_sv: BitcoinSV,
     // eslint-disable-next-line @typescript-eslint/camelcase
     bitcoin_cash: BitcoinCash,
+    ethereum: Ethereum
 }
 
 export class Keys implements IKeys {
@@ -36,7 +38,7 @@ export class Keys implements IKeys {
         if (blockchainLibs[blockchain]) {
             this.lib = new blockchainLibs[blockchain](network)
         } else {
-            throw new Error('Blockchain not implemented yet!')
+            throw new Error(`Blockchain ${blockchain} not implemented yet!`)
         }
     }
 
