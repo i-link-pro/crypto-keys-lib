@@ -25,7 +25,7 @@ export class EOS extends BitcoinBase {
         this.defaultPath = this.networks[network].path
     }
 
-    getPublicFromPrivate(privateKey: string): string {        
+    getPublicFromPrivate(privateKey: string): string {
         return eosUtil.privateToPublic(privateKey)
     }
 
