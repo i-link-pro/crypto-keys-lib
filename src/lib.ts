@@ -21,6 +21,7 @@ import { BitcoinSV } from './bitcoinsv'
 import { BitcoinCash } from './bitcoin-cash'
 import { Litecoin } from './litecoin'
 import { Ethereum } from './ethereum'
+import { EOS } from './eos'
 
 const blockchainLibs = {
     bitcoin: Bitcoin,
@@ -29,7 +30,8 @@ const blockchainLibs = {
     bitcoin_sv: BitcoinSV,
     // eslint-disable-next-line @typescript-eslint/camelcase
     bitcoin_cash: BitcoinCash,
-    ethereum: Ethereum
+    ethereum: Ethereum,
+    eos: EOS,
 }
 
 export class Keys implements IKeys {
