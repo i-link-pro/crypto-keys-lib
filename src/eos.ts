@@ -41,7 +41,11 @@ export class EOS extends BitcoinBase {
         return publicKey
     }
 
-    // sign{
-    //     https://github.com/EOSIO/eosjs-ecc/blob/a806b93fbbccec8d38c0c02998d204ff2040a6ae/src/api_common.js#L107
-    // }
+    sign(data: string, privateKey: string): string {
+        return eosUtil.sign(data, privateKey)
+    }
+
+    checkSign(publicKey: string, data: string, sign: string): boolean {
+        return eosUtil.verify(sign, data, publicKey)
+    }
 }

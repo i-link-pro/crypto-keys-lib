@@ -3,6 +3,7 @@ import { Network, Blockchain } from './keys.types'
 import { bitcoin } from './network-configs'
 import * as ethUtil from 'ethereumjs-util'
 import { BIP32Interface } from 'bip32'
+import createHash from 'create-hash'
 
 export class Ethereum extends BitcoinBase {
     protected networks = {
@@ -50,7 +51,26 @@ export class Ethereum extends BitcoinBase {
         return address
     }
 
-    // sign {
-    //     https://github.com/ethereumjs/ethereumjs-util/blob/master/src/signature.ts#L16
-    // }
+    sign(data: string, privateKey: string): string {
+        const hash = ethUtil.hashPersonalMessage(Buffer.from(data))
+        const sign = ethUtil.ecsign(
+            hash,
+            Buffer.from(privateKey.replace('0x', ''), 'hex'),
+        )
+        return JSON.stringify({
+            r: sign.r.toString('hex'),
+            s: sign.s.toString('hex'),
+            v: sign.v,
+        })
+    }
+
+    checkSign(publicKey: string, data: string, sign: string): boolean {
+        const signObject = JSON.parse(sign)
+
+        return ethUtil.isValidSignature(
+            parseInt(signObject.v),
+            Buffer.from(signObject.r, 'hex'),
+            Buffer.from(signObject.s, 'hex'),
+        )
+    }
 }

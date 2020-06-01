@@ -21,7 +21,16 @@ Object.keys(Blockchain).forEach(chain => {
             const address = keys.getAddressFromPublic(publicKey)
             console.log('addr same', address === pack[0].address)
         }
+        const data = 'sign test'
         console.log(pack[0])
+        const sign = keys.sign(data, pack[0].privateKey)
+        if (!(sign instanceof Error)) {
+            console.log({ sign })
+            console.log(
+                'is valid sign',
+                keys.checkSign(pack[0].publicKey, data, sign),
+            )
+        }
     } catch (err) {
         console.log({ err })
     }
