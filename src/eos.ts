@@ -40,4 +40,8 @@ export class EOS extends BitcoinBase {
     getAddressFromPublic(publicKey: string): string {
         return publicKey
     }
+
+    // sign{
+    //     https://github.com/EOSIO/eosjs-ecc/blob/a806b93fbbccec8d38c0c02998d204ff2040a6ae/src/api_common.js#L107
+    // }
 }

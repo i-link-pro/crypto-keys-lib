@@ -49,4 +49,8 @@ export class Ethereum extends BitcoinBase {
         const address = ethUtil.addHexPrefix(checksumAddress)
         return address
     }
+
+    // sign {
+    //     https://github.com/ethereumjs/ethereumjs-util/blob/master/src/signature.ts#L16
+    // }
 }
