@@ -1,6 +1,6 @@
 import { BitcoinBase } from './bitcoin-base'
-import { Network, Blockchain } from './keys.types'
-import { bitcoin } from './network-configs'
+import { Network, Blockchain } from '../types'
+import { bitcoin } from '../network-configs'
 import * as rippleKeyPair from 'ripple-keypairs'
 import * as rippleUtil from 'ripple-address-codec'
 import createHash from 'create-hash'

@@ -2,9 +2,9 @@ import HDKey from 'hdkey'
 import { payments, ECPair } from 'bitcoinjs-lib'
 import * as bip32 from 'bip32'
 import createHash from 'create-hash'
-import { PathCursor, Blockchain, Network, Path } from './keys.types'
-import { getIndexes, preparePath, getHardenedPath } from './utils'
-import { bitcoin } from './network-configs'
+import { PathCursor, Blockchain, Network, Path } from '../types'
+import { getIndexes, preparePath, getHardenedPath } from '../utils'
+import { bitcoin } from '../network-configs'
 
 export class BitcoinBase {
     protected networks = {

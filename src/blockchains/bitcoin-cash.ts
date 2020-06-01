@@ -1,6 +1,6 @@
 import { BitcoinBase } from './bitcoin-base'
-import { bitcoin } from './network-configs'
-import { Network, Blockchain } from './keys.types'
+import { bitcoin } from '../network-configs'
+import { Network, Blockchain } from '../types'
 import { toCashAddress, toBitpayAddress } from 'bchaddrjs'
 
 export class BitcoinCash extends BitcoinBase {

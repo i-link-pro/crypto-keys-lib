@@ -1,20 +1,20 @@
 import { BitcoinBase } from './bitcoin-base'
-import { litecoin } from './network-configs'
-import { Network, Blockchain } from './keys.types'
+import { bitcoinsv } from '../network-configs'
+import { Network, Blockchain } from '../types'
 
-export class Litecoin extends BitcoinBase {
+export class BitcoinSV extends BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
-            blockchain: Blockchain.LITECOIN,
+            blockchain: Blockchain.BITCOIN_SV,
             network: Network.MAINNET,
-            path: "m/44'/2'/0'/0/0",
-            config: litecoin.mainnet,
+            path: "m/44'/236'/0'/0/0",
+            config: bitcoinsv.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.LITECOIN,
+            blockchain: Blockchain.BITCOIN_SV,
             network: Network.TESTNET,
             path: "m/44'/1'/0'/0/0",
-            config: litecoin.testnet,
+            config: bitcoinsv.testnet,
         },
     }
     constructor(network: Network) {

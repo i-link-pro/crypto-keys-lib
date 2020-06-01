@@ -13,16 +13,16 @@ import {
     PublicKey,
     Address,
     Path,
-} from './keys.types'
+} from './types'
 
 import { generateMnemonic, validateMnemonic, mnemonicToSeedHex } from './utils'
-import { Bitcoin } from './bitcoin'
-import { BitcoinSV } from './bitcoinsv'
-import { BitcoinCash } from './bitcoin-cash'
-import { Litecoin } from './litecoin'
-import { Ethereum } from './ethereum'
-import { EOS } from './eos'
-import { Ripple } from './ripple'
+import { Bitcoin } from './blockchains/bitcoin'
+import { BitcoinSV } from './blockchains/bitcoinsv'
+import { BitcoinCash } from './blockchains/bitcoin-cash'
+import { Litecoin } from './blockchains/litecoin'
+import { Ethereum } from './blockchains/ethereum'
+import { EOS } from './blockchains/eos'
+import { Ripple } from './blockchains/ripple'
 
 const blockchainLibs = {
     bitcoin: Bitcoin,

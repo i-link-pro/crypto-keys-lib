@@ -4,7 +4,7 @@ import {
     Network,
     // SeedDictionaryLang,
     SeedWithKeys,
-} from './keys.types'
+} from './types'
 
 Object.keys(Blockchain).forEach(chain => {
     try {

@@ -10,7 +10,7 @@ export const mnemonicToSeedHex = (
 
 export const generateMnemonic = (length: 12 | 24, lang = 'english'): string => {
     let strength = 128
-    
+
     if (length === 24) {
         strength = 256
     } else if (length !== 12) {
