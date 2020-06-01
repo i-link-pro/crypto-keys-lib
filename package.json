@@ -18,7 +18,8 @@
     "eosjs-ecc": "^4.0.7",
     "ethereumjs-util": "^7.0.2",
     "hdkey": "^1.1.2",
-    "xpring-js": "^4.2.9"
+    "ripple-address-codec": "^4.1.1",
+    "ripple-keypairs": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

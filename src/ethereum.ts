@@ -3,7 +3,6 @@ import { Network, Blockchain } from './keys.types'
 import { bitcoin } from './network-configs'
 import * as ethUtil from 'ethereumjs-util'
 import { BIP32Interface } from 'bip32'
-import createHash from 'create-hash'
 
 export class Ethereum extends BitcoinBase {
     protected networks = {

@@ -2,7 +2,7 @@ import { Keys } from './lib'
 import {
     Blockchain,
     Network,
-    SeedDictionaryLang,
+    // SeedDictionaryLang,
     SeedWithKeys,
 } from './keys.types'
 

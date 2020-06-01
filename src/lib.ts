@@ -22,6 +22,7 @@ import { BitcoinCash } from './bitcoin-cash'
 import { Litecoin } from './litecoin'
 import { Ethereum } from './ethereum'
 import { EOS } from './eos'
+import { Ripple } from './ripple'
 
 const blockchainLibs = {
     bitcoin: Bitcoin,
@@ -32,6 +33,7 @@ const blockchainLibs = {
     bitcoin_cash: BitcoinCash,
     ethereum: Ethereum,
     eos: EOS,
+    ripple: Ripple,
 }
 
 export class Keys implements IKeys {
