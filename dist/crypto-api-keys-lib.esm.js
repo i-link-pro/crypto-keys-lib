@@ -42,13 +42,6 @@ var SeedDictionaryLang;
   SeedDictionaryLang["CZECH"] = "czech";
 })(SeedDictionaryLang || (SeedDictionaryLang = {}));
 
-var types = {
-    __proto__: null,
-    get Blockchain () { return Blockchain; },
-    get Network () { return Network; },
-    get SeedDictionaryLang () { return SeedDictionaryLang; }
-};
-
 function _extends() {
   _extends = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -745,5 +738,5 @@ var Keys = /*#__PURE__*/function () {
   return Keys;
 }();
 
-export { Keys, types as Types };
+export { Blockchain, Keys, Network, SeedDictionaryLang };
 //# sourceMappingURL=crypto-api-keys-lib.esm.js.map

@@ -15,8 +15,6 @@ var eosUtil = require('eosjs-ecc');
 var rippleKeyPair = require('ripple-keypairs');
 var rippleUtil = require('ripple-address-codec');
 
-var Blockchain;
-
 (function (Blockchain) {
   Blockchain["BITCOIN"] = "bitcoin";
   Blockchain["ETHEREUM"] = "ethereum";
@@ -25,16 +23,12 @@ var Blockchain;
   Blockchain["BITCOIN_SV"] = "bitcoin_sv";
   Blockchain["LITECOIN"] = "litecoin";
   Blockchain["RIPPLE"] = "ripple";
-})(Blockchain || (Blockchain = {}));
-
-var Network;
+})(exports.Blockchain || (exports.Blockchain = {}));
 
 (function (Network) {
   Network["MAINNET"] = "mainnet";
   Network["TESTNET"] = "testnet";
-})(Network || (Network = {}));
-
-var SeedDictionaryLang;
+})(exports.Network || (exports.Network = {}));
 
 (function (SeedDictionaryLang) {
   SeedDictionaryLang["ENGLISH"] = "english";
@@ -46,14 +40,7 @@ var SeedDictionaryLang;
   SeedDictionaryLang["ITALIAN"] = "italian";
   SeedDictionaryLang["KOREAN"] = "korean";
   SeedDictionaryLang["CZECH"] = "czech";
-})(SeedDictionaryLang || (SeedDictionaryLang = {}));
-
-var types = {
-    __proto__: null,
-    get Blockchain () { return Blockchain; },
-    get Network () { return Network; },
-    get SeedDictionaryLang () { return SeedDictionaryLang; }
-};
+})(exports.SeedDictionaryLang || (exports.SeedDictionaryLang = {}));
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -218,14 +205,14 @@ var BitcoinBase = /*#__PURE__*/function () {
   function BitcoinBase(network) {
     var _this$networks;
 
-    this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.BITCOIN,
-      network: Network.MAINNET,
+    this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.BITCOIN,
+      network: exports.Network.MAINNET,
       path: "m/44'/0'/0'/0/0",
       config: bitcoin.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.BITCOIN,
-      network: Network.TESTNET,
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.BITCOIN,
+      network: exports.Network.TESTNET,
       path: "m/44'/1'/0'/0/0",
       config: bitcoin.testnet
     }, _this$networks);
@@ -384,14 +371,14 @@ var BitcoinSV = /*#__PURE__*/function (_BitcoinBase) {
     var _this;
 
     _this = _BitcoinBase.call(this, network) || this;
-    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.BITCOIN_SV,
-      network: Network.MAINNET,
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.BITCOIN_SV,
+      network: exports.Network.MAINNET,
       path: "m/44'/236'/0'/0/0",
       config: bitcoinsv.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.BITCOIN_SV,
-      network: Network.TESTNET,
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.BITCOIN_SV,
+      network: exports.Network.TESTNET,
       path: "m/44'/1'/0'/0/0",
       config: bitcoinsv.testnet
     }, _this$networks);
@@ -412,14 +399,14 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinBase) {
     var _this;
 
     _this = _BitcoinBase.call(this, network) || this;
-    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.BITCOIN_CASH,
-      network: Network.MAINNET,
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.BITCOIN_CASH,
+      network: exports.Network.MAINNET,
       path: "m/44'/145'/0'/0/0",
       config: bitcoin.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.BITCOIN_CASH,
-      network: Network.TESTNET,
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.BITCOIN_CASH,
+      network: exports.Network.TESTNET,
       path: "m/44'/1'/0'/0/0",
       config: bitcoin.testnet
     }, _this$networks);
@@ -458,14 +445,14 @@ var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
     var _this;
 
     _this = _BitcoinBase.call(this, network) || this;
-    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.LITECOIN,
-      network: Network.MAINNET,
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.LITECOIN,
+      network: exports.Network.MAINNET,
       path: "m/44'/2'/0'/0/0",
       config: litecoin.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.LITECOIN,
-      network: Network.TESTNET,
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.LITECOIN,
+      network: exports.Network.TESTNET,
       path: "m/44'/1'/0'/0/0",
       config: litecoin.testnet
     }, _this$networks);
@@ -486,14 +473,14 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
     var _this;
 
     _this = _BitcoinBase.call(this, network) || this;
-    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.ETHEREUM,
-      network: Network.MAINNET,
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.ETHEREUM,
+      network: exports.Network.MAINNET,
       path: "m/44'/60'/0'/0/0",
       config: bitcoin.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.ETHEREUM,
-      network: Network.TESTNET,
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.ETHEREUM,
+      network: exports.Network.TESTNET,
       path: "m/44'/1'/0'/0/0",
       config: bitcoin.testnet
     }, _this$networks);
@@ -556,14 +543,14 @@ var EOS = /*#__PURE__*/function (_BitcoinBase) {
     var _this;
 
     _this = _BitcoinBase.call(this, network) || this;
-    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.EOS,
-      network: Network.MAINNET,
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.EOS,
+      network: exports.Network.MAINNET,
       path: "m/44'/194'/0'/0/0",
       config: bitcoin.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.EOS,
-      network: Network.TESTNET,
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.EOS,
+      network: exports.Network.TESTNET,
       path: "m/44'/1'/0'/0/0",
       config: bitcoin.testnet
     }, _this$networks);
@@ -610,14 +597,14 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
     var _this;
 
     _this = _BitcoinBase.call(this, network) || this;
-    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.RIPPLE,
-      network: Network.MAINNET,
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.RIPPLE,
+      network: exports.Network.MAINNET,
       path: "m/44'/144'/0'/0/0",
       config: bitcoin.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.RIPPLE,
-      network: Network.TESTNET,
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.RIPPLE,
+      network: exports.Network.TESTNET,
       path: "m/44'/1'/0'/0/0",
       config: bitcoin.testnet
     }, _this$networks);
@@ -702,7 +689,7 @@ var Keys = /*#__PURE__*/function () {
 
   _proto.generateSeedPhrase = function generateSeedPhrase(wordCount, lang, path, password) {
     if (lang === void 0) {
-      lang = SeedDictionaryLang.ENGLISH;
+      lang = exports.SeedDictionaryLang.ENGLISH;
     }
 
     var seedPhrase = generateMnemonic(wordCount, lang);
@@ -752,5 +739,4 @@ var Keys = /*#__PURE__*/function () {
 }();
 
 exports.Keys = Keys;
-exports.Types = types;
 //# sourceMappingURL=crypto-api-keys-lib.cjs.development.js.map
