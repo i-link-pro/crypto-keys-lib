@@ -6,7 +6,7 @@ import {
     SeedWithKeys,
 } from './types'
 
-Object.keys(Blockchain).forEach(chain => {
+for (const chain in Blockchain) {
     try {
         const keys = new Keys(Blockchain[chain], Network.MAINNET)
         const seedWithKeys = keys.generateSeedPhrase(12)
@@ -15,6 +15,12 @@ Object.keys(Blockchain).forEach(chain => {
             { seedPhrase: (seedWithKeys as SeedWithKeys).seedPhrase },
             { skip: 3, limit: 1 },
         )
+        if (!Array.isArray(pack) || !pack.length) {
+            continue
+        }
+        if (!pack[0].privateKey) {
+            continue
+        }
         const publicKey = keys.getPublicFromPrivate(pack[0].privateKey)
         console.log('pub same', pack[0].publicKey === publicKey)
         if (!(publicKey instanceof Error)) {
@@ -34,7 +40,7 @@ Object.keys(Blockchain).forEach(chain => {
     } catch (err) {
         console.log({ err })
     }
-})
+}
 
 // const litecoinKeys = new Keys(Blockchain.LITECOIN, Network.MAINNET);
 // const privKey = 'Kx44mfmTaidMc4Kq1tmWJ3vV1ZjkoXPDnRKdFm2wWhb3LzjD2Vyp';

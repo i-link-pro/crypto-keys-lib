@@ -32,7 +32,11 @@ export class Ethereum extends BitcoinBase {
     }
 
     getPrivateKey(privateKey: BIP32Interface): string {
-        return ethUtil.bufferToHex(privateKey.privateKey)
+        if (privateKey.privateKey) {
+            return ethUtil.bufferToHex(privateKey.privateKey)
+        } else {
+            throw new Error('Invalid private key')
+        }
     }
 
     getPublicKey(publicKey: string): string {
@@ -63,7 +67,7 @@ export class Ethereum extends BitcoinBase {
         })
     }
 
-    checkSign(publicKey: string, data: string, sign: string): boolean {
+    checkSign(_: string, __: string, sign: string): boolean {
         const signObject = JSON.parse(sign)
 
         return ethUtil.isValidSignature(

@@ -1,6 +1,6 @@
-type Network = {
+export type Network = {
     messagePrefix: string
-    bech32?: string
+    bech32: string
     bip32: Bip32
     pubKeyHash: number
     scriptHash: number
@@ -14,8 +14,8 @@ type Bip32 = {
 
 type NetworkConfig = {
     mainnet: Network
+    testnet: Network
     regtest?: Network
-    testnet?: Network
 }
 
 const bitcoin: NetworkConfig = {
@@ -82,6 +82,18 @@ const litecoin: NetworkConfig = {
 const bitcoinsv: NetworkConfig = {
     mainnet: {
         messagePrefix: 'unused',
+        bech32: 'bsv',
+        bip32: {
+            public: 0x0488b21e,
+            private: 0x0488ade4,
+        },
+        pubKeyHash: 0x00,
+        scriptHash: 0x05,
+        wif: 0x80,
+    },
+    testnet: {
+        messagePrefix: 'unused',
+        bech32: 'tbsv',
         bip32: {
             public: 0x0488b21e,
             private: 0x0488ade4,

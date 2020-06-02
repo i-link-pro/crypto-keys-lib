@@ -4,7 +4,7 @@ import * as bip32 from 'bip32'
 import createHash from 'create-hash'
 import { PathCursor, Blockchain, Network, Path } from '../types'
 import { getIndexes, preparePath, getHardenedPath } from '../utils'
-import { bitcoin } from '../network-configs'
+import { bitcoin, Network as NetworkConfig } from '../network-configs'
 
 export class BitcoinBase {
     protected networks = {
@@ -21,8 +21,8 @@ export class BitcoinBase {
             config: bitcoin.testnet,
         },
     }
-    protected defaultPath
-    protected networkConfig
+    protected defaultPath: string
+    protected networkConfig: NetworkConfig
 
     constructor(network: Network) {
         this.networkConfig = this.networks[network].config
@@ -146,15 +146,19 @@ export class BitcoinBase {
         format?: string, // 'base58' | 'bech32' = 'base58'
     ): string {
         if (format && format === 'bech32') {
-            return payments.p2wpkh({
-                pubkey: Buffer.from(publicKey, 'hex'),
-                network: this.networkConfig,
-            }).address
+            return (
+                payments.p2wpkh({
+                    pubkey: Buffer.from(publicKey, 'hex'),
+                    network: this.networkConfig,
+                }).address ?? ''
+            )
         }
 
-        return payments.p2pkh({
-            pubkey: Buffer.from(publicKey, 'hex'),
-            network: this.networkConfig,
-        }).address
+        return (
+            payments.p2pkh({
+                pubkey: Buffer.from(publicKey, 'hex'),
+                network: this.networkConfig,
+            }).address ?? ''
+        )
     }
 }

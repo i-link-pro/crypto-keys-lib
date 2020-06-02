@@ -50,7 +50,11 @@ export class Ripple extends BitcoinBase {
         const hash = createHash('sha256')
             .update(data)
             .digest('hex')
-        return rippleKeyPair.sign(hash, key.privateKey.toString('hex'))
+        if (key.privateKey) {
+            return rippleKeyPair.sign(hash, key.privateKey.toString('hex'))
+        } else {
+            throw Error('Invalid private key')
+        }
     }
 
     checkSign(publicKey: string, data: string, sign: string): boolean {

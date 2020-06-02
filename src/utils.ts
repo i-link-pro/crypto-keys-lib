@@ -32,7 +32,7 @@ export const getIndexes = (skip: number, limit: number): number[] => {
         throw Error('Limit must be greater than zero')
     }
 
-    return Array.from({ length: limit }, (v, k) => k + skip + 1)
+    return Array.from({ length: limit }, (_, k) => k + skip + 1)
 }
 
 export const preparePath = (path: string): string => {

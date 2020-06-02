@@ -37,7 +37,7 @@ const blockchainLibs = {
 }
 
 export class Keys implements IKeys {
-    private lib
+    private lib: any
     constructor(blockchain: Blockchain, network: Network) {
         if (blockchainLibs[blockchain]) {
             this.lib = new blockchainLibs[blockchain](network)
