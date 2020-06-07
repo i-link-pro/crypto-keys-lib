@@ -170,7 +170,7 @@ export class Keys implements IKeys {
             nonce,
             key,
         )
-        
+
         return decrypted.toString('utf-8')
     }
 
