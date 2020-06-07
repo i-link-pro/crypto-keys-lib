@@ -1,8 +1,9 @@
+import { SodiumPlus, CryptographyKey } from 'sodium-plus';
+import createHash from 'create-hash';
 import { mnemonicToSeedSync, validateMnemonic as validateMnemonic$1, setDefaultWordlist, generateMnemonic as generateMnemonic$1 } from 'bip39';
 import HDKey from 'hdkey';
 import { ECPair, payments } from 'bitcoinjs-lib';
 import { fromBase58 } from 'bip32';
-import createHash from 'create-hash';
 import { toCashAddress, toBitpayAddress } from 'bchaddrjs';
 import { addHexPrefix, bufferToHex, importPublic, publicToAddress, toChecksumAddress, hashPersonalMessage, ecsign, isValidSignature } from 'ethereumjs-util';
 import { privateToPublic, PrivateKey, PublicKey, sign, verify } from 'eosjs-ecc';
@@ -733,6 +734,39 @@ var Keys = /*#__PURE__*/function () {
 
   _proto.getDefaultPaths = function getDefaultPaths() {
     return this.lib.getPaths();
+  };
+
+  Keys.decrypt = function decrypt(encryptedData, password) {
+    try {
+      return Promise.resolve(SodiumPlus.auto()).then(function (sodium) {
+        var hashedPassword = createHash('sha256').update(password).digest('hex');
+        var key = CryptographyKey.from(hashedPassword, 'hex');
+        var nonce = Buffer.from(encryptedData.substring(0, 48), 'hex');
+        var ciphertext = Buffer.from(encryptedData.substring(48), 'hex');
+        return Promise.resolve(sodium.crypto_secretbox_open(ciphertext, nonce, key)).then(function (decrypted) {
+          return decrypted.toString('utf-8');
+        });
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+
+  Keys.encrypt = function encrypt(data, password) {
+    try {
+      return Promise.resolve(SodiumPlus.auto()).then(function (sodium) {
+        var hashedPassword = createHash('sha256').update(password).digest('hex');
+        var key = CryptographyKey.from(hashedPassword, 'hex');
+        return Promise.resolve(sodium.randombytes_buf(24)).then(function (nonce) {
+          return Promise.resolve(sodium.crypto_secretbox(data, nonce, key)).then(function (ciphertext) {
+            var encryptedData = nonce.toString('hex') + ciphertext.toString('hex');
+            return encryptedData;
+          });
+        });
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   return Keys;

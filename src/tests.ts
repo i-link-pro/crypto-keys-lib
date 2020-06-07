@@ -6,6 +6,15 @@ import {
     SeedWithKeys,
 } from './types'
 
+const encTest = async () => {
+    const password = '123'
+    const encrypted = await Keys.encrypt('encrypt test', password)
+    const decrypted = await Keys.decrypt(encrypted, password)
+    console.log({ encrypted, decrypted })
+}
+
+encTest()
+
 for (const chain in Blockchain) {
     try {
         const keys = new Keys(Blockchain[chain], Network.MAINNET)

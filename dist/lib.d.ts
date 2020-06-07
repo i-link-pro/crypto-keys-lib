@@ -14,4 +14,6 @@ export declare class Keys implements IKeys {
     checkSign(publicKey: PublicKey, data: string, sign: string): boolean | Error;
     checkSeedPhrase(seedPhrase: string): boolean | Error;
     getDefaultPaths(): Path[];
+    static decrypt(encryptedData: string, password: string): Promise<string>;
+    static encrypt(data: string, password: string): Promise<string>;
 }

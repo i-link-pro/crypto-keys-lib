@@ -1,3 +1,6 @@
+import { SodiumPlus, CryptographyKey } from 'sodium-plus'
+import createHash from 'create-hash'
+
 import {
     IKeys,
     Blockchain,
@@ -144,5 +147,48 @@ export class Keys implements IKeys {
 
     getDefaultPaths(): Path[] {
         return this.lib.getPaths()
+    }
+
+    static async decrypt(
+        encryptedData: string,
+        password: string,
+    ): Promise<string> {
+        // Select a backend automatically
+        const sodium = await SodiumPlus.auto()
+
+        const hashedPassword = createHash('sha256')
+            .update(password)
+            .digest('hex')
+
+        const key = CryptographyKey.from(hashedPassword, 'hex')
+
+        const nonce = Buffer.from(encryptedData.substring(0, 48), 'hex')
+        const ciphertext = Buffer.from(encryptedData.substring(48), 'hex')
+
+        const decrypted = await sodium.crypto_secretbox_open(
+            ciphertext,
+            nonce,
+            key,
+        )
+        
+        return decrypted.toString('utf-8')
+    }
+
+    static async encrypt(data: string, password: string): Promise<string> {
+        // Select a backend automatically
+        const sodium = await SodiumPlus.auto()
+
+        const hashedPassword = createHash('sha256')
+            .update(password)
+            .digest('hex')
+
+        const key = CryptographyKey.from(hashedPassword, 'hex')
+
+        const nonce = await sodium.randombytes_buf(24)
+
+        const ciphertext = await sodium.crypto_secretbox(data, nonce, key)
+        const encryptedData = nonce.toString('hex') + ciphertext.toString('hex')
+
+        return encryptedData
     }
 }

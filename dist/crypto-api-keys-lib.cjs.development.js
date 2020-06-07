@@ -4,11 +4,12 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var sodiumPlus = require('sodium-plus');
+var createHash = _interopDefault(require('create-hash'));
 var bip39 = require('bip39');
 var HDKey = _interopDefault(require('hdkey'));
 var bitcoinjsLib = require('bitcoinjs-lib');
 var bip32 = require('bip32');
-var createHash = _interopDefault(require('create-hash'));
 var bchaddrjs = require('bchaddrjs');
 var ethUtil = require('ethereumjs-util');
 var eosUtil = require('eosjs-ecc');
@@ -733,6 +734,39 @@ var Keys = /*#__PURE__*/function () {
 
   _proto.getDefaultPaths = function getDefaultPaths() {
     return this.lib.getPaths();
+  };
+
+  Keys.decrypt = function decrypt(encryptedData, password) {
+    try {
+      return Promise.resolve(sodiumPlus.SodiumPlus.auto()).then(function (sodium) {
+        var hashedPassword = createHash('sha256').update(password).digest('hex');
+        var key = sodiumPlus.CryptographyKey.from(hashedPassword, 'hex');
+        var nonce = Buffer.from(encryptedData.substring(0, 48), 'hex');
+        var ciphertext = Buffer.from(encryptedData.substring(48), 'hex');
+        return Promise.resolve(sodium.crypto_secretbox_open(ciphertext, nonce, key)).then(function (decrypted) {
+          return decrypted.toString('utf-8');
+        });
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+
+  Keys.encrypt = function encrypt(data, password) {
+    try {
+      return Promise.resolve(sodiumPlus.SodiumPlus.auto()).then(function (sodium) {
+        var hashedPassword = createHash('sha256').update(password).digest('hex');
+        var key = sodiumPlus.CryptographyKey.from(hashedPassword, 'hex');
+        return Promise.resolve(sodium.randombytes_buf(24)).then(function (nonce) {
+          return Promise.resolve(sodium.crypto_secretbox(data, nonce, key)).then(function (ciphertext) {
+            var encryptedData = nonce.toString('hex') + ciphertext.toString('hex');
+            return encryptedData;
+          });
+        });
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   return Keys;
