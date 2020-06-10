@@ -1,9 +1,8 @@
 
 import * as assert from 'assert';
-// import * as sinon from 'sinon';
 import { describe, it } from 'mocha';
 import { Keys } from '../src/lib';
-import { Network, Blockchain, PathCursor } from '../src/types'
+import { Network, Blockchain } from '../src/types'
 import { BitcoinBase } from '../src/blockchains/bitcoin-base';
 import { TEST_VECTORS } from './fixtures/vectors';
 
@@ -11,9 +10,9 @@ import { TEST_VECTORS } from './fixtures/vectors';
 describe('BitcoinBase', () => {
   const instance = new BitcoinBase(Network.TESTNET);
   describe('getMasterAddressFromSeed', () => {
-    TEST_VECTORS.forEach((vector, index) => {
+    TEST_VECTORS.forEach((vector) => {
       const actual = instance.getMasterAddressFromSeed(vector.seed);
-      it(`should be generate correct public key ${vector.masterPublicKey}`, () => { // doesnot match with value of test vector
+      it(`should be generate correct public key ${vector.masterPublicKey}`, () => {
         assert.strictEqual(actual['masterPublicKey'], vector.masterPublicKey);
       });
       it(`should be generate correct private key ${vector.masterPrivateKey}`, () => {
