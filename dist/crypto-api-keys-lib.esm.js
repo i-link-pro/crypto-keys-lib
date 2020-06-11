@@ -309,10 +309,15 @@ var BitcoinBase = /*#__PURE__*/function () {
 
   _proto.getMasterAddressFromSeed = function getMasterAddressFromSeed(seed, path) {
     var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'));
-    var hdnode = hdkey.derive(getHardenedPath(path || this.defaultPath));
+    var masterPublicKey = hdkey.toJSON().xpub;
+
+    if (path) {
+      masterPublicKey = hdkey.derive(getHardenedPath(path)).toJSON().xpub;
+    }
+
     return {
       masterPrivateKey: hdkey.toJSON().xpriv,
-      masterPublicKey: hdnode.toJSON().xpub
+      masterPublicKey: masterPublicKey
     };
   };
 
