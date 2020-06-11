@@ -10,7 +10,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'"    ,
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'",
     "lint:ts": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
   },
@@ -22,6 +22,7 @@
     "src"
   ],
   "dependencies": {
+    "@types/sinon": "^9.0.4",
     "bchaddrjs": "^0.4.8",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
@@ -31,7 +32,8 @@
     "ethereumjs-util": "^7.0.2",
     "hdkey": "^1.1.2",
     "ripple-address-codec": "^4.1.1",
-    "ripple-keypairs": "^1.0.1"
+    "ripple-keypairs": "^1.0.1",
+    "sinon": "^9.0.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",

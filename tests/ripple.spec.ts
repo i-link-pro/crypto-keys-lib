@@ -4,27 +4,10 @@ import * as sinon from 'sinon';
 import { describe, it, after, before } from 'mocha';
 import { Keys } from '../src/lib';
 import { Network, Blockchain } from '../src/types'
-import { BitcoinBase } from '../src/blockchains/bitcoin-base';
-import { TEST_VECTORS } from './fixtures/vectors';
+import { Ripple } from '../src/blockchains/ripple';
 
-
-describe('BitcoinBase', () => {
-  const instance = new BitcoinBase(Network.TESTNET);
-  describe('#getMasterAddressFromSeed', () => {
-    TEST_VECTORS.forEach((vector) => {
-      const actual = instance.getMasterAddressFromSeed(vector.seed);
-      it(`should be generate correct public key ${vector.masterPublicKey}`, () => {
-        assert.strictEqual(actual['masterPublicKey'], vector.masterPublicKey);
-      });
-      it(`should be generate correct private key ${vector.masterPrivateKey}`, () => {
-        assert.strictEqual(actual['masterPrivateKey'], vector.masterPrivateKey);
-      });
-    })
-  });
-})
-
-describe('Lib/bitcoin', () => {
-  const instance = new Keys(Blockchain.BITCOIN, Network.MAINNET);
+describe('Lib/Ripple', () => {
+  const instance = new Keys(Blockchain.RIPPLE, Network.MAINNET);
   describe('#getDataFromSeed/generateSeedPhrase', () => {
     const seed = instance.generateSeedPhrase(12);
     const actual = instance.getDataFromSeed(seed['seedPhrase']);
@@ -36,7 +19,7 @@ describe('Lib/bitcoin', () => {
       assert.strictEqual(actual['masterPublicKey'], seed['masterPublicKey']);
     });
 
-    it(`should be return \`${seed['masterPrivateKey']}\` masterPrivateKey`, () => {
+    it(`should be return \`${seed['masterPrivateKey']}\ masterPrivateKey`, () => {
       assert.strictEqual(actual['masterPrivateKey'], seed['masterPrivateKey']);
     });
   });
@@ -45,12 +28,12 @@ describe('Lib/bitcoin', () => {
     const actualPaths = instance.getDefaultPaths();
     it('should return exact paths', () => {
       const expectedPaths = [{
-        blockchain: 'bitcoin',
+        blockchain: 'ripple',
         network: 'mainnet',
-        path: 'm/44\'/0\'/0\'/0/0'
+        path: 'm/44\'/144\'/0\'/0/0'
       },
       {
-        blockchain: 'bitcoin',
+        blockchain: 'ripple',
         network: 'testnet',
         path: 'm/44\'/1\'/0\'/0/0'
       }];
@@ -59,10 +42,14 @@ describe('Lib/bitcoin', () => {
   });
 
   describe('#checkSeedPhrase', () => {
-    const seedPhrase = 'crouch congress lake quantum smoke play glove firm pony capital wise cream';
-    const actual = instance.checkSeedPhrase(seedPhrase);
+    const seedPhrase: string = 'wolf extra expand cause vocal worth cricket era board word ability limit';
+    const actualPositive: boolean | Error = instance.checkSeedPhrase(seedPhrase);
     it('should return `true`', () => {
-      assert.strictEqual(actual, true);
+      assert.strictEqual(actualPositive, true);
+    });
+    const actualNegative: boolean | Error = instance.checkSeedPhrase('invalid');
+    it('should return `false`', () => {
+      assert.strictEqual(actualNegative, false);
     });
   });
 
@@ -70,12 +57,12 @@ describe('Lib/bitcoin', () => {
     let spy;
     let actual;
     before((done) => {
-      spy = sinon.spy(BitcoinBase.prototype, 'derivateFromPrivate');
+      spy = sinon.spy(Ripple.prototype, 'derivateFromPrivate');
       const cursor = {
         skip: 1,
         limit: 1
       }
-      const masterPrivateKey = { masterPrivateKey: 'xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U' }
+      const masterPrivateKey = { masterPrivateKey: 'xprv9s21ZrQH143K3Wy2r1A79bJVQ23n6qFwNtM6F8egcamUeZkcy1AXYg4p1oQ1TSfCrzTZFRcDgosskwcgKB1BGTuBqfQG9CquUX7F9VrPzey' }
       actual = instance.derivateKeys(masterPrivateKey, cursor);
       done();
     })
@@ -86,12 +73,12 @@ describe('Lib/bitcoin', () => {
       context('positive result', () => {
       const expected: [{ path: string, address: string, publicKey: string, privateKey: string }] = [
         {
-          path: "m/44'/0'/0'/0/2",
-          address: '1Nb924nRs93gWVeFnaKH1EE8uLqWGfdkXE',
-          publicKey: '02db7398c945695b9ea17e97a3a09da0adfb46afb94b7fbc8c16561d0c1faedc38',
-          privateKey: 'L58PscmN5Ee1u2t4oCvZNq1YF9rtuwe19CospGwygyBfd3aH7zYy'
+          path: "m/44'/144'/0'/0/2",
+          address: 'XVmKGwrZEEmhss7XR5YqPygAmaeWoBzKhWYovtE1tZp9Fet',
+          publicKey: '02d018cbcbb62a18d231cb64342dbbbd95f1f3bc21aa7f8da0f334b69110fc4a05',
+          privateKey: 'L2fDxPGkZTRoasvqbUJDyf5XwHRqLGFGXUhXpinXKY1fPtzkVuM1'
         }
-      ];
+      ]
       it(`should be return correct ${expected[0]['path']} path`, () => {
         assert.strictEqual(actual[0]['path'], expected[0]['path']);
       });
@@ -113,9 +100,9 @@ describe('Lib/bitcoin', () => {
       });
 
       it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U',
+          ['xprv9s21ZrQH143K3Wy2r1A79bJVQ23n6qFwNtM6F8egcamUeZkcy1AXYg4p1oQ1TSfCrzTZFRcDgosskwcgKB1BGTuBqfQG9CquUX7F9VrPzey',
           { limit: 1, skip: 1 }]`, () => {
-        assert.deepEqual(spy.args[0], ['xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U',
+        assert.deepEqual(spy.args[0], ['xprv9s21ZrQH143K3Wy2r1A79bJVQ23n6qFwNtM6F8egcamUeZkcy1AXYg4p1oQ1TSfCrzTZFRcDgosskwcgKB1BGTuBqfQG9CquUX7F9VrPzey',
         { limit: 1, skip: 1 }]);
       });
     });
@@ -126,7 +113,7 @@ describe('Lib/bitcoin', () => {
       skip: 1,
       limit: 1
     };
-    const masterPrivateKey = { masterPrivateKey: 'xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U' }
+    const masterPrivateKey = { masterPrivateKey: 'xprv9s21ZrQH143K2aSeenTNZ5iYEUVzvzTriKKtTWmUN2VhHW7Az2xDW3gNZ5cSHxAfZZQNp1nfKECfJKBeA8Ne9zzS5fiUHqwDt6SfiKyq9cY' }
     try {
       instance.derivateKeys({ masterPrivateKey: 'invalidKey' }, cursor); // check behavior in case of non-base58 charackter
     } catch (ex) {
@@ -145,10 +132,10 @@ describe('Lib/bitcoin', () => {
   });
 
   describe('#sign', () => {
-    const masterPrivateKey = 'L58PscmN5Ee1u2t4oCvZNq1YF9rtuwe19CospGwygyBfd3aH7zYy';
-    const actual = instance.sign('fake_data', masterPrivateKey);
-    it(`should be return 8fb2a0f2905d1ae0676489ccebbd1f36093ae86cd65108ad76fdd8fd36b551ff36b92305d1f9b01993326fad7a0864e63cc60ede2f04c32e59de39ef40ebed4f`, () => {
-      assert.strictEqual(actual, '8fb2a0f2905d1ae0676489ccebbd1f36093ae86cd65108ad76fdd8fd36b551ff36b92305d1f9b01993326fad7a0864e63cc60ede2f04c32e59de39ef40ebed4f');
+    const privateKey = 'L2fDxPGkZTRoasvqbUJDyf5XwHRqLGFGXUhXpinXKY1fPtzkVuM1';
+    const actual = instance.sign('fake_data', privateKey);
+    it('should be return `30440220110A823EC57DE58D2BBFE34E4FE3464BFFD2997E952C00E534B5AF3B92FF51A80220112C3B818AA2BDDEA761236B4A23FBB741071407E56A6C7B1CBD6F93CF36FB08`', () => {
+      assert.strictEqual(actual, '30440220110A823EC57DE58D2BBFE34E4FE3464BFFD2997E952C00E534B5AF3B92FF51A80220112C3B818AA2BDDEA761236B4A23FBB741071407E56A6C7B1CBD6F93CF36FB08');
     });
     try {
       instance.sign('fake_data', 'Invalid_Private_Key'); // check behavior in case of invalid private Key
@@ -160,10 +147,10 @@ describe('Lib/bitcoin', () => {
   });
 
   describe('#getPublicFromPrivate', () => {
-    const masterPrivateKey = 'L58PscmN5Ee1u2t4oCvZNq1YF9rtuwe19CospGwygyBfd3aH7zYy';
-    const actual = instance.getPublicFromPrivate(masterPrivateKey);
-    it(`should be return 02db7398c945695b9ea17e97a3a09da0adfb46afb94b7fbc8c16561d0c1faedc38`, () => {
-      assert.strictEqual(actual, '02db7398c945695b9ea17e97a3a09da0adfb46afb94b7fbc8c16561d0c1faedc38');
+    const privateKey = 'L2fDxPGkZTRoasvqbUJDyf5XwHRqLGFGXUhXpinXKY1fPtzkVuM1';
+    const actual = instance.getPublicFromPrivate(privateKey);
+    it(`should be return 02d018cbcbb62a18d231cb64342dbbbd95f1f3bc21aa7f8da0f334b69110fc4a05`, () => {
+      assert.strictEqual(actual, '02d018cbcbb62a18d231cb64342dbbbd95f1f3bc21aa7f8da0f334b69110fc4a05');
     });
     try {
       instance.getPublicFromPrivate('Invalid_Private_Key'); // check behavior in case of invalid private Key
@@ -175,37 +162,30 @@ describe('Lib/bitcoin', () => {
   });
 
   describe('#getAddressFromPublic', () => {
-    const publicKey = '02db7398c945695b9ea17e97a3a09da0adfb46afb94b7fbc8c16561d0c1faedc38';
+    const publicKey = '02d018cbcbb62a18d231cb64342dbbbd95f1f3bc21aa7f8da0f334b69110fc4a05';
     const actual = instance.getAddressFromPublic(publicKey);
-    it(`should be return 1Nb924nRs93gWVeFnaKH1EE8uLqWGfdkXE`, () => {
-      assert.strictEqual(actual, '1Nb924nRs93gWVeFnaKH1EE8uLqWGfdkXE');
+    it(`should be return XVmKGwrZEEmhss7XR5YqPygAmaeWoBzKhWYovtE1tZp9Fet`, () => {
+      assert.strictEqual(actual, 'XVmKGwrZEEmhss7XR5YqPygAmaeWoBzKhWYovtE1tZp9Fet');
     });
     try {
       instance.getAddressFromPublic('Invalid_Public_Key'); // check behavior in case of invalid public Key
     } catch (ex) {
-      it('should be throw an error with following message `Expected property "pubkey" of type ?isPoint, got Buffer`', () => {
-        assert.strictEqual(ex.message, 'Expected property "pubkey" of type ?isPoint, got Buffer');
+      it('should be throw an error with following message `Invalid character in Invalid_Public_Key`', () => {
+        assert.strictEqual(ex.message, 'Invalid character in Invalid_Public_Key');
       });
     }
   });
 
   describe('#checkSign', () => {
-    const actualPositive = instance.checkSign('02db7398c945695b9ea17e97a3a09da0adfb46afb94b7fbc8c16561d0c1faedc38', 'fake_data', '8fb2a0f2905d1ae0676489ccebbd1f36093ae86cd65108ad76fdd8fd36b551ff36b92305d1f9b01993326fad7a0864e63cc60ede2f04c32e59de39ef40ebed4f');
+    const actual = instance.checkSign('02d018cbcbb62a18d231cb64342dbbbd95f1f3bc21aa7f8da0f334b69110fc4a05', 'fake_data', '30440220110A823EC57DE58D2BBFE34E4FE3464BFFD2997E952C00E534B5AF3B92FF51A80220112C3B818AA2BDDEA761236B4A23FBB741071407E56A6C7B1CBD6F93CF36FB08');
     it('should be return `true`', () => {
-      assert.strictEqual(actualPositive, true);
+      assert.strictEqual(actual, true);
     });
     try {
-      instance.checkSign('Invalid_Public_Key', 'fake_data', '8fb2a0f2905d1ae0676489ccebbd1f36093ae86cd65108ad76fdd8fd36b551ff36b92305d1f9b01993326fad7a0864e63cc60ede2f04c32e59de39ef40ebed4f'); // check behavior in case of invalid public Key
+      instance.checkSign('02d018cbcbb62a18d231cb64342dbbbd95f1f3bc21aa7f8da0f334b69110fc4a05', 'fake_data', 'invalid_sign');
     } catch (ex) {
-      it('should be throw an error with following message `Expected isPoint, got Buffer`', () => {
-        assert.strictEqual(ex.message, 'Expected isPoint, got Buffer');
-      });
-    }
-    try {
-      instance.checkSign('02db7398c945695b9ea17e97a3a09da0adfb46afb94b7fbc8c16561d0c1faedc38', 'fake_data', 'invalid_sign');
-    } catch (ex) {
-      it('should be throw an error with following message `Expected Signature`', () => {
-        assert.strictEqual(ex.message, 'Expected Signature');
+      it('should be throw an error with following message `Signature without r or s`', () => {
+        assert.strictEqual(ex.message, 'Signature without r or s');
       });
     }
   });
