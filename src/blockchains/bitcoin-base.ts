@@ -121,8 +121,14 @@ export class BitcoinBase {
         return key.verify(Buffer.from(hash, 'hex'), Buffer.from(sign, 'hex'))
     }
 
-    getMasterAddressFromSeed(seed: string, path?: string) {
-        const hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'))
+    getMasterAddressFromSeed(seed: string, path?: string) : {
+        masterPrivateKey: string,
+        masterPublicKey: string,
+    } {
+        const hdkey = HDKey.fromMasterSeed(
+            Buffer.from(seed, 'hex'),
+            this.networkConfig.bip32,
+        )
         let masterPublicKey = hdkey.toJSON().xpub
         if (path) {
             masterPublicKey = hdkey.derive(getHardenedPath(path)).toJSON().xpub

@@ -1,55 +1,55 @@
-import { Keys } from './lib'
-import {
-    Blockchain,
-    Network,
-    // SeedDictionaryLang,
-    SeedWithKeys,
-} from './types'
+// import { Keys } from './lib'
+// import {
+//     Blockchain,
+//     Network,
+//     // SeedDictionaryLang,
+//     SeedWithKeys,
+// } from './types'
 
-const encTest = async () => {
-    const password = '123'
-    const encrypted = await Keys.encrypt('encrypt test', password)
-    const decrypted = await Keys.decrypt(encrypted, password)
-    console.log({ encrypted, decrypted })
-}
+// const encTest = async () => {
+//     const password = '123'
+//     const encrypted = await Keys.encrypt('encrypt test', password)
+//     const decrypted = await Keys.decrypt(encrypted, password)
+//     console.log({ encrypted, decrypted })
+// }
 
-encTest()
+// encTest()
 
-for (const chain in Blockchain) {
-    try {
-        const keys = new Keys(Blockchain[chain], Network.MAINNET)
-        const seedWithKeys = keys.generateSeedPhrase(12)
-        console.log({ seedWithKeys, pa: keys.getDefaultPaths() })
-        const pack = keys.derivateKeys(
-            { seedPhrase: (seedWithKeys as SeedWithKeys).seedPhrase },
-            { skip: 3, limit: 1 },
-        )
-        if (!Array.isArray(pack) || !pack.length) {
-            continue
-        }
-        if (!pack[0].privateKey) {
-            continue
-        }
-        const publicKey = keys.getPublicFromPrivate(pack[0].privateKey)
-        console.log('pub same', pack[0].publicKey === publicKey)
-        if (!(publicKey instanceof Error)) {
-            const address = keys.getAddressFromPublic(publicKey)
-            console.log('addr same', address === pack[0].address)
-        }
-        const data = 'sign test'
-        console.log(pack[0])
-        const sign = keys.sign(data, pack[0].privateKey)
-        if (!(sign instanceof Error)) {
-            console.log({ sign })
-            console.log(
-                'is valid sign',
-                keys.checkSign(pack[0].publicKey, data, sign),
-            )
-        }
-    } catch (err) {
-        console.log({ err })
-    }
-}
+// for (const chain in Blockchain) {
+//     try {
+//         const keys = new Keys(Blockchain[chain], Network.MAINNET)
+//         const seedWithKeys = keys.generateSeedPhrase(12)
+//         console.log({ seedWithKeys, pa: keys.getDefaultPaths() })
+//         const pack = keys.derivateKeys(
+//             { seedPhrase: (seedWithKeys as SeedWithKeys).seedPhrase },
+//             { skip: 3, limit: 1 },
+//         )
+//         if (!Array.isArray(pack) || !pack.length) {
+//             continue
+//         }
+//         if (!pack[0].privateKey) {
+//             continue
+//         }
+//         const publicKey = keys.getPublicFromPrivate(pack[0].privateKey)
+//         console.log('pub same', pack[0].publicKey === publicKey)
+//         if (!(publicKey instanceof Error)) {
+//             const address = keys.getAddressFromPublic(publicKey)
+//             console.log('addr same', address === pack[0].address)
+//         }
+//         const data = 'sign test'
+//         console.log(pack[0])
+//         const sign = keys.sign(data, pack[0].privateKey)
+//         if (!(sign instanceof Error)) {
+//             console.log({ sign })
+//             console.log(
+//                 'is valid sign',
+//                 keys.checkSign(pack[0].publicKey, data, sign),
+//             )
+//         }
+//     } catch (err) {
+//         console.log({ err })
+//     }
+// }
 
 // const litecoinKeys = new Keys(Blockchain.LITECOIN, Network.MAINNET);
 // const privKey = 'Kx44mfmTaidMc4Kq1tmWJ3vV1ZjkoXPDnRKdFm2wWhb3LzjD2Vyp';
@@ -105,3 +105,15 @@ for (const chain in Blockchain) {
 //     { skip: 3, limit: 1, path },
 //   ),
 // );
+
+// const keys = new Keys(Blockchain.BITCOIN, Network.TESTNET)
+// const seed = keys.generateSeedPhrase(12)
+
+// console.log({ seed })
+// // @ts-ignore
+// const dkeys = keys.derivateKeys(
+//     { seedPhrase: seed.seedPhrase },
+//     { skip: 0, limit: 3, path: "m/44'/0'/0'/0/3" },
+// )
+
+// console.log({ dkeys })

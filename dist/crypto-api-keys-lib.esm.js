@@ -308,7 +308,7 @@ var BitcoinBase = /*#__PURE__*/function () {
   };
 
   _proto.getMasterAddressFromSeed = function getMasterAddressFromSeed(seed, path) {
-    var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'));
+    var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.networkConfig.bip32);
     var masterPublicKey = hdkey.toJSON().xpub;
 
     if (path) {
