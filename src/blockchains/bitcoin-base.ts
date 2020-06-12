@@ -121,9 +121,12 @@ export class BitcoinBase {
         return key.verify(Buffer.from(hash, 'hex'), Buffer.from(sign, 'hex'))
     }
 
-    getMasterAddressFromSeed(seed: string, path?: string) : {
-        masterPrivateKey: string,
-        masterPublicKey: string,
+    getMasterAddressFromSeed(
+        seed: string,
+        path?: string,
+    ): {
+        masterPrivateKey: string
+        masterPublicKey: string
     } {
         const hdkey = HDKey.fromMasterSeed(
             Buffer.from(seed, 'hex'),
