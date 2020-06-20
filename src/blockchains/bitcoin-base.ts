@@ -60,7 +60,7 @@ export class BitcoinBase {
         const wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
         const path = preparePath(cursor.path || this.defaultPath)
-
+        
         return indexes.map(index => {
             const currentPath = path.replace('{index}', index.toString())
             const derived = wallet.derivePath(currentPath)
@@ -123,11 +123,12 @@ export class BitcoinBase {
 
     getMasterAddressFromSeed(seed: string, path?: string) {
         const hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'))
-        const hdnode = hdkey.derive(getHardenedPath(path || this.defaultPath))
+        // const hdnode = hdkey.derive(getHardenedPath(path || this.defaultPath))
 
         return {
             masterPrivateKey: hdkey.toJSON().xpriv,
-            masterPublicKey: hdnode.toJSON().xpub,
+            masterPublicKey: hdkey.toJSON().xpub
+            // masterPublicKey: hdnode.toJSON().xpub,
         }
     }
 
