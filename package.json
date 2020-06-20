@@ -9,7 +9,7 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build --tsconfig ./tsconfig.build.json",
     "test": "tsdx test",
     "lint:ts": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
