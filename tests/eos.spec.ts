@@ -496,12 +496,12 @@ describe('Lib/EOS', () => {
                         },
                     ] = [
                         {
-                            path: "m/44'/1'/0'/0/0",
-                            address: 'mrXkT1bveXsHUVwFiSC1SEV7daSUQsgqFd',
+                            path: "m/44'/1'/0'/0/2",
+                            address: 'EOS5Dk5EzYa8sgAUwKwuL6by4KmmJCnyeA4uVZhT2QzUMoxktBucS',
                             publicKey:
-                                '0220f62994c468d5a407e26c41760a9cec5d5359743c7a34ae6fbcdd5726da3c82',
+                                'EOS5Dk5EzYa8sgAUwKwuL6by4KmmJCnyeA4uVZhT2QzUMoxktBucS',
                             privateKey:
-                                'cW5BJw2xfZXmaMdcjwnae4SgXAQPPuPc2xjTZs2FqZTQ7r3nCv7y',
+                                '5JEMzRJvBFet8hnVACFw5u5KqCYNELwmn8LFe1Yi57rCtUFvFpz',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -537,10 +537,10 @@ describe('Lib/EOS', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+          ['tprv8ZgxMBicQKsPfKAaP2Q5eNv8au9dUPcqytJs25PybygLZn5VVueBVpGP3DmFoHgzgus5Mr8cQ1Jm4WMLojE39A8ERV4V9gCt1G54rHEGVvP',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+                            'tprv8ZgxMBicQKsPfKAaP2Q5eNv8au9dUPcqytJs25PybygLZn5VVueBVpGP3DmFoHgzgus5Mr8cQ1Jm4WMLojE39A8ERV4V9gCt1G54rHEGVvP',
                             { limit: 1, skip: 1 },
                         ])
                     })

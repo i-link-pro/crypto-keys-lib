@@ -505,11 +505,11 @@ describe('Lib/Ripple', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: 'mkQ7xUTwC1rEkD3EDfKn8PDTiS7wQwWwLF',
+                            address: 'XVpxcpi1z6gz2QXEg5TzUQyumcYswurUvrX4LMK17iYVNjY',
                             publicKey:
-                                '037798ec55401dabd54919296a51ccf607dd4087cc596fa8d65a6b55cb0524034d',
+                                '034a10344d4794febdd46a1afe38e421cd4d88c8c1f33081958ee31cb689287f76',
                             privateKey:
-                                'cTbsDzjtRmxoVVjKjLFCwTpV5YaaHfbVcEbyMJHT1hcmSbEcWZ5E',
+                                'cR4AhvMYkYmnd7VNQQ8rpqYHBe5gfVjBMVQuMHdKXdEWqRFCfGWp',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -545,10 +545,10 @@ describe('Lib/Ripple', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK',
+          ['tprv8ZgxMBicQKsPd37ZVh3xLHZCzQKKnToE6Et91PbWpcTu5BCEgp2LFWUq3SN84piNbUKhw5Phh4Ew5cwCQGTvAFAYBzxF2ifPHqMieHhzgLn',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK',
+                            'tprv8ZgxMBicQKsPd37ZVh3xLHZCzQKKnToE6Et91PbWpcTu5BCEgp2LFWUq3SN84piNbUKhw5Phh4Ew5cwCQGTvAFAYBzxF2ifPHqMieHhzgLn',
                             { limit: 1, skip: 1 },
                         ])
                     })

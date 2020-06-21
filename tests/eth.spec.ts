@@ -492,11 +492,11 @@ describe('Lib/Ethereum', () => {
                         {
                             path: "m/44'/1'/0'/0/2",
                             address:
-                                '0x5e9048408d084D6FC80591139C6e0AFc0DBe061f',
+                                '0x468a06Dffe57281fA418A0b6440673634D0AfEB6',
                             publicKey:
-                                '0x039fa838fe66f379578e3165117ce0c95b6a0172c6ab3ffd922a4da749fdcea2b6',
+                                '0x022079bcb42a11e364b43195dd3d4bc7a3daf5e1a22bee2586bd31c03e939ad1f2',
                             privateKey:
-                                '0x80f7fda49ebb91f8890ee103fa258d3aa13de8d6339e43a4d6e7ea9a4bd30cba',
+                                '0x98f53dafe645d12aa063d8b0f63071bfd27340575e49288996f79da71ecc8f44',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -532,10 +532,10 @@ describe('Lib/Ethereum', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+          ['tprv8ZgxMBicQKsPeCxL6vrbctP8GhrGvffokP1bfksTVoGWkCNUnq87dHNfhyZmT4scyN9DKfMXhwzBxtufhPGHMMyxEGd3jKdnqKKmHCzm4F7',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+                            'tprv8ZgxMBicQKsPeCxL6vrbctP8GhrGvffokP1bfksTVoGWkCNUnq87dHNfhyZmT4scyN9DKfMXhwzBxtufhPGHMMyxEGd3jKdnqKKmHCzm4F7',
                             { limit: 1, skip: 1 },
                         ])
                     })
