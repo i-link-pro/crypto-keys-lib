@@ -22,7 +22,6 @@
     "src"
   ],
   "dependencies": {
-    "@types/sha.js": "^2.4.0",
     "base-x": "^3.0.8",
     "bchaddrjs": "^0.4.8",
     "bech32": "^1.1.4",

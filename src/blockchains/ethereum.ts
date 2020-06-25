@@ -76,4 +76,8 @@ export class Ethereum extends BitcoinBase {
             Buffer.from(signObject.s, 'hex'),
         )
     }
+
+    isValidAddress(address: string): boolean {
+        return ethUtil.isValidAddress(address);
+    }
 }

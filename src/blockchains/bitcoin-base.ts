@@ -5,6 +5,7 @@ import createHash from 'create-hash'
 import { PathCursor, Blockchain, Network, Path } from '../types'
 import { getIndexes, preparePath, getHardenedPath } from '../utils'
 import { bitcoin, Network as NetworkConfig } from '../network-configs'
+import { isValidBech32Address, isValidBase58Address } from './address-utils'
 
 export class BitcoinBase {
     protected networks = {
@@ -171,5 +172,28 @@ export class BitcoinBase {
                 network: this.networkConfig,
             }).address ?? ''
         )
+    }
+
+    isValidAddress(address: string, format?: string): boolean {
+    
+        if (!address) {
+            return false;
+        }
+    
+        const prefix = address.substr(0, 2);
+        if (prefix === 'bc' || prefix === 'tb' || format === "bech32") {
+            return isValidBech32Address(address);
+        }
+    
+        return isValidBase58Address(address);
+    };
+    
+    getFormat(address: string) : string {
+        const prefix = address.substr(0, 2);
+        if (prefix === 'bc' || prefix === 'tb') {
+            return "bech32";
+        } else {
+            return "base58";
+        }
     }
 }
