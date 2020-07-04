@@ -25,11 +25,19 @@ export declare enum SeedDictionaryLang {
 export declare type Address = string;
 export declare type PublicKey = string;
 export declare type PrivateKey = string;
+export declare type MasterKeys = {
+    masterPrivateKey: string;
+    masterPublicKey: string;
+    masterAccountPrivateKey: string;
+    masterAccountPublicKey: string;
+};
 export declare type SeedWithKeys = {
     seedPhrase: string;
     seed: string;
-    masterPublicKey: PublicKey;
-    masterPrivateKey: PrivateKey;
+    masterPrivateKey: string;
+    masterPublicKey: string;
+    masterAccountPrivateKey: string;
+    masterAccountPublicKey: string;
 };
 export declare type PathCursor = {
     skip: number;
