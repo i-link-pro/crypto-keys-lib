@@ -493,11 +493,11 @@ describe('Lib/Litecoin', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: 'mubLLpj62ZDKwbWhq2WPeTaKBqGt1XRxNR',
+                            address: 'mypH2bHWDLx9QBT2364XQj613LLRZWmrD3',
                             publicKey:
-                                '034243f24045d256ddfd466ea40455a61991a7dc96f54632e3fe5ea6143915413f',
+                                '02b1d95ccd81161262637db2d4aca73562475f7e99153aee17264d1342c6d97955',
                             privateKey:
-                                'cR1eRQB2sysfKE2A9tWLqv4NzaKiXu2QMyVTEpksNiqzPTv7UtLz',
+                                'cVBMHP1VRZDyBhWr1wDC9BT6zz2gWANEXUJpQq1gNsWWqmukDoz1',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -533,10 +533,10 @@ describe('Lib/Litecoin', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+          ['tprv8ZgxMBicQKsPeb86yg7R6Nboa6n4jF8oeJqxgz3pqYBdDmwdeSWJqwjvxDmwYQZHgXntK4N7W8nYYsUCcbaCdgakkc8rLDxahESxaboNgyC',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+                            'tprv8ZgxMBicQKsPeb86yg7R6Nboa6n4jF8oeJqxgz3pqYBdDmwdeSWJqwjvxDmwYQZHgXntK4N7W8nYYsUCcbaCdgakkc8rLDxahESxaboNgyC',
                             { limit: 1, skip: 1 },
                         ])
                     })

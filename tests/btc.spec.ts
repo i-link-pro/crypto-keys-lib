@@ -7,7 +7,7 @@ import { BitcoinBase } from '../src/blockchains/bitcoin-base'
 import { TEST_VECTORS } from './fixtures/vectors'
 
 describe('BitcoinBase', () => {
-    const instance = new BitcoinBase(Network.TESTNET)
+    const instance = new BitcoinBase(Network.MAINNET)
     describe('#getMasterAddressFromSeed', () => {
         TEST_VECTORS.forEach(vector => {
             const actual = instance.getMasterAddressFromSeed(vector.seed)
@@ -514,7 +514,7 @@ describe('Lib/BitcoinBase', () => {
                         },
                     ] = [
                         {
-                            path: "m/44'/1'/0'/0/0",
+                            path: "m/44'/1'/0'/0/2",
                             address: 'mzP9atortKF87N4LRzTNuYqm4WWdJevz7f',
                             publicKey:
                                 '02d7d7b4ed62a982c6bcdb8146230f9b92d4bd3a8136faaec49fbf8750261d82b7',
@@ -555,10 +555,10 @@ describe('Lib/BitcoinBase', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+          ['tprv8ZgxMBicQKsPdBD4H3iPH6uFSKmJ18hzpDLxnX1pDBZVw3Q3M5eE281mkxzxEHeGMxRUtCwbMzURrEzEtidA5NeeAC5wgdhvhDzLDhxcSzx',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+                            'tprv8ZgxMBicQKsPdBD4H3iPH6uFSKmJ18hzpDLxnX1pDBZVw3Q3M5eE281mkxzxEHeGMxRUtCwbMzURrEzEtidA5NeeAC5wgdhvhDzLDhxcSzx',
                             { limit: 1, skip: 1 },
                         ])
                     })
