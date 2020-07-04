@@ -1,8 +1,14 @@
-import HDKey from 'hdkey'
 import { payments, ECPair } from 'bitcoinjs-lib'
 import * as bip32 from 'bip32'
 import createHash from 'create-hash'
-import { PathCursor, Blockchain, Network, Path } from '../types'
+import {
+    PathCursor,
+    Blockchain,
+    Network,
+    Path,
+    KeysWithPath,
+    MasterKeys,
+} from '../types'
 import { getIndexes, preparePath, getHardenedPath } from '../utils'
 import { bitcoin, Network as NetworkConfig } from '../network-configs'
 
@@ -56,7 +62,10 @@ export class BitcoinBase {
         return publicKey
     }
 
-    derivateFromPrivate(masterPrivateKey: string, cursor: PathCursor) {
+    derivateFromPrivate(
+        masterPrivateKey: string,
+        cursor: PathCursor,
+    ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
         const path = preparePath(cursor.path || this.defaultPath)
@@ -76,7 +85,10 @@ export class BitcoinBase {
         })
     }
 
-    derivateFromPublic(masterPublicKey: string, cursor: PathCursor) {
+    derivateFromPublic(
+        masterPublicKey: string,
+        cursor: PathCursor,
+    ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPublicKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
         const path = preparePath(cursor.path || this.defaultPath)
@@ -121,23 +133,21 @@ export class BitcoinBase {
         return key.verify(Buffer.from(hash, 'hex'), Buffer.from(sign, 'hex'))
     }
 
-    getMasterAddressFromSeed(
-        seed: string,
-        path?: string,
-    ): {
-        masterPrivateKey: string
-        masterPublicKey: string
-    } {
-        const hdkey = HDKey.fromMasterSeed(
+    getMasterAddressFromSeed(seed: string, path?: string): MasterKeys {
+        const hdkey = bip32.fromSeed(
             Buffer.from(seed, 'hex'),
-            this.networkConfig.bip32,
+            this.networkConfig,
         )
-        // const hdnode = hdkey.derive(getHardenedPath(path || this.defaultPath))
+
+        const hdnode = hdkey.derivePath(
+            getHardenedPath(path || this.defaultPath),
+        )
 
         return {
-            masterPrivateKey: hdkey.toJSON().xpriv,
-            masterPublicKey: hdkey.toJSON().xpub,
-            // masterPublicKey: hdnode.toJSON().xpub,
+            masterPrivateKey: hdkey.toBase58(),
+            masterPublicKey: hdkey.neutered().toBase58(),
+            masterAccountPrivateKey: hdnode.toBase58(),
+            masterAccountPublicKey: hdnode.neutered().toBase58(),
         }
     }
 
