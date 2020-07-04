@@ -512,7 +512,8 @@ describe('Lib/BitcoinCash', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: 'bchtest:qr80ql99kp3kvgrp5h5qu0pexm3ukug9ugthwn5a0k',
+                            address:
+                                'bchtest:qr80ql99kp3kvgrp5h5qu0pexm3ukug9ugthwn5a0k',
                             publicKey:
                                 '02d7d7b4ed62a982c6bcdb8146230f9b92d4bd3a8136faaec49fbf8750261d82b7',
                             privateKey:

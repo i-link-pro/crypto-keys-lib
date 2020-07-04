@@ -505,7 +505,8 @@ describe('Lib/Ripple', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: 'XVpxcpi1z6gz2QXEg5TzUQyumcYswurUvrX4LMK17iYVNjY',
+                            address:
+                                'XVpxcpi1z6gz2QXEg5TzUQyumcYswurUvrX4LMK17iYVNjY',
                             publicKey:
                                 '034a10344d4794febdd46a1afe38e421cd4d88c8c1f33081958ee31cb689287f76',
                             privateKey:

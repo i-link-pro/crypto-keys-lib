@@ -497,7 +497,8 @@ describe('Lib/EOS', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: 'EOS5Dk5EzYa8sgAUwKwuL6by4KmmJCnyeA4uVZhT2QzUMoxktBucS',
+                            address:
+                                'EOS5Dk5EzYa8sgAUwKwuL6by4KmmJCnyeA4uVZhT2QzUMoxktBucS',
                             publicKey:
                                 'EOS5Dk5EzYa8sgAUwKwuL6by4KmmJCnyeA4uVZhT2QzUMoxktBucS',
                             privateKey:
