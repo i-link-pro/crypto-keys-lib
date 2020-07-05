@@ -1,9 +1,8 @@
 import { SodiumPlus, CryptographyKey } from 'sodium-plus';
 import createHash from 'create-hash';
 import { mnemonicToSeedSync, validateMnemonic as validateMnemonic$1, setDefaultWordlist, generateMnemonic as generateMnemonic$1 } from 'bip39';
-import HDKey from 'hdkey';
 import { ECPair, payments } from 'bitcoinjs-lib';
-import { fromBase58 } from 'bip32';
+import { fromBase58, fromSeed } from 'bip32';
 import { toCashAddress, toBitpayAddress } from 'bchaddrjs';
 import { addHexPrefix, bufferToHex, importPublic, publicToAddress, toChecksumAddress, hashPersonalMessage, ecsign, isValidSignature } from 'ethereumjs-util';
 import { privateToPublic, PrivateKey, PublicKey, sign, verify } from 'eosjs-ecc';
@@ -156,7 +155,7 @@ var bitcoin = {
 var litecoin = {
   mainnet: {
     messagePrefix: '\x19Litecoin Signed Message:\n',
-    bech32: 'tltc',
+    bech32: 'ltc',
     bip32: {
       "public": 0x0488b21e,
       "private": 0x0488ade4
@@ -167,7 +166,7 @@ var litecoin = {
   },
   testnet: {
     messagePrefix: '\x18Litecoin Signed Message:\n',
-    bech32: 'ltc',
+    bech32: 'tltc',
     bip32: {
       "public": 0x043587cf,
       "private": 0x04358394
@@ -191,13 +190,13 @@ var bitcoinsv = {
   },
   testnet: {
     messagePrefix: 'unused',
-    bech32: 'tbsv',
+    bech32: 'bsvtest',
     bip32: {
-      "public": 0x0488b21e,
-      "private": 0x0488ade4
+      "public": 0x043587cf,
+      "private": 0x04358394
     },
-    pubKeyHash: 0x00,
-    scriptHash: 0x05,
+    pubKeyHash: 0x6f,
+    scriptHash: 0xc4,
     wif: 0x80
   }
 };
@@ -308,16 +307,13 @@ var BitcoinBase = /*#__PURE__*/function () {
   };
 
   _proto.getMasterAddressFromSeed = function getMasterAddressFromSeed(seed, path) {
-    var hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'), this.networkConfig.bip32);
-    var masterPublicKey = hdkey.toJSON().xpub;
-
-    if (path) {
-      masterPublicKey = hdkey.derive(getHardenedPath(path)).toJSON().xpub;
-    }
-
+    var hdkey = fromSeed(Buffer.from(seed, 'hex'), this.networkConfig);
+    var hdnode = hdkey.derivePath(getHardenedPath(path || this.defaultPath));
     return {
-      masterPrivateKey: hdkey.toJSON().xpriv,
-      masterPublicKey: masterPublicKey
+      masterPrivateKey: hdkey.toBase58(),
+      masterPublicKey: hdkey.neutered().toBase58(),
+      masterAccountPrivateKey: hdnode.toBase58(),
+      masterAccountPublicKey: hdnode.neutered().toBase58()
     };
   };
 

@@ -29,11 +29,20 @@ export type Address = string
 export type PublicKey = string
 export type PrivateKey = string
 
+export type MasterKeys = {
+    masterPrivateKey: string
+    masterPublicKey: string
+    masterAccountPrivateKey: string
+    masterAccountPublicKey: string
+}
+
 export type SeedWithKeys = {
     seedPhrase: string
     seed: string
-    masterPublicKey: PublicKey
-    masterPrivateKey: PrivateKey
+    masterPrivateKey: string
+    masterPublicKey: string
+    masterAccountPrivateKey: string
+    masterAccountPublicKey: string
 }
 
 export type PathCursor = {
