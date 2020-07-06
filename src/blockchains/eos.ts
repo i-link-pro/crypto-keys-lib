@@ -49,8 +49,8 @@ export class EOS extends BitcoinBase {
         return eosUtil.verify(sign, data, publicKey)
     }
 
-    isValidAddress(address: string) : boolean {
-        const regex = new RegExp(/^\e.[a-z1-5]{12}$/g);
-        return regex.test(address);
+    isValidAddress(address: string): boolean {
+        const regex = new RegExp(/^\e.[a-z1-5]{12}$/g)
+        return regex.test(address)
     }
 }

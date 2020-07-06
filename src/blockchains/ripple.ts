@@ -5,7 +5,6 @@ import * as rippleKeyPair from 'ripple-keypairs'
 import * as rippleUtil from 'ripple-address-codec'
 import createHash from 'create-hash'
 import { ECPair } from 'bitcoinjs-lib'
-import baseX from "base-x";
 
 export class Ripple extends BitcoinBase {
     protected networks = {
@@ -65,11 +64,10 @@ export class Ripple extends BitcoinBase {
         return rippleKeyPair.verify(hash, sign, publicKey)
     }
 
-    
     isValidAddress(address: string): boolean {
-        const ALLOWED_CHARS = 'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz';
-        const regex = new RegExp('^r[' + ALLOWED_CHARS + ']{27,35}$');
-
-        return regex.test(address);
+        return (
+            rippleUtil.isValidXAddress(address) ||
+            rippleUtil.isValidClassicAddress(address)
+        )
     }
 }

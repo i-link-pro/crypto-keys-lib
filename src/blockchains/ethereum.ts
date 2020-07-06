@@ -78,6 +78,6 @@ export class Ethereum extends BitcoinBase {
     }
 
     isValidAddress(address: string): boolean {
-        return ethUtil.isValidAddress(address);
+        return ethUtil.isValidAddress(address)
     }
 }

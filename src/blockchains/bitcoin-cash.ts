@@ -39,6 +39,6 @@ export class BitcoinCash extends BitcoinBase {
     }
 
     isValidAddress(address: string): boolean {
-        return isValidAddress(address);
+        return isValidAddress(address)
     }
 }

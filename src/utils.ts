@@ -1,6 +1,6 @@
 import * as bip39 from 'bip39'
-import baseX from "base-x"
-import createHash from "create-hash"
+import baseX from 'base-x'
+import createHash from 'create-hash'
 
 export const validateMnemonic = (mnemonic: string): boolean =>
     bip39.validateMnemonic(mnemonic)
@@ -53,6 +53,13 @@ export const getHardenedPath = (path: string): string => {
     return parts.join('/')
 }
 
-export const base58 = baseX('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+export const base58 = baseX(
+    '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz',
+)
 
-export const sha256 = payload => Buffer.from(createHash("sha256").update(payload).digest());
+export const sha256 = payload =>
+    Buffer.from(
+        createHash('sha256')
+            .update(payload)
+            .digest(),
+    )
