@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "es6",
+    "module": "CommonJS",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -8,8 +8,6 @@
     "target": "es2017",
     "sourceMap": false,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "rootDir": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

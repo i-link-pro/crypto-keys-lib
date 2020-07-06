@@ -57,7 +57,7 @@ const bitcoin: NetworkConfig = {
 const litecoin: NetworkConfig = {
     mainnet: {
         messagePrefix: '\x19Litecoin Signed Message:\n',
-        bech32: 'tltc',
+        bech32: 'ltc',
         bip32: {
             public: 0x0488b21e,
             private: 0x0488ade4,
@@ -68,7 +68,7 @@ const litecoin: NetworkConfig = {
     },
     testnet: {
         messagePrefix: '\x18Litecoin Signed Message:\n',
-        bech32: 'ltc',
+        bech32: 'tltc',
         bip32: {
             public: 0x043587cf,
             private: 0x04358394,
@@ -93,13 +93,13 @@ const bitcoinsv: NetworkConfig = {
     },
     testnet: {
         messagePrefix: 'unused',
-        bech32: 'tbsv',
+        bech32: 'bsvtest',
         bip32: {
-            public: 0x0488b21e,
-            private: 0x0488ade4,
+            public: 0x043587cf,
+            private: 0x04358394,
         },
-        pubKeyHash: 0x00,
-        scriptHash: 0x05,
+        pubKeyHash: 0x6f,
+        scriptHash: 0xc4,
         wif: 0x80,
     },
 }
