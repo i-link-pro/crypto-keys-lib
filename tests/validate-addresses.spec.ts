@@ -9,6 +9,7 @@ import { Ripple } from '../src/blockchains/ripple'
 import { EOS } from '../src/blockchains/eos'
 import { describe, it } from 'mocha'
 import * as assert from 'assert'
+import { BitcoinBase } from '../src/blockchains/bitcoin-base'
 
 const generateAddress = (
     network: Network,
@@ -186,7 +187,7 @@ describe('LITECOIN Address Validator', () => {
 })
 
 describe('RIPPLE Address Validator', () => {
-    ;['base58', 'bech32'].forEach(format => {
+    ['base58', 'bech32'].forEach(format => {
         describe('RIPPLE MAINNET', () => {
             generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
                 const instance = new Ripple(Network.MAINNET)
@@ -207,6 +208,28 @@ describe('RIPPLE Address Validator', () => {
                     assert.equal(instance.isValidAddress(address), true)
                 })
             })
+        })
+    })
+})
+
+describe("getFormat", () => {
+    generateAddress(Network.MAINNET, Blockchain.BITCOIN, publicKey => {
+        it("Should return 'base58' format for base58 addresses", () => {
+
+            const instance = new Bitcoin(Network.MAINNET)
+            const address = instance.getAddressFromPublic(publicKey)
+
+            assert.equal(instance.getFormat(address), "base58")
+        })
+    })
+
+    generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
+        it("Should return 'bech32' format for bech32 addresses", () => {
+            
+            const instance = new BitcoinBase(Network.MAINNET)
+            const address = instance.getAddressFromPublic(publicKey, "bech32")
+
+            assert.strictEqual(instance.getFormat(address), "bech32")
         })
     })
 })
