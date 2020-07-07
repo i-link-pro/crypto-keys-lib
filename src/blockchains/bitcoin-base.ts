@@ -212,7 +212,7 @@ export class BitcoinBase {
         }
 
         if (decodeBech32(address)) {
-            return 'besh32'
+            return 'bech32'
         }
 
         throw new Error('Invalid address')
