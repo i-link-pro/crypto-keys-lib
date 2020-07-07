@@ -28,12 +28,28 @@ const addressTypes = {
     },
 }
 
-export const isValidBech32Address = (address: string): boolean => {
-    let decoded
-
+export const decodeBase58 = (address: string): Buffer => {
     try {
-        decoded = bech32.decode(address)
-    } catch (error) {
+        return base58.decode(address)
+    } catch {
+        return null
+    }
+}
+
+export const decodeBech32 = (
+    address: string,
+): { prefix: string; words: number[] } => {
+    try {
+        return bech32.decode(address)
+    } catch {
+        return null
+    }
+}
+
+// Source: https://github.com/ruigomeseu/bitcoin-address-validation/blob/master/src/index.js
+export const isValidBech32Address = (address: string): boolean => {
+    const decoded = decodeBech32(address)
+    if (!decoded) {
         return false
     }
 
@@ -59,10 +75,8 @@ export const isValidBech32Address = (address: string): boolean => {
 }
 
 export const isValidBase58Address = (address: string): boolean => {
-    let decoded
-    try {
-        decoded = base58.decode(address)
-    } catch (error) {
+    const decoded = decodeBase58(address)
+    if (!decoded) {
         return false
     }
 

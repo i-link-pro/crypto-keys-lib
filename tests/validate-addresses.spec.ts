@@ -1,4 +1,3 @@
-import { BitcoinBase } from '../src/blockchains/bitcoin-base'
 import { Bitcoin } from '../src/blockchains/bitcoin'
 import { Network, Blockchain } from '../src/types'
 import { Keys } from '../src/lib'
@@ -8,13 +7,13 @@ import { Ethereum } from '../src/blockchains/ethereum'
 import { Litecoin } from '../src/blockchains/litecoin'
 import { Ripple } from '../src/blockchains/ripple'
 import { EOS } from '../src/blockchains/eos'
-import { describe, it, after, before } from 'mocha'
+import { describe, it } from 'mocha'
 import * as assert from 'assert'
 
 const generateAddress = (
     network: Network,
     blockchain: Blockchain,
-    callback: (address: string) => void,
+    testCallback: (publicKey: string) => void,
 ) => {
     const keys = new Keys(blockchain, network)
     const seed = keys.generateSeedPhrase(12)
@@ -26,24 +25,17 @@ const generateAddress = (
         )
 
         for (const key in dkeys) {
-            let address: string
-
-            if (dkeys[key]['address'].split(':').length === 2) {
-                address = dkeys[key]['address'].split(':')[1]
-            } else {
-                address = dkeys[key]['address']
-            }
-
-            callback(address)
+            testCallback(dkeys[key]['publicKey'])
         }
     }
 }
 
 describe('Bitcoin Address Validator', () => {
     describe('Bitcoin MAINNET', () => {
-        const instance = new Bitcoin(Network.MAINNET)
+        generateAddress(Network.MAINNET, Blockchain.BITCOIN, publicKey => {
+            const instance = new Bitcoin(Network.MAINNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.MAINNET, Blockchain.BITCOIN, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -51,9 +43,10 @@ describe('Bitcoin Address Validator', () => {
     })
 
     describe('Bitcoin TESTNET', () => {
-        const instance = new Bitcoin(Network.TESTNET)
+        generateAddress(Network.TESTNET, Blockchain.BITCOIN, publicKey => {
+            const instance = new Bitcoin(Network.TESTNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.TESTNET, Blockchain.BITCOIN, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -63,9 +56,10 @@ describe('Bitcoin Address Validator', () => {
 
 describe('BCH Address Validator', () => {
     describe('BitcoinCash MAINNET', () => {
-        const instance = new BitcoinCash(Network.MAINNET)
+        generateAddress(Network.MAINNET, Blockchain.BITCOIN_CASH, publicKey => {
+            const instance = new BitcoinCash(Network.MAINNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.MAINNET, Blockchain.BITCOIN_CASH, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -73,9 +67,10 @@ describe('BCH Address Validator', () => {
     })
 
     describe('BitcoinCash TESTNET', () => {
-        const instance = new BitcoinCash(Network.TESTNET)
+        generateAddress(Network.TESTNET, Blockchain.BITCOIN_CASH, publicKey => {
+            const instance = new BitcoinCash(Network.TESTNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.TESTNET, Blockchain.BITCOIN_CASH, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -85,9 +80,10 @@ describe('BCH Address Validator', () => {
 
 describe('BSV Address Validator', () => {
     describe('BitcoinSV MAINNET', () => {
-        const instance = new BitcoinSV(Network.MAINNET)
+        generateAddress(Network.MAINNET, Blockchain.BITCOIN_SV, publicKey => {
+            const instance = new BitcoinSV(Network.MAINNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.MAINNET, Blockchain.BITCOIN_SV, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -95,9 +91,10 @@ describe('BSV Address Validator', () => {
     })
 
     describe('BitcoinSV TESTNET', () => {
-        const instance = new BitcoinSV(Network.TESTNET)
+        generateAddress(Network.TESTNET, Blockchain.BITCOIN_SV, publicKey => {
+            const instance = new BitcoinSV(Network.TESTNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.TESTNET, Blockchain.BITCOIN_SV, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -107,9 +104,10 @@ describe('BSV Address Validator', () => {
 
 describe('ETHEREUM Address Validator', () => {
     describe('ETHEREUM MAINNET', () => {
-        const instance = new Ethereum(Network.MAINNET)
+        generateAddress(Network.MAINNET, Blockchain.ETHEREUM, publicKey => {
+            const instance = new Ethereum(Network.MAINNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.MAINNET, Blockchain.ETHEREUM, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -117,9 +115,10 @@ describe('ETHEREUM Address Validator', () => {
     })
 
     describe('ETHEREUM TESTNET', () => {
-        const instance = new Ethereum(Network.TESTNET)
+        generateAddress(Network.TESTNET, Blockchain.ETHEREUM, publicKey => {
+            const instance = new Ethereum(Network.TESTNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.TESTNET, Blockchain.ETHEREUM, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -140,10 +139,10 @@ describe('EOS Address Validator', () => {
     }
 
     describe('EOS MAINNET', () => {
-        const instance = new EOS(Network.MAINNET)
-        const address = generateEOS()
+        generateAddress(Network.MAINNET, Blockchain.EOS, (/* publicKey */) => {
+            const instance = new EOS(Network.MAINNET)
+            const address = generateEOS() /* instance.getAddressFromPublic(publicKey) */
 
-        generateAddress(Network.MAINNET, Blockchain.EOS, () => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -151,10 +150,10 @@ describe('EOS Address Validator', () => {
     })
 
     describe('EOS TESTNET', () => {
-        const instance = new EOS(Network.TESTNET)
-        const address = generateEOS()
+        generateAddress(Network.TESTNET, Blockchain.EOS, (/* publicKey */) => {
+            const instance = new EOS(Network.TESTNET)
+            const address = generateEOS() /* instance.getAddressFromPublic(publicKey) */
 
-        generateAddress(Network.TESTNET, Blockchain.EOS, () => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -164,9 +163,10 @@ describe('EOS Address Validator', () => {
 
 describe('LITECOIN Address Validator', () => {
     describe('LITECOIN MAINNET', () => {
-        const instance = new Litecoin(Network.MAINNET)
+        generateAddress(Network.MAINNET, Blockchain.LITECOIN, publicKey => {
+            const instance = new Litecoin(Network.MAINNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.MAINNET, Blockchain.LITECOIN, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -174,9 +174,10 @@ describe('LITECOIN Address Validator', () => {
     })
 
     describe('LITECOIN TESTNET', () => {
-        const instance = new Litecoin(Network.TESTNET)
+        generateAddress(Network.TESTNET, Blockchain.LITECOIN, publicKey => {
+            const instance = new Litecoin(Network.TESTNET)
+            const address = instance.getAddressFromPublic(publicKey)
 
-        generateAddress(Network.TESTNET, Blockchain.LITECOIN, address => {
             it('Should generate valid address', () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
@@ -185,22 +186,26 @@ describe('LITECOIN Address Validator', () => {
 })
 
 describe('RIPPLE Address Validator', () => {
-    describe('RIPPLE MAINNET', () => {
-        const instance = new Ripple(Network.MAINNET)
+    ;['base58', 'bech32'].forEach(format => {
+        describe('RIPPLE MAINNET', () => {
+            generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
+                const instance = new Ripple(Network.MAINNET)
+                const address = instance.getAddressFromPublic(publicKey, format)
 
-        generateAddress(Network.MAINNET, Blockchain.RIPPLE, address => {
-            it('Should generate valid address', () => {
-                assert.equal(instance.isValidAddress(address), true)
+                it(`Should generate valid ${format} address`, () => {
+                    assert.equal(instance.isValidAddress(address), true)
+                })
             })
         })
-    })
 
-    describe('RIPPLE TESTNET', () => {
-        const instance = new Ripple(Network.TESTNET)
+        describe('RIPPLE TESTNET', () => {
+            generateAddress(Network.TESTNET, Blockchain.RIPPLE, publicKey => {
+                const instance = new Ripple(Network.TESTNET)
+                const address = instance.getAddressFromPublic(publicKey, format)
 
-        generateAddress(Network.TESTNET, Blockchain.RIPPLE, address => {
-            it('Should generate valid address', () => {
-                assert.equal(instance.isValidAddress(address), true)
+                it(`Should generate valid ${format} address`, () => {
+                    assert.equal(instance.isValidAddress(address), true)
+                })
             })
         })
     })

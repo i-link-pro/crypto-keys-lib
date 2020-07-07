@@ -11,7 +11,12 @@ import {
 } from '../types'
 import { getIndexes, preparePath, getHardenedPath } from '../utils'
 import { bitcoin, Network as NetworkConfig } from '../network-configs'
-import { isValidBech32Address, isValidBase58Address } from './address-utils'
+import {
+    isValidBech32Address,
+    isValidBase58Address,
+    decodeBase58,
+    decodeBech32,
+} from './address-utils'
 
 export class BitcoinBase {
     protected networks = {
@@ -188,20 +193,28 @@ export class BitcoinBase {
             return false
         }
 
-        const prefix = address.substr(0, 2)
-        if (prefix === 'bc' || prefix === 'tb' || format === 'bech32') {
-            return isValidBech32Address(address)
+        if (!format) {
+            return this.isValidAddress(address, this.getFormat(address))
+        } else {
+            if (format.toLowerCase() === 'bech32') {
+                return isValidBech32Address(address)
+            } else if (format.toLowerCase() === 'base58') {
+                return isValidBase58Address(address)
+            } else {
+                return false
+            }
         }
-
-        return isValidBase58Address(address)
     }
 
     getFormat(address: string): string {
-        const prefix = address.substr(0, 2)
-        if (prefix === 'bc' || prefix === 'tb') {
-            return 'bech32'
-        } else {
+        if (decodeBase58(address)) {
             return 'base58'
         }
+
+        if (decodeBech32(address)) {
+            return 'besh32'
+        }
+
+        throw new Error('Invalid address')
     }
 }
