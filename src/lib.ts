@@ -149,6 +149,14 @@ export class Keys implements IKeys {
         return this.lib.getPaths()
     }
 
+    isValidAddress(address: string, format?: string): boolean {
+        return this.lib.isValidAddress(address, format)
+    }
+
+    getFormat(address: string): string {
+        return this.lib.getFormat(address)
+    }
+
     static async decrypt(
         encryptedData: string,
         password: string,
