@@ -63,4 +63,11 @@ export class Ripple extends BitcoinBase {
             .digest('hex')
         return rippleKeyPair.verify(hash, sign, publicKey)
     }
+
+    isValidAddress(address: string): boolean {
+        return (
+            rippleUtil.isValidXAddress(address) ||
+            rippleUtil.isValidClassicAddress(address)
+        )
+    }
 }

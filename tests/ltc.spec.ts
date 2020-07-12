@@ -686,15 +686,15 @@ describe('Lib/Litecoin', () => {
                     })
                 }
             })
-            context('Without bech32 format', () => {
+            context('With bech32 format', () => {
                 const actual = instance.getAddressFromPublic(
                     publicKey,
                     'bech32',
                 )
-                it(`should be return tltc1qktmq2uwmt2shqlrz334jva35fhtvcpff5fuk02`, () => {
+                it(`should be return ltc1qktmq2uwmt2shqlrz334jva35fhtvcpffrmlluq`, () => {
                     assert.strictEqual(
                         actual,
-                        'tltc1qktmq2uwmt2shqlrz334jva35fhtvcpff5fuk02',
+                        'ltc1qktmq2uwmt2shqlrz334jva35fhtvcpffrmlluq',
                     )
                 })
             })
@@ -737,15 +737,15 @@ describe('Lib/Litecoin', () => {
                     })
                 }
             })
-            context('Without bech32 format', () => {
+            context('With bech32 format', () => {
                 const actual = instanceWithTestnet.getAddressFromPublic(
                     publicKey,
                     'bech32',
                 )
-                it(`should be return ltc1q0jclu959l9wephzy04yzx7ejsdpv9fd58yw58z`, () => {
+                it(`should be return tltc1q0jclu959l9wephzy04yzx7ejsdpv9fd5skda5g`, () => {
                     assert.strictEqual(
                         actual,
-                        'ltc1q0jclu959l9wephzy04yzx7ejsdpv9fd58yw58z',
+                        'tltc1q0jclu959l9wephzy04yzx7ejsdpv9fd5skda5g',
                     )
                 })
             })
