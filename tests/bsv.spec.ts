@@ -316,7 +316,7 @@ describe('Lib/BitcoinSV', () => {
                      */
                     const masterPrivateKey = {
                         masterPrivateKey:
-                            'xprv9s21ZrQH143K2iKVu6HAL1Fzuo8fDw15ZKXrNeshMyem7yyG5th14TdjX1rgdZoM3pCByNskZmxDs58NPSCgmTjSYWunLKvBiu2LznJw6K9',
+                            'tprv8ZgxMBicQKsPdnHse7r5kbsbLJWKiZeym81SAXHLvZ6CJoE9XtH8yHWMC8xJVaVSihoTXG1mMoC3wL9FVvyZ59b8WQu8HkySy8gWFbMobLJ',
                     }
                     actual = instanceWithTestnet.derivateKeys(
                         masterPrivateKey,
@@ -339,11 +339,11 @@ describe('Lib/BitcoinSV', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: '1Jn9Pd4oThsrb3dsycqFxKcxuRvyRxGdUy',
+                            address: 'mjPn5L3PQY48MQrLezjfMUrdnshdnAiLXF',
                             publicKey:
-                                '024b6bcf5552d193cda04ba9d129503a6318b5bd98c1a42cdc49e0a98b53a24796',
+                                '038ae54b5a649cb2415a8e4896a74dfb5021c6e8796776b0d7dab710529fb18911',
                             privateKey:
-                                'KxXoNWFRuNJgfk1GrHaHVBXccH9qVPsNMnjGUHKR6FR31HtcBvLk',
+                                'L5ZCb3zSy5g1R6YewWAWfz3nxH7kZkmtkQh5XLwJReCVri2MB85T',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -379,10 +379,10 @@ describe('Lib/BitcoinSV', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-              ['xprv9s21ZrQH143K2iKVu6HAL1Fzuo8fDw15ZKXrNeshMyem7yyG5th14TdjX1rgdZoM3pCByNskZmxDs58NPSCgmTjSYWunLKvBiu2LznJw6K9',
+              ['tprv8ZgxMBicQKsPdnHse7r5kbsbLJWKiZeym81SAXHLvZ6CJoE9XtH8yHWMC8xJVaVSihoTXG1mMoC3wL9FVvyZ59b8WQu8HkySy8gWFbMobLJ',
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K2iKVu6HAL1Fzuo8fDw15ZKXrNeshMyem7yyG5th14TdjX1rgdZoM3pCByNskZmxDs58NPSCgmTjSYWunLKvBiu2LznJw6K9',
+                            'tprv8ZgxMBicQKsPdnHse7r5kbsbLJWKiZeym81SAXHLvZ6CJoE9XtH8yHWMC8xJVaVSihoTXG1mMoC3wL9FVvyZ59b8WQu8HkySy8gWFbMobLJ',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -402,7 +402,7 @@ describe('Lib/BitcoinSV', () => {
                      */
                     const masterPublicKey = {
                         masterPublicKey:
-                            'xpub6BSVpjECmShCyKGVRbFALyug71W5xwsf5A7tyxh9FyujZDRNUyfzBuu3UpRTFNS3YWK7uAajq9KPMe7hzbBd8Rrt1x6A24zMhGSTt72exx1',
+                            'tpubDG4hzHBhdZFnFV6KGpqDgQRj9gntid7QGSEhsLyQ3Ltn6qAB31vh8fAZVtSubfVCcnCiagzUqVVzE8gjAgY2xxcQN3W9T7gCqD9ZfEKdjpq',
                     }
                     actual = instanceWithTestnet.derivateKeys(
                         masterPublicKey,
@@ -420,9 +420,9 @@ describe('Lib/BitcoinSV', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: '145VtF1KUEjp4adHmFbdQ7rMFuXehWmXwf',
+                            address: 'n1RD7wp7uzpVLF1Pc5Q2LNNP8u2ojZ1V3y',
                             publicKey:
-                                '024b7a3f27b92d656cc63a2ebd5cb4372f7927ae6ea7f9bc786a793a4c9aa5d8a5',
+                                '036a4272805d87fba72df0779278d80281dc1e7019e466f19e4408112432ed95d8',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -451,10 +451,10 @@ describe('Lib/BitcoinSV', () => {
                     })
 
                     it(`should be call {derivateFromPublic} function with following args 
-              ['xpub6BSVpjECmShCyKGVRbFALyug71W5xwsf5A7tyxh9FyujZDRNUyfzBuu3UpRTFNS3YWK7uAajq9KPMe7hzbBd8Rrt1x6A24zMhGSTt72exx1',
+              ['tpubDG4hzHBhdZFnFV6KGpqDgQRj9gntid7QGSEhsLyQ3Ltn6qAB31vh8fAZVtSubfVCcnCiagzUqVVzE8gjAgY2xxcQN3W9T7gCqD9ZfEKdjpq',
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xpub6BSVpjECmShCyKGVRbFALyug71W5xwsf5A7tyxh9FyujZDRNUyfzBuu3UpRTFNS3YWK7uAajq9KPMe7hzbBd8Rrt1x6A24zMhGSTt72exx1',
+                            'tpubDG4hzHBhdZFnFV6KGpqDgQRj9gntid7QGSEhsLyQ3Ltn6qAB31vh8fAZVtSubfVCcnCiagzUqVVzE8gjAgY2xxcQN3W9T7gCqD9ZfEKdjpq',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -497,7 +497,7 @@ describe('Lib/BitcoinSV', () => {
                     ] = [
                         {
                             path: "m/44'/1'/0'/0/2",
-                            address: '1KsCHqit5HosLFaiiRV15ddSCWuvP5PNeM',
+                            address: 'mzP9atortKF87N4LRzTNuYqm4WWdJevz7f',
                             publicKey:
                                 '02d7d7b4ed62a982c6bcdb8146230f9b92d4bd3a8136faaec49fbf8750261d82b7',
                             privateKey:
@@ -537,10 +537,10 @@ describe('Lib/BitcoinSV', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K2MyXcUrt7THG8CM5mcfzUfRqv6bMjD529SexMiJUWNeKqnqJDvFwzWtht7KqCdtdPPSVmWHDGKP3dYse2Gysn8Eun2yvtmb',
+          ['tprv8ZgxMBicQKsPdBD4H3iPH6uFSKmJ18hzpDLxnX1pDBZVw3Q3M5eE281mkxzxEHeGMxRUtCwbMzURrEzEtidA5NeeAC5wgdhvhDzLDhxcSzx',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K2MyXcUrt7THG8CM5mcfzUfRqv6bMjD529SexMiJUWNeKqnqJDvFwzWtht7KqCdtdPPSVmWHDGKP3dYse2Gysn8Eun2yvtmb',
+                            'tprv8ZgxMBicQKsPdBD4H3iPH6uFSKmJ18hzpDLxnX1pDBZVw3Q3M5eE281mkxzxEHeGMxRUtCwbMzURrEzEtidA5NeeAC5wgdhvhDzLDhxcSzx',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -722,10 +722,10 @@ describe('Lib/BitcoinSV', () => {
                 const actual = instanceWithTestnet.getAddressFromPublic(
                     publicKey,
                 )
-                it(`should be return 13yeJhn2b59TGgquft15NfD9ddNtH5n2gx`, () => {
+                it(`should be return miVbbks1Q6ai3oKXPSyTCaRUVcybHYmHQT`, () => {
                     assert.strictEqual(
                         actual,
-                        '13yeJhn2b59TGgquft15NfD9ddNtH5n2gx',
+                        'miVbbks1Q6ai3oKXPSyTCaRUVcybHYmHQT',
                     )
                 })
                 try {
@@ -747,10 +747,10 @@ describe('Lib/BitcoinSV', () => {
                     publicKey,
                     'bech32',
                 )
-                it(`should be return tbsv1qyzn2ltksd54s623q2f68qg6l5uv5qpvxmt3v08`, () => {
+                it(`should be return bsvtest1qyzn2ltksd54s623q2f68qg6l5uv5qpvxzmf233`, () => {
                     assert.strictEqual(
                         actual,
-                        'tbsv1qyzn2ltksd54s623q2f68qg6l5uv5qpvxmt3v08',
+                        'bsvtest1qyzn2ltksd54s623q2f68qg6l5uv5qpvxzmf233',
                     )
                 })
             })
@@ -760,10 +760,10 @@ describe('Lib/BitcoinSV', () => {
                     publicKey,
                     'invalid',
                 )
-                it(`should be return 13yeJhn2b59TGgquft15NfD9ddNtH5n2gx`, () => {
+                it(`should be return miVbbks1Q6ai3oKXPSyTCaRUVcybHYmHQT`, () => {
                     assert.strictEqual(
                         actual,
-                        '13yeJhn2b59TGgquft15NfD9ddNtH5n2gx',
+                        'miVbbks1Q6ai3oKXPSyTCaRUVcybHYmHQT',
                     )
                 })
             })
