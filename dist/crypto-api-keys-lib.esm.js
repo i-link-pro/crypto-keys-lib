@@ -1,13 +1,15 @@
 import { SodiumPlus, CryptographyKey } from 'sodium-plus';
 import createHash from 'create-hash';
 import { mnemonicToSeedSync, validateMnemonic as validateMnemonic$1, setDefaultWordlist, generateMnemonic as generateMnemonic$1 } from 'bip39';
+import baseX from 'base-x';
 import { ECPair, payments } from 'bitcoinjs-lib';
 import { fromBase58, fromSeed } from 'bip32';
-import { toCashAddress, toBitpayAddress } from 'bchaddrjs';
-import { addHexPrefix, bufferToHex, importPublic, publicToAddress, toChecksumAddress, hashPersonalMessage, ecsign, isValidSignature } from 'ethereumjs-util';
+import bech32 from 'bech32';
+import { toCashAddress, toBitpayAddress, isValidAddress } from 'bchaddrjs';
+import { addHexPrefix, bufferToHex, importPublic, publicToAddress, toChecksumAddress, hashPersonalMessage, ecsign, isValidSignature, isValidAddress as isValidAddress$1 } from 'ethereumjs-util';
 import { privateToPublic, PrivateKey, PublicKey, sign, verify } from 'eosjs-ecc';
 import { deriveAddress, sign as sign$1, verify as verify$1 } from 'ripple-keypairs';
-import { classicAddressToXAddress } from 'ripple-address-codec';
+import { classicAddressToXAddress, isValidXAddress, isValidClassicAddress } from 'ripple-address-codec';
 
 var Blockchain;
 
@@ -116,6 +118,10 @@ var getHardenedPath = function getHardenedPath(path) {
   });
   return parts.join('/');
 };
+var base58 = /*#__PURE__*/baseX('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+var sha256 = function sha256(payload) {
+  return Buffer.from(createHash('sha256').update(payload).digest());
+};
 
 var bitcoin = {
   mainnet: {
@@ -198,6 +204,97 @@ var bitcoinsv = {
     pubKeyHash: 0x6f,
     scriptHash: 0xc4,
     wif: 0x80
+  }
+};
+
+var addressTypes = {
+  0x00: {
+    type: 'p2pkh',
+    network: 'mainnet'
+  },
+  0x30: {
+    type: 'p2pkh',
+    network: 'mainnet'
+  },
+  0x6f: {
+    type: 'p2pkh',
+    network: 'testnet'
+  },
+  0x05: {
+    type: 'p2sh',
+    network: 'mainnet'
+  },
+  0xc4: {
+    type: 'p2sh',
+    network: 'testnet'
+  }
+};
+var decodeBase58 = function decodeBase58(address) {
+  try {
+    return base58.decode(address);
+  } catch (_unused) {
+    return null;
+  }
+};
+var decodeBech32 = function decodeBech32(address) {
+  try {
+    return bech32.decode(address);
+  } catch (_unused2) {
+    return null;
+  }
+};
+var isValidBech32Address = function isValidBech32Address(address) {
+  var decoded = decodeBech32(address);
+
+  if (!decoded) {
+    return false;
+  }
+
+  var prefixesNetwork = {
+    bc: 'mainnet',
+    tb: 'testnet',
+    bcrt: 'regtest'
+  };
+  var network = prefixesNetwork[decoded.prefix];
+
+  if (network === undefined) {
+    return false;
+  }
+
+  var witnessVersion = decoded.words[0];
+
+  if (witnessVersion < 0 || witnessVersion > 16) {
+    return false;
+  }
+
+  return true;
+};
+var isValidBase58Address = function isValidBase58Address(address) {
+  var decoded = decodeBase58(address);
+
+  if (!decoded) {
+    return false;
+  }
+
+  var length = decoded.length;
+
+  if (length !== 25) {
+    return false;
+  }
+
+  var version = decoded.readUInt8(0);
+  var checksum = decoded.slice(length - 4, length);
+  var body = decoded.slice(0, length - 4);
+  var expectedChecksum = sha256(sha256(body)).slice(0, 4);
+
+  if (!checksum.equals(expectedChecksum)) {
+    return false;
+  }
+
+  if (addressTypes[version]) {
+    return true;
+  } else {
+    return false;
   }
 };
 
@@ -351,6 +448,36 @@ var BitcoinBase = /*#__PURE__*/function () {
     }).address) !== null && _payments$p2pkh$addre !== void 0 ? _payments$p2pkh$addre : '';
   };
 
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    if (!address) {
+      return false;
+    }
+
+    if (!format) {
+      return this.isValidAddress(address, this.getFormat(address));
+    } else {
+      if (format.toLowerCase() === 'bech32') {
+        return isValidBech32Address(address);
+      } else if (format.toLowerCase() === 'base58') {
+        return isValidBase58Address(address);
+      } else {
+        return false;
+      }
+    }
+  };
+
+  _proto.getFormat = function getFormat(address) {
+    if (decodeBase58(address)) {
+      return 'base58';
+    }
+
+    if (decodeBech32(address)) {
+      return 'bech32';
+    }
+
+    throw new Error('Invalid address');
+  };
+
   return BitcoinBase;
 }();
 
@@ -433,6 +560,10 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinBase) {
     }
 
     return address;
+  };
+
+  _proto.isValidAddress = function isValidAddress$1(address) {
+    return isValidAddress(address);
   };
 
   return BitcoinCash;
@@ -533,6 +664,10 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
     return isValidSignature(parseInt(signObject.v), Buffer.from(signObject.r, 'hex'), Buffer.from(signObject.s, 'hex'));
   };
 
+  _proto.isValidAddress = function isValidAddress(address) {
+    return isValidAddress$1(address);
+  };
+
   return Ethereum;
 }(BitcoinBase);
 
@@ -585,6 +720,11 @@ var EOS = /*#__PURE__*/function (_BitcoinBase) {
 
   _proto.checkSign = function checkSign(publicKey, data, sign) {
     return verify(sign, data, publicKey);
+  };
+
+  _proto.isValidAddress = function isValidAddress(address) {
+    var regex = new RegExp(/^\e.[a-z1-5]{12}$/g);
+    return regex.test(address);
   };
 
   return EOS;
@@ -647,6 +787,10 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
   _proto.checkSign = function checkSign(publicKey, data, sign) {
     var hash = createHash('sha256').update(data).digest('hex');
     return verify$1(hash, sign, publicKey);
+  };
+
+  _proto.isValidAddress = function isValidAddress(address) {
+    return isValidXAddress(address) || isValidClassicAddress(address);
   };
 
   return Ripple;
@@ -735,6 +879,14 @@ var Keys = /*#__PURE__*/function () {
 
   _proto.getDefaultPaths = function getDefaultPaths() {
     return this.lib.getPaths();
+  };
+
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    return this.lib.isValidAddress(address, format);
+  };
+
+  _proto.getFormat = function getFormat(address) {
+    return this.lib.getFormat(address);
   };
 
   Keys.decrypt = function decrypt(encryptedData, password) {

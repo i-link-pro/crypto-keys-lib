@@ -23,4 +23,5 @@ export declare class EOS extends BitcoinBase {
     getAddressFromPublic(publicKey: string): string;
     sign(data: string, privateKey: string): string;
     checkSign(publicKey: string, data: string, sign: string): boolean;
+    isValidAddress(address: string): boolean;
 }

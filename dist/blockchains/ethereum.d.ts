@@ -23,4 +23,5 @@ export declare class Ethereum extends BitcoinBase {
     getAddressFromPublic(publicKey: string): string;
     sign(data: string, privateKey: string): string;
     checkSign(_: string, __: string, sign: string): boolean;
+    isValidAddress(address: string): boolean;
 }

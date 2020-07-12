@@ -19,4 +19,5 @@ export declare class Ripple extends BitcoinBase {
     getAddressFromPublic(publicKey: string, format?: string): string;
     sign(data: string, privateKey: string): string;
     checkSign(publicKey: string, data: string, sign: string): boolean;
+    isValidAddress(address: string): boolean;
 }

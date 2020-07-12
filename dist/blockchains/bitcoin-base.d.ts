@@ -30,4 +30,6 @@ export declare class BitcoinBase {
     getMasterAddressFromSeed(seed: string, path?: string): MasterKeys;
     getPublicFromPrivate(privateKey: string, isWIF?: boolean): string;
     getAddressFromPublic(publicKey: string, format?: string): string;
+    isValidAddress(address: string, format?: string): boolean;
+    getFormat(address: string): string;
 }

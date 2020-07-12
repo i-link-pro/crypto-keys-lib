@@ -17,4 +17,5 @@ export declare class BitcoinCash extends BitcoinBase {
     };
     constructor(network: Network);
     getAddressFromPublic(publicKey: string, format?: string): string;
+    isValidAddress(address: string): boolean;
 }
