@@ -15,7 +15,6 @@ const generateAddress = (
     network: Network,
     blockchain: Blockchain,
     testCallback: (publicKey: string) => void,
-
 ) => {
     const keys = new Keys(blockchain, network)
     const seed = keys.generateSeedPhrase(12)
@@ -188,7 +187,7 @@ describe('LITECOIN Address Validator', () => {
 })
 
 describe('RIPPLE Address Validator', () => {
-    ['base58', 'bech32'].forEach(format => {
+    ;['base58', 'bech32'].forEach(format => {
         describe('RIPPLE MAINNET', () => {
             generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
                 const instance = new Ripple(Network.MAINNET)
@@ -213,45 +212,45 @@ describe('RIPPLE Address Validator', () => {
     })
 })
 
-describe("getFormat", () => {
+describe('getFormat', () => {
     generateAddress(Network.MAINNET, Blockchain.BITCOIN, publicKey => {
         it("Should return 'base58' format for base58 addresses", () => {
-
             const instance = new Bitcoin(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey)
 
-            assert.equal(instance.getFormat(address), "base58")
+            assert.equal(instance.getFormat(address), 'base58')
         })
     })
 
     generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
         it("Should return 'bech32' format for bech32 addresses", () => {
-            
             const instance = new BitcoinBase(Network.MAINNET)
-            const address = instance.getAddressFromPublic(publicKey, "bech32")
+            const address = instance.getAddressFromPublic(publicKey, 'bech32')
 
-            assert.strictEqual(instance.getFormat(address), "bech32")
+            assert.strictEqual(instance.getFormat(address), 'bech32')
         })
     })
 
     it("Should throw 'Invalid address' error", () => {
-        const address = "bc1qz5f8d6qejxtdg4y5p3zarvary0x5xw7kV8f3t4"
+        const address = 'bc1qz5f8d6qejxtdg4y5p3zarvary0x5xw7kV8f3t4'
         const instance = new BitcoinBase(Network.MAINNET)
 
-        assert.throws(() => instance.getFormat(address), new Error('Invalid address'));
+        assert.throws(
+            () => instance.getFormat(address),
+            new Error('Invalid address'),
+        )
     })
 })
 
-describe("Invalid Addresses", () => {
-    const instance = new Bitcoin(Network.MAINNET);
+describe('Invalid Addresses', () => {
+    const instance = new Bitcoin(Network.MAINNET)
     const addresses = [
-        "tprv8ZgxMBicQKsPcsbCVeqqF1KVdH7gwDJbxbzpCxDUsoXHdb6SnTPY",
-        "98ZJLNGbhd2pq7ZtDiPYTfJ7iBenLVQpYgSQqPjUsQeJXH8VQ8xA67D",
-        
+        'tprv8ZgxMBicQKsPcsbCVeqqF1KVdH7gwDJbxbzpCxDUsoXHdb6SnTPY',
+        '98ZJLNGbhd2pq7ZtDiPYTfJ7iBenLVQpYgSQqPjUsQeJXH8VQ8xA67D',
     ]
     it("Should return 'false' for invalid addresses", () => {
-        addresses.forEach((address) => {
-            assert.equal(instance.isValidAddress(address), false);
-        });
+        addresses.forEach(address => {
+            assert.equal(instance.isValidAddress(address), false)
+        })
     })
 })

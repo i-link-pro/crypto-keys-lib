@@ -1,7 +1,11 @@
 import { BitcoinBase } from './bitcoin-base'
 import { bitcoin } from '../network-configs'
 import { Network, Blockchain } from '../types'
-import { toCashAddress, toBitpayAddress, isValidAddress as IsValidBCHAddress } from 'bchaddrjs'
+import {
+    toCashAddress,
+    toBitpayAddress,
+    isValidAddress as IsValidBCHAddress,
+} from 'bchaddrjs'
 
 export class BitcoinCash extends BitcoinBase {
     protected networks = {
