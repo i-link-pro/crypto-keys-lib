@@ -69,7 +69,7 @@ export interface IKeys {
     generateSeedPhrase(wordCount: number, lang?: SeedDictionaryLang, path?: string, password?: string): SeedWithKeys | Error;
     getDataFromSeed(seedPhrase: string, path?: string, password?: string): SeedWithKeys | Error;
     derivateKeys(from: FromSeedPhrase | FromMasterPublicKey | FromMasterPrivateKey, pathCursor: PathCursor): KeysWithPath[] | Error;
-    sign(data: string, privateKey: PrivateKey): string | Error;
+    sign(data: string, privateKey: PrivateKey, isTx?: boolean): string | Error;
     getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error;
     getAddressFromPublic(publicKey: PublicKey, format?: string): Address | Error;
     checkSign(publicKey: PublicKey, data: string, sign: string): boolean | Error;

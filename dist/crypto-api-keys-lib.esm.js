@@ -389,7 +389,8 @@ var BitcoinBase = /*#__PURE__*/function () {
     });
   };
 
-  _proto.sign = function sign(data, privateKey) {
+  _proto.sign = function sign(data, privateKey, isTx) {
+
     var key = ECPair.fromWIF(privateKey, this.networkConfig);
     var hash = createHash('sha256').update(data).digest('hex');
     return key.sign(Buffer.from(hash, 'hex')).toString('hex');
@@ -597,6 +598,8 @@ var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
   return Litecoin;
 }(BitcoinBase);
 
+var ethTx = /*#__PURE__*/require('ethereumjs-tx').Transaction;
+
 var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
   _inheritsLoose(Ethereum, _BitcoinBase);
 
@@ -619,6 +622,7 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
     }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
     _this.defaultPath = _this.networks[network].path;
+    _this.net = network;
     return _this;
   }
 
@@ -649,7 +653,22 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
     return address;
   };
 
-  _proto.sign = function sign(data, privateKey) {
+  _proto.sign = function sign(data, privateKey, isTx) {
+    if (isTx === void 0) {
+      isTx = true;
+    }
+
+    if (isTx) {
+      var chain = this.net === Network.MAINNET ? 'mainnet' : 'ropsten';
+      var transactionObject = JSON.parse(data);
+      var txRaw = new ethTx(transactionObject, {
+        chain: chain
+      });
+      var pk = Buffer.from(privateKey.replace('0x', ''), 'hex');
+      txRaw.sign(pk);
+      return "0x" + txRaw.serialize().toString('hex');
+    }
+
     var hash = hashPersonalMessage(Buffer.from(data));
     var sign = ecsign(hash, Buffer.from(privateKey.replace('0x', ''), 'hex'));
     return JSON.stringify({
@@ -857,8 +876,12 @@ var Keys = /*#__PURE__*/function () {
     }
   };
 
-  _proto.sign = function sign(data, privateKey) {
-    return this.lib.sign(data, privateKey);
+  _proto.sign = function sign(data, privateKey, isTx) {
+    if (isTx === void 0) {
+      isTx = true;
+    }
+
+    return this.lib.sign(data, privateKey, isTx);
   };
 
   _proto.getPublicFromPrivate = function getPublicFromPrivate(privateKey) {
