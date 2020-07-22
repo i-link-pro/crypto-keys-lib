@@ -118,8 +118,8 @@ export class Keys implements IKeys {
         }
     }
 
-    sign(data: string, privateKey: PrivateKey): string | Error {
-        return this.lib.sign(data, privateKey)
+    sign(data: string, privateKey: PrivateKey, isTx?: boolean): string | Error {
+        return this.lib.sign(data, privateKey, isTx)
     }
 
     getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error {
