@@ -1,28 +1,33 @@
 import { BitcoinBase } from './bitcoin-base'
-import { Network, Blockchain } from '../types'
+import { Blockchain, Network } from '../types'
 import { bitcoin } from '../network-configs'
 import * as ethUtil from 'ethereumjs-util'
 import { BIP32Interface } from 'bip32'
+
+const ethTx = require('ethereumjs-tx').Transaction
 
 export class Ethereum extends BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
             blockchain: Blockchain.ETHEREUM,
             network: Network.MAINNET,
-            path: "m/44'/60'/0'/0/0",
+            path: 'm/44\'/60\'/0\'/0/0',
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
             blockchain: Blockchain.ETHEREUM,
             network: Network.TESTNET,
-            path: "m/44'/1'/0'/0/0",
+            path: 'm/44\'/1\'/0\'/0/0',
             config: bitcoin.testnet,
         },
     }
+    private net: Network
+
     constructor(network: Network) {
         super(network)
         this.networkConfig = this.networks[network].config
         this.defaultPath = this.networks[network].path
+        this.net = network
     }
 
     getPublicFromPrivate(privateKey: string): string {
@@ -54,7 +59,16 @@ export class Ethereum extends BitcoinBase {
         return address
     }
 
-    sign(data: string, privateKey: string): string {
+    sign(data: string, privateKey: string, isTx?: boolean): string {
+        if (isTx) {
+            const chain = this.net === Network.MAINNET ? 'mainnet' : 'ropsten'
+            const transactionObject = JSON.parse(data)
+            const txRaw = new ethTx(transactionObject, { chain: chain })
+            const pk = Buffer.from(privateKey.replace('0x', ''), 'hex')
+            txRaw.sign(pk)
+            return `0x${txRaw.serialize().toString('hex')}`
+        }
+
         const hash = ethUtil.hashPersonalMessage(Buffer.from(data))
         const sign = ethUtil.ecsign(
             hash,
