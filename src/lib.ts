@@ -118,7 +118,7 @@ export class Keys implements IKeys {
         }
     }
 
-    sign(data: string, privateKey: PrivateKey, isTx?: boolean): string | Error {
+    sign(data: string, privateKey: PrivateKey, isTx = true): string | Error {
         return this.lib.sign(data, privateKey, isTx)
     }
 

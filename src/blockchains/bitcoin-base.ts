@@ -119,7 +119,7 @@ export class BitcoinBase {
         })
     }
 
-    sign(data: string, privateKey: string, isTx?: boolean): string {
+    sign(data: string, privateKey: string, isTx = true): string {
         const key = ECPair.fromWIF(privateKey, this.networkConfig)
         const hash = createHash('sha256')
             .update(data)
