@@ -305,12 +305,12 @@ var BitcoinBase = /*#__PURE__*/function () {
     this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.BITCOIN,
       network: exports.Network.MAINNET,
-      path: "m/44'/0'/0'/0/0",
+      path: "m/44'/0'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.BITCOIN,
       network: exports.Network.TESTNET,
-      path: "m/44'/1'/0'/0/0",
+      path: "m/44'/1'/0'",
       config: bitcoin.testnet
     }, _this$networks);
     this.networkConfig = this.networks[network].config;
@@ -504,12 +504,12 @@ var BitcoinSV = /*#__PURE__*/function (_BitcoinBase) {
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.BITCOIN_SV,
       network: exports.Network.MAINNET,
-      path: "m/44'/236'/0'/0/0",
+      path: "m/44'/236'/0'",
       config: bitcoinsv.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.BITCOIN_SV,
       network: exports.Network.TESTNET,
-      path: "m/44'/1'/0'/0/0",
+      path: "m/44'/1'/0'",
       config: bitcoinsv.testnet
     }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
@@ -532,12 +532,12 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinBase) {
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.BITCOIN_CASH,
       network: exports.Network.MAINNET,
-      path: "m/44'/145'/0'/0/0",
+      path: "m/44'/145'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.BITCOIN_CASH,
       network: exports.Network.TESTNET,
-      path: "m/44'/1'/0'/0/0",
+      path: "m/44'/1'/0'",
       config: bitcoin.testnet
     }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
@@ -582,12 +582,12 @@ var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.LITECOIN,
       network: exports.Network.MAINNET,
-      path: "m/44'/2'/0'/0/0",
+      path: "m/44'/2'/0'",
       config: litecoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.LITECOIN,
       network: exports.Network.TESTNET,
-      path: "m/44'/1'/0'/0/0",
+      path: "m/44'/1'/0'",
       config: litecoin.testnet
     }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
@@ -612,12 +612,12 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.ETHEREUM,
       network: exports.Network.MAINNET,
-      path: "m/44'/60'/0'/0/0",
+      path: "m/44'/60'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.ETHEREUM,
       network: exports.Network.TESTNET,
-      path: "m/44'/1'/0'/0/0",
+      path: "m/44'/1'/0'",
       config: bitcoin.testnet
     }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
@@ -702,12 +702,12 @@ var EOS = /*#__PURE__*/function (_BitcoinBase) {
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.EOS,
       network: exports.Network.MAINNET,
-      path: "m/44'/194'/0'/0/0",
+      path: "m/44'/194'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.EOS,
       network: exports.Network.TESTNET,
-      path: "m/44'/1'/0'/0/0",
+      path: "m/44'/1'/0'",
       config: bitcoin.testnet
     }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
@@ -761,12 +761,12 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.RIPPLE,
       network: exports.Network.MAINNET,
-      path: "m/44'/144'/0'/0/0",
+      path: "m/44'/144'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.RIPPLE,
       network: exports.Network.TESTNET,
-      path: "m/44'/1'/0'/0/0",
+      path: "m/44'/1'/0'",
       config: bitcoin.testnet
     }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
