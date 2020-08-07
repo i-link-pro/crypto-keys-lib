@@ -12,13 +12,13 @@ export class BitcoinCash extends BitcoinBase {
         [Network.MAINNET]: {
             blockchain: Blockchain.BITCOIN_CASH,
             network: Network.MAINNET,
-            path: "m/44'/145'/0'/0/0",
+            path: "m/44'/145'/0'",
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
             blockchain: Blockchain.BITCOIN_CASH,
             network: Network.TESTNET,
-            path: "m/44'/1'/0'/0/0",
+            path: "m/44'/1'/0'",
             config: bitcoin.testnet,
         },
     }

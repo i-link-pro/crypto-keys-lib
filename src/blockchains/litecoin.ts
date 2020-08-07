@@ -7,13 +7,13 @@ export class Litecoin extends BitcoinBase {
         [Network.MAINNET]: {
             blockchain: Blockchain.LITECOIN,
             network: Network.MAINNET,
-            path: "m/44'/2'/0'/0/0",
+            path: "m/44'/2'/0'",
             config: litecoin.mainnet,
         },
         [Network.TESTNET]: {
             blockchain: Blockchain.LITECOIN,
             network: Network.TESTNET,
-            path: "m/44'/1'/0'/0/0",
+            path: "m/44'/1'/0'",
             config: litecoin.testnet,
         },
     }

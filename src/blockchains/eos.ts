@@ -9,13 +9,13 @@ export class EOS extends BitcoinBase {
         [Network.MAINNET]: {
             blockchain: Blockchain.EOS,
             network: Network.MAINNET,
-            path: "m/44'/194'/0'/0/0",
+            path: "m/44'/194'/0'",
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
             blockchain: Blockchain.EOS,
             network: Network.TESTNET,
-            path: "m/44'/1'/0'/0/0",
+            path: "m/44'/1'/0'",
             config: bitcoin.testnet,
         },
     }
