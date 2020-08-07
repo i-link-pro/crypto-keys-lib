@@ -23,13 +23,13 @@ export class BitcoinBase {
         [Network.MAINNET]: {
             blockchain: Blockchain.BITCOIN,
             network: Network.MAINNET,
-            path: "m/44'/0'/0'/0/0",
+            path: "m/44'/0'/0'",
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
             blockchain: Blockchain.BITCOIN,
             network: Network.TESTNET,
-            path: "m/44'/1'/0'/0/0",
+            path: "m/44'/1'/0'",
             config: bitcoin.testnet,
         },
     }
