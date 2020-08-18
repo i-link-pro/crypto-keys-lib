@@ -25,7 +25,7 @@
         "bchaddrjs": "^0.4.8",
         "bip32": "^2.0.5",
         "bip39": "^3.0.2",
-        "bitcoinjs-lib": "^5.1.8",
+        "bitcoinjs-lib": "^5.1.10",
         "create-hash": "^1.2.0",
         "eosjs-ecc": "^4.0.7",
         "ethereumjs-tx": "^2.1.2",

@@ -17,19 +17,20 @@ import {
     decodeBase58,
     decodeBech32,
 } from './address-utils'
+const lib = require('bitcoinjs-lib');
 
 export class BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
             blockchain: Blockchain.BITCOIN,
             network: Network.MAINNET,
-            path: "m/44'/0'/0'",
+            path: 'm/44\'/0\'/0\'',
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
             blockchain: Blockchain.BITCOIN,
             network: Network.TESTNET,
-            path: "m/44'/1'/0'",
+            path: 'm/44\'/1\'/0\'',
             config: bitcoin.testnet,
         },
     }
@@ -120,6 +121,54 @@ export class BitcoinBase {
     }
 
     sign(data: string, privateKey: string, isTx = true): string {
+
+        if (isTx) {
+            const dataObj = JSON.parse(data)
+            const mapPrivateKeys = JSON.parse(privateKey)
+            let signedHex = ''
+            const tx = new lib.Psbt({ network: this.networkConfig })
+            for (const input of dataObj.inputs) {
+                if (input.type.includes('witness')) {
+                    tx.addInput({
+                        hash: input.txId,
+                        index: input.n,
+                        witnessUtxo: {
+                            script: Buffer.from(input.scriptPubKeyHex, 'hex'),
+                            value: +input.value,
+                        },
+                    })
+                } else {
+                    tx.addInput({
+                        hash: input.txId,
+                        index: input.n,
+                        nonWitnessUtxo: Buffer.from(
+                            input.hex,
+                            'hex',
+                        ),
+                    })
+                }
+            }
+            for (const output of dataObj.outputs) {
+                tx.addOutput({
+                    address: output.address,
+                    value: +output.amount,
+                })
+            }
+
+            for (const [index, input] of dataObj.inputs.entries()) {
+                const keyPair = lib.ECPair.fromWIF(
+                    mapPrivateKeys[input.address],
+                    this.networkConfig,
+                )
+                tx.signInput(index, keyPair)
+                tx.validateSignaturesOfInput(index)
+            }
+            tx.finalizeAllInputs()
+            signedHex = tx.extractTransaction().toHex()
+            return signedHex
+        }
+
+
         const key = ECPair.fromWIF(privateKey, this.networkConfig)
         const hash = createHash('sha256')
             .update(data)
