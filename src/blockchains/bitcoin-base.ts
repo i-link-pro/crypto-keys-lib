@@ -17,20 +17,21 @@ import {
     decodeBase58,
     decodeBech32,
 } from './address-utils'
-const lib = require('bitcoinjs-lib');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const lib = require('bitcoinjs-lib')
 
 export class BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
             blockchain: Blockchain.BITCOIN,
             network: Network.MAINNET,
-            path: 'm/44\'/0\'/0\'',
+            path: "m/44'/0'/0'",
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
             blockchain: Blockchain.BITCOIN,
             network: Network.TESTNET,
-            path: 'm/44\'/1\'/0\'',
+            path: "m/44'/1'/0'",
             config: bitcoin.testnet,
         },
     }
@@ -121,7 +122,6 @@ export class BitcoinBase {
     }
 
     sign(data: string, privateKey: string, isTx = true): string {
-
         if (isTx) {
             const dataObj = JSON.parse(data)
             const mapPrivateKeys = JSON.parse(privateKey)
@@ -141,10 +141,7 @@ export class BitcoinBase {
                     tx.addInput({
                         hash: input.txId,
                         index: input.n,
-                        nonWitnessUtxo: Buffer.from(
-                            input.hex,
-                            'hex',
-                        ),
+                        nonWitnessUtxo: Buffer.from(input.hex, 'hex'),
                     })
                 }
             }
@@ -167,7 +164,6 @@ export class BitcoinBase {
             signedHex = tx.extractTransaction().toHex()
             return signedHex
         }
-
 
         const key = ECPair.fromWIF(privateKey, this.networkConfig)
         const hash = createHash('sha256')
