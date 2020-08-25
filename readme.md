@@ -1,6 +1,6 @@
 # install
 
-npm i git+ssh://git-codecommit.eu-central-1.amazonaws.com/v1/repos/crypto-api-keys-lib
+npm i git+ssh://git@gitlab.i-link.pro:crypto-api/crypto-api-keys-lib
 
 # Use example
 ```
