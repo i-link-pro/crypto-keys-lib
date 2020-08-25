@@ -577,7 +577,7 @@ describe('Lib/Ethereum', () => {
         context('with mainnet network', () => {
             const privateKey =
                 'efca4cdd31923b50f4214af5d2ae10e7ac45a5019e9431cc195482d707485378'
-            const actual = instance.sign('fake_data', privateKey)
+            const actual = instance.sign('fake_data', privateKey, false)
             it('should be return `{"r":"58f4a1752fd3b747ba5e4a531bdff163ae20b741f23f1ae2a52e1d83a5133b01","s":"5d6c1dec0f7287495c59bad2b1bea07311d610fbf9b098076ba4103adf5248bc","v":27}`', () => {
                 assert.strictEqual(
                     actual,
@@ -585,7 +585,7 @@ describe('Lib/Ethereum', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key') // check behavior in case of invalid private Key
+                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Expected private key to be an Uint8Array with length 32`', () => {
                     assert.strictEqual(
@@ -598,7 +598,11 @@ describe('Lib/Ethereum', () => {
         context('with testnet network', () => {
             const privateKey =
                 '0xce1d919795a87346b29aeb11bdd95f9608169ed9dc2e60c4dd81d43dd6b69949'
-            const actual = instanceWithTestnet.sign('fake_data', privateKey)
+            const actual = instanceWithTestnet.sign(
+                'fake_data',
+                privateKey,
+                false,
+            )
             it(`should be return {"r":"0a1da94b81da9e5a735a398f7158a67ac0eaeab785c90d6fed10875cff053d1d","s":"78b642fdc963087102675884d694650543b8cd081ee49380e823c86cb2332c25","v":27}`, () => {
                 assert.strictEqual(
                     actual,
@@ -606,7 +610,11 @@ describe('Lib/Ethereum', () => {
                 )
             })
             try {
-                instanceWithTestnet.sign('fake_data', 'Invalid_Private_Key') // check behavior in case of invalid private Key
+                instanceWithTestnet.sign(
+                    'fake_data',
+                    'Invalid_Private_Key',
+                    false,
+                ) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Expected private key to be an Uint8Array with length 32`', () => {
                     assert.strictEqual(

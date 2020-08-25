@@ -582,7 +582,7 @@ describe('Lib/BitcoinSV', () => {
         context('with mainnet network', () => {
             const privateKey =
                 'L5iKsuPCE27Gq1HpztakBmM6ACUyuh4tRV4Vd92EMvaRoLWwN2w2'
-            const actual = instance.sign('fake_data', privateKey)
+            const actual = instance.sign('fake_data', privateKey, false)
             it('should be return `566ac601ed26a65b05e1bb21367e83aafbd688ebceecaf222e65938a6da4a18c692c6df1a8ba3af9e49d67b57f621bab8bbeea97b1d5ced18dc252ec6f83214d`', () => {
                 assert.strictEqual(
                     actual,
@@ -590,7 +590,7 @@ describe('Lib/BitcoinSV', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key') // check behavior in case of invalid private Key
+                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')
@@ -600,7 +600,11 @@ describe('Lib/BitcoinSV', () => {
         context('with testnet network', () => {
             const privateKey =
                 'KxXoNWFRuNJgfk1GrHaHVBXccH9qVPsNMnjGUHKR6FR31HtcBvLk'
-            const actual = instanceWithTestnet.sign('fake_data', privateKey)
+            const actual = instanceWithTestnet.sign(
+                'fake_data',
+                privateKey,
+                false,
+            )
             it(`should be return 716c12a248071f782fe47212e1d8e7b729e361044213cf2a18aed5ae90c920885dbb57096312a228dedaa846896ac0e516f51d8daeb853413251a7a914541946`, () => {
                 assert.strictEqual(
                     actual,
@@ -608,7 +612,11 @@ describe('Lib/BitcoinSV', () => {
                 )
             })
             try {
-                instanceWithTestnet.sign('fake_data', 'Invalid_Private_Key') // check behavior in case of invalid private Key
+                instanceWithTestnet.sign(
+                    'fake_data',
+                    'Invalid_Private_Key',
+                    false,
+                ) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')
