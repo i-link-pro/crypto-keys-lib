@@ -74,7 +74,7 @@ export class BitcoinBase {
     ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
-        const path = preparePath(cursor.path || this.defaultPath + '/0/0')
+        const path = preparePath(cursor.path || '0/0')
 
         return indexes.map(index => {
             const currentPath = path.replace('{index}', index.toString())
@@ -97,7 +97,7 @@ export class BitcoinBase {
     ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPublicKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
-        const path = preparePath(cursor.path || this.defaultPath + '/0/0')
+        const path = preparePath(cursor.path || '0/0')
 
         return indexes.map(index => {
             const currentPath = path.replace('{index}', index.toString())
