@@ -394,7 +394,7 @@ var BitcoinBase = /*#__PURE__*/function () {
 
     var wallet = fromBase58(masterPrivateKey, this.networkConfig);
     var indexes = getIndexes(cursor.skip, cursor.limit);
-    var path = preparePath(cursor.path || this.defaultPath + '/0/0');
+    var path = preparePath(cursor.path || '0/0');
     return indexes.map(function (index) {
       var currentPath = path.replace('{index}', index.toString());
       var derived = wallet.derivePath(currentPath);
@@ -412,7 +412,7 @@ var BitcoinBase = /*#__PURE__*/function () {
 
     var wallet = fromBase58(masterPublicKey, this.networkConfig);
     var indexes = getIndexes(cursor.skip, cursor.limit);
-    var path = preparePath(cursor.path || this.defaultPath + '/0/0');
+    var path = preparePath(cursor.path || '0/0');
     return indexes.map(function (index) {
       var currentPath = path.replace('{index}', index.toString());
       var pathParts = currentPath.replace(getHardenedPath(path), '').split('/').filter(function (part) {
