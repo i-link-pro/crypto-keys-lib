@@ -2,7 +2,7 @@ import { SodiumPlus, CryptographyKey } from 'sodium-plus';
 import createHash from 'create-hash';
 import { mnemonicToSeedSync, validateMnemonic as validateMnemonic$1, setDefaultWordlist, generateMnemonic as generateMnemonic$1 } from 'bip39';
 import baseX from 'base-x';
-import { ECPair, payments } from 'bitcoinjs-lib';
+import { Psbt, ECPair, payments } from 'bitcoinjs-lib';
 import { fromBase58, fromSeed } from 'bip32';
 import bech32 from 'bech32';
 import { toCashAddress, toBitpayAddress, isValidAddress } from 'bchaddrjs';
@@ -66,6 +66,48 @@ function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
   subClass.__proto__ = superClass;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+      return function () {
+        if (i >= o.length) return {
+          done: true
+        };
+        return {
+          done: false,
+          value: o[i++]
+        };
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  it = o[Symbol.iterator]();
+  return it.next.bind(it);
 }
 
 var validateMnemonic = function validateMnemonic(mnemonic) {
@@ -324,7 +366,7 @@ var BitcoinBase = /*#__PURE__*/function () {
       return {
         blockchain: path.blockchain,
         network: path.network,
-        path: path.path
+        path: path.path + '/0/0'
       };
     });
   };
@@ -352,7 +394,7 @@ var BitcoinBase = /*#__PURE__*/function () {
 
     var wallet = fromBase58(masterPrivateKey, this.networkConfig);
     var indexes = getIndexes(cursor.skip, cursor.limit);
-    var path = preparePath(cursor.path || this.defaultPath);
+    var path = preparePath(cursor.path || this.defaultPath + '/0/0');
     return indexes.map(function (index) {
       var currentPath = path.replace('{index}', index.toString());
       var derived = wallet.derivePath(currentPath);
@@ -370,7 +412,7 @@ var BitcoinBase = /*#__PURE__*/function () {
 
     var wallet = fromBase58(masterPublicKey, this.networkConfig);
     var indexes = getIndexes(cursor.skip, cursor.limit);
-    var path = preparePath(cursor.path || this.defaultPath);
+    var path = preparePath(cursor.path || this.defaultPath + '/0/0');
     return indexes.map(function (index) {
       var currentPath = path.replace('{index}', index.toString());
       var pathParts = currentPath.replace(getHardenedPath(path), '').split('/').filter(function (part) {
@@ -390,6 +432,68 @@ var BitcoinBase = /*#__PURE__*/function () {
   };
 
   _proto.sign = function sign(data, privateKey, isTx) {
+    if (isTx === void 0) {
+      isTx = true;
+    }
+
+    if (isTx) {
+      var dataObj;
+      var mapPrivateKeys;
+
+      try {
+        dataObj = JSON.parse(data);
+        mapPrivateKeys = JSON.parse(privateKey);
+      } catch (err) {
+        throw new Error('Invalid data or key, must be json string');
+      }
+
+      var signedHex = '';
+      var tx = new Psbt({
+        network: this.networkConfig
+      });
+
+      for (var _iterator = _createForOfIteratorHelperLoose(dataObj.inputs), _step; !(_step = _iterator()).done;) {
+        var input = _step.value;
+
+        if (input.type.includes('witness')) {
+          tx.addInput({
+            hash: input.txId,
+            index: input.n,
+            witnessUtxo: {
+              script: Buffer.from(input.scriptPubKeyHex, 'hex'),
+              value: +input.value
+            }
+          });
+        } else {
+          tx.addInput({
+            hash: input.txId,
+            index: input.n,
+            nonWitnessUtxo: Buffer.from(input.hex, 'hex')
+          });
+        }
+      }
+
+      for (var _iterator2 = _createForOfIteratorHelperLoose(dataObj.outputs), _step2; !(_step2 = _iterator2()).done;) {
+        var output = _step2.value;
+        tx.addOutput({
+          address: output.address,
+          value: +output.amount
+        });
+      }
+
+      for (var _iterator3 = _createForOfIteratorHelperLoose(dataObj.inputs.entries()), _step3; !(_step3 = _iterator3()).done;) {
+        var _step3$value = _step3.value,
+            index = _step3$value[0],
+            _input = _step3$value[1];
+        var keyPair = ECPair.fromWIF(mapPrivateKeys[_input.address], this.networkConfig);
+        tx.signInput(index, keyPair);
+        tx.validateSignaturesOfInput(index);
+      }
+
+      tx.finalizeAllInputs();
+      signedHex = tx.extractTransaction().toHex();
+      return signedHex;
+    }
 
     var key = ECPair.fromWIF(privateKey, this.networkConfig);
     var hash = createHash('sha256').update(data).digest('hex');
