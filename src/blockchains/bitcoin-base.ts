@@ -1,4 +1,4 @@
-import { payments, ECPair } from 'bitcoinjs-lib'
+import { payments, ECPair, Psbt } from 'bitcoinjs-lib'
 import * as bip32 from 'bip32'
 import createHash from 'create-hash'
 import {
@@ -17,8 +17,6 @@ import {
     decodeBase58,
     decodeBech32,
 } from './address-utils'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const lib = require('bitcoinjs-lib')
 
 export class BitcoinBase {
     protected networks = {
@@ -47,7 +45,7 @@ export class BitcoinBase {
         return Object.values(this.networks).map(path => ({
             blockchain: path.blockchain,
             network: path.network,
-            path: path.path,
+            path: path.path + '/0/0',
         }))
     }
 
@@ -76,7 +74,7 @@ export class BitcoinBase {
     ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
-        const path = preparePath(cursor.path || this.defaultPath)
+        const path = preparePath(cursor.path || this.defaultPath + '/0/0')
 
         return indexes.map(index => {
             const currentPath = path.replace('{index}', index.toString())
@@ -99,7 +97,7 @@ export class BitcoinBase {
     ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPublicKey, this.networkConfig)
         const indexes = getIndexes(cursor.skip, cursor.limit)
-        const path = preparePath(cursor.path || this.defaultPath)
+        const path = preparePath(cursor.path || this.defaultPath + '/0/0')
 
         return indexes.map(index => {
             const currentPath = path.replace('{index}', index.toString())
@@ -123,10 +121,16 @@ export class BitcoinBase {
 
     sign(data: string, privateKey: string, isTx = true): string {
         if (isTx) {
-            const dataObj = JSON.parse(data)
-            const mapPrivateKeys = JSON.parse(privateKey)
+            let dataObj
+            let mapPrivateKeys
+            try {
+                dataObj = JSON.parse(data)
+                mapPrivateKeys = JSON.parse(privateKey)
+            } catch (err) {
+                throw new Error('Invalid data or key, must be json string')
+            }
             let signedHex = ''
-            const tx = new lib.Psbt({ network: this.networkConfig })
+            const tx = new Psbt({ network: this.networkConfig })
             for (const input of dataObj.inputs) {
                 if (input.type.includes('witness')) {
                     tx.addInput({
@@ -153,7 +157,7 @@ export class BitcoinBase {
             }
 
             for (const [index, input] of dataObj.inputs.entries()) {
-                const keyPair = lib.ECPair.fromWIF(
+                const keyPair = ECPair.fromWIF(
                     mapPrivateKeys[input.address],
                     this.networkConfig,
                 )
