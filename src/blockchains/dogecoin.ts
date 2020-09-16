@@ -7,7 +7,7 @@ export class Dogecoin extends BitcoinBase {
         [Network.MAINNET]: {
             blockchain: Blockchain.DOGECOIN,
             network: Network.MAINNET,
-            path: "m/44'/2'/0'",
+            path: "m/44'/3'/0'",
             config: dogecoin.mainnet,
         },
         [Network.TESTNET]: {
