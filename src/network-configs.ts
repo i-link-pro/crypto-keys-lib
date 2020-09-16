@@ -79,6 +79,31 @@ const litecoin: NetworkConfig = {
     },
 }
 
+const dogecoin: NetworkConfig = {
+    mainnet: {
+        messagePrefix: '\x19Dogecoin Signed Message:\n',
+        bech32: 'xdg',
+        bip32: {
+            public: 0x02facafd,
+            private: 0x02fac398,
+        },
+        pubKeyHash: 0x02,
+        scriptHash: 0xfa,
+        wif: 0xb0,
+    },
+    testnet: {
+        messagePrefix: '\x18Dogecoin Signed Message:\n',
+        bech32: 'xdg',
+        bip32: {
+            public: 0x0432a9a8,
+            private: 0x0432a243,
+        },
+        pubKeyHash: 0x04,
+        scriptHash: 0x35,
+        wif: 0xef,
+    },
+}
+
 const bitcoinsv: NetworkConfig = {
     mainnet: {
         messagePrefix: 'unused',
@@ -104,4 +129,4 @@ const bitcoinsv: NetworkConfig = {
     },
 }
 
-export { bitcoin, litecoin, bitcoinsv }
+export {bitcoin, litecoin, bitcoinsv, dogecoin}
