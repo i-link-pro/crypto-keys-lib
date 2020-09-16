@@ -233,20 +233,20 @@ var dogecoin = {
       "public": 0x02facafd,
       "private": 0x02fac398
     },
-    pubKeyHash: 0x02,
-    scriptHash: 0xfa,
-    wif: 0xb0
+    pubKeyHash: 0x1e,
+    scriptHash: 0x16,
+    wif: 0x9e
   },
   testnet: {
     messagePrefix: '\x18Dogecoin Signed Message:\n',
     bech32: 'xdg',
     bip32: {
-      "public": 0x0432a9a8,
-      "private": 0x0432a243
+      "public": 0x043587cf,
+      "private": 0x04358394
     },
-    pubKeyHash: 0x04,
-    scriptHash: 0x35,
-    wif: 0xef
+    pubKeyHash: 0x71,
+    scriptHash: 0xc4,
+    wif: 0xf1
   }
 };
 var bitcoinsv = {
@@ -739,7 +739,7 @@ var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
       blockchain: exports.Blockchain.DOGECOIN,
       network: exports.Network.MAINNET,
-      path: "m/44'/2'/0'",
+      path: "m/44'/3'/0'",
       config: dogecoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
       blockchain: exports.Blockchain.DOGECOIN,

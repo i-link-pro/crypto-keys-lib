@@ -129,4 +129,4 @@ const bitcoinsv: NetworkConfig = {
     },
 }
 
-export {bitcoin, litecoin, bitcoinsv, dogecoin}
+export { bitcoin, litecoin, bitcoinsv, dogecoin }

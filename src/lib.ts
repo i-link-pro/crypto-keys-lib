@@ -38,7 +38,7 @@ const blockchainLibs = {
     ethereum: Ethereum,
     eos: EOS,
     ripple: Ripple,
-    dogecoin: Dogecoin
+    dogecoin: Dogecoin,
 }
 
 export class Keys implements IKeys {

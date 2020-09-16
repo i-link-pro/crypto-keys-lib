@@ -6,7 +6,7 @@ export enum Blockchain {
     BITCOIN_SV = 'bitcoin_sv',
     LITECOIN = 'litecoin',
     RIPPLE = 'ripple',
-    DOGECOIN = 'dogecoin'
+    DOGECOIN = 'dogecoin',
 }
 
 export enum Network {
