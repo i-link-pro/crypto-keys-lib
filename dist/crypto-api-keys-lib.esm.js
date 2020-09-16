@@ -21,6 +21,7 @@ var Blockchain;
   Blockchain["BITCOIN_SV"] = "bitcoin_sv";
   Blockchain["LITECOIN"] = "litecoin";
   Blockchain["RIPPLE"] = "ripple";
+  Blockchain["DOGECOIN"] = "dogecoin";
 })(Blockchain || (Blockchain = {}));
 
 var Network;
@@ -221,6 +222,30 @@ var litecoin = {
     },
     pubKeyHash: 0x6f,
     scriptHash: 0xc4,
+    wif: 0xef
+  }
+};
+var dogecoin = {
+  mainnet: {
+    messagePrefix: '\x19Dogecoin Signed Message:\n',
+    bech32: 'xdg',
+    bip32: {
+      "public": 0x02facafd,
+      "private": 0x02fac398
+    },
+    pubKeyHash: 0x02,
+    scriptHash: 0xfa,
+    wif: 0xb0
+  },
+  testnet: {
+    messagePrefix: '\x18Dogecoin Signed Message:\n',
+    bech32: 'xdg',
+    bip32: {
+      "public": 0x0432a9a8,
+      "private": 0x0432a243
+    },
+    pubKeyHash: 0x04,
+    scriptHash: 0x35,
     wif: 0xef
   }
 };
@@ -702,6 +727,34 @@ var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
   return Litecoin;
 }(BitcoinBase);
 
+var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
+  _inheritsLoose(Dogecoin, _BitcoinBase);
+
+  function Dogecoin(network) {
+    var _this$networks;
+
+    var _this;
+
+    _this = _BitcoinBase.call(this, network) || this;
+    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
+      blockchain: Blockchain.DOGECOIN,
+      network: Network.MAINNET,
+      path: "m/44'/2'/0'",
+      config: dogecoin.mainnet
+    }, _this$networks[Network.TESTNET] = {
+      blockchain: Blockchain.DOGECOIN,
+      network: Network.TESTNET,
+      path: "m/44'/1'/0'",
+      config: dogecoin.testnet
+    }, _this$networks);
+    _this.networkConfig = _this.networks[network].config;
+    _this.defaultPath = _this.networks[network].path;
+    return _this;
+  }
+
+  return Dogecoin;
+}(BitcoinBase);
+
 var ethTx = /*#__PURE__*/require('ethereumjs-tx').Transaction;
 
 var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
@@ -926,7 +979,8 @@ var blockchainLibs = {
   bitcoin_cash: BitcoinCash,
   ethereum: Ethereum,
   eos: EOS,
-  ripple: Ripple
+  ripple: Ripple,
+  dogecoin: Dogecoin
 };
 var Keys = /*#__PURE__*/function () {
   function Keys(blockchain, network) {

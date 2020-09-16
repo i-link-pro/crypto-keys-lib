@@ -5,7 +5,8 @@ export declare enum Blockchain {
     BITCOIN_CASH = "bitcoin_cash",
     BITCOIN_SV = "bitcoin_sv",
     LITECOIN = "litecoin",
-    RIPPLE = "ripple"
+    RIPPLE = "ripple",
+    DOGECOIN = "dogecoin"
 }
 export declare enum Network {
     MAINNET = "mainnet",
