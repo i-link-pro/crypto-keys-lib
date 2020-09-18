@@ -22,7 +22,7 @@ export declare class Ethereum extends BitcoinBase {
     getPrivateKey(privateKey: BIP32Interface): string;
     getPublicKey(publicKey: string): string;
     getAddressFromPublic(publicKey: string): string;
-    sign(data: string, privateKey: string, isTx?: boolean): string;
+    sign(data: string, privateKey: string, isTx?: boolean): Promise<string>;
     checkSign(_: string, __: string, sign: string): boolean;
     isValidAddress(address: string): boolean;
 }

@@ -118,8 +118,8 @@ export class Keys implements IKeys {
         }
     }
 
-    sign(data: string, privateKey: PrivateKey, isTx = true): string | Error {
-        return this.lib.sign(data, privateKey, isTx)
+    async sign(data: string, privateKey: PrivateKey, isTx = true): Promise<string | Error> {
+        return await this.lib.sign(data, privateKey, isTx)
     }
 
     getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error {

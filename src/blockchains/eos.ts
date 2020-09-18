@@ -3,6 +3,13 @@ import { Network, Blockchain } from '../types'
 import { bitcoin } from '../network-configs'
 import * as eosUtil from 'eosjs-ecc'
 import { BIP32Interface } from 'bip32'
+import { Api, JsonRpc } from 'eosjs'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const fetch = require('node-fetch')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { TextEncoder, TextDecoder } = require('util')
 
 export class EOS extends BitcoinBase {
     protected networks = {
@@ -41,7 +48,39 @@ export class EOS extends BitcoinBase {
         return publicKey
     }
 
-    sign(data: string, privateKey: string): string {
+    async sign(data: string, privateKey: string, isTx):Promise<string> {
+
+        if (isTx) {
+            const accountPrvKey = Object.values(JSON.parse(privateKey))[0]
+            const signatureProvider = new JsSignatureProvider([accountPrvKey])
+
+            const rpc = new JsonRpc(JSON.parse(data).endpoint, {
+                fetch,
+            })
+
+            const api = new Api({
+                rpc,
+                signatureProvider,
+                textDecoder: new TextDecoder(),
+                textEncoder: new TextEncoder(),
+            })
+
+            const result = await api.transact(
+                {
+                    actions: JSON.parse(data).actions,
+                },
+                {
+                    broadcast: false,
+                    sign: true,
+                    blocksBehind: 3,
+                    expireSeconds: 30,
+                },
+            )
+            result.serializedTransaction = Buffer.from(
+                result.serializedTransaction,
+            ).toString('hex')
+            return JSON.stringify(result)
+        }
         return eosUtil.sign(data, privateKey)
     }
 
