@@ -27,9 +27,11 @@
         "bip39": "^3.0.2",
         "bitcoinjs-lib": "^5.1.10",
         "create-hash": "^1.2.0",
+        "eosjs": "^21.0.3",
         "eosjs-ecc": "^4.0.7",
         "ethereumjs-tx": "^2.1.2",
         "ethereumjs-util": "^7.0.2",
+        "node-fetch": "^2.6.1",
         "ripple-address-codec": "^4.1.1",
         "ripple-keypairs": "^1.0.1",
         "sodium-plus": "^0.7.1"
