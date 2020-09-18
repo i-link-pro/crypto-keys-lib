@@ -73,7 +73,7 @@ export class EOS extends BitcoinBase {
                     broadcast: false,
                     sign: true,
                     blocksBehind: 3,
-                    expireSeconds: 30,
+                    expireSeconds: 3600,
                 },
             )
             result.serializedTransaction = Buffer.from(

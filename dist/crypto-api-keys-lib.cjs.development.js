@@ -886,7 +886,7 @@ var EOS = /*#__PURE__*/function (_BitcoinBase) {
             broadcast: false,
             sign: true,
             blocksBehind: 3,
-            expireSeconds: 30
+            expireSeconds: 3600
           })).then(function (result) {
             result.serializedTransaction = Buffer.from(result.serializedTransaction).toString('hex');
             _exit2 = true;
