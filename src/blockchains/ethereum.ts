@@ -59,7 +59,7 @@ export class Ethereum extends BitcoinBase {
         return address
     }
 
-    sign(data: string, privateKey: string, isTx = true): string {
+    async sign(data: string, privateKey: string, isTx = true): Promise<string> {
         if (isTx) {
             const chain = this.net === Network.MAINNET ? 'mainnet' : 'ropsten'
             const transactionObject = JSON.parse(data)

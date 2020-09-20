@@ -8,6 +8,7 @@ import bech32 from 'bech32';
 import { toCashAddress, toBitpayAddress, isValidAddress } from 'bchaddrjs';
 import { addHexPrefix, bufferToHex, importPublic, publicToAddress, toChecksumAddress, hashPersonalMessage, ecsign, isValidSignature, isValidAddress as isValidAddress$1 } from 'ethereumjs-util';
 import { privateToPublic, PrivateKey, PublicKey, sign, verify } from 'eosjs-ecc';
+import { JsonRpc, Api } from 'eosjs';
 import { deriveAddress, sign as sign$1, verify as verify$1 } from 'ripple-keypairs';
 import { classicAddressToXAddress, isValidXAddress, isValidClassicAddress } from 'ripple-address-codec';
 
@@ -461,68 +462,74 @@ var BitcoinBase = /*#__PURE__*/function () {
       isTx = true;
     }
 
-    if (isTx) {
-      var dataObj;
-      var mapPrivateKeys;
+    try {
+      var _this4 = this;
 
-      try {
-        dataObj = JSON.parse(data);
-        mapPrivateKeys = JSON.parse(privateKey);
-      } catch (err) {
-        throw new Error('Invalid data or key, must be json string');
-      }
+      if (isTx) {
+        var dataObj;
+        var mapPrivateKeys;
 
-      var signedHex = '';
-      var tx = new Psbt({
-        network: this.networkConfig
-      });
+        try {
+          dataObj = JSON.parse(data);
+          mapPrivateKeys = JSON.parse(privateKey);
+        } catch (err) {
+          throw new Error('Invalid data or key, must be json string');
+        }
 
-      for (var _iterator = _createForOfIteratorHelperLoose(dataObj.inputs), _step; !(_step = _iterator()).done;) {
-        var input = _step.value;
+        var signedHex = '';
+        var tx = new Psbt({
+          network: _this4.networkConfig
+        });
 
-        if (input.type.includes('witness')) {
-          tx.addInput({
-            hash: input.txId,
-            index: input.n,
-            witnessUtxo: {
-              script: Buffer.from(input.scriptPubKeyHex, 'hex'),
-              value: +input.value
-            }
-          });
-        } else {
-          tx.addInput({
-            hash: input.txId,
-            index: input.n,
-            nonWitnessUtxo: Buffer.from(input.hex, 'hex')
+        for (var _iterator = _createForOfIteratorHelperLoose(dataObj.inputs), _step; !(_step = _iterator()).done;) {
+          var input = _step.value;
+
+          if (input.type.includes('witness')) {
+            tx.addInput({
+              hash: input.txId,
+              index: input.n,
+              witnessUtxo: {
+                script: Buffer.from(input.scriptPubKeyHex, 'hex'),
+                value: +input.value
+              }
+            });
+          } else {
+            tx.addInput({
+              hash: input.txId,
+              index: input.n,
+              nonWitnessUtxo: Buffer.from(input.hex, 'hex')
+            });
+          }
+        }
+
+        for (var _iterator2 = _createForOfIteratorHelperLoose(dataObj.outputs), _step2; !(_step2 = _iterator2()).done;) {
+          var output = _step2.value;
+          tx.addOutput({
+            address: output.address,
+            value: +output.amount
           });
         }
+
+        for (var _iterator3 = _createForOfIteratorHelperLoose(dataObj.inputs.entries()), _step3; !(_step3 = _iterator3()).done;) {
+          var _step3$value = _step3.value,
+              index = _step3$value[0],
+              _input = _step3$value[1];
+          var keyPair = ECPair.fromWIF(mapPrivateKeys[_input.address], _this4.networkConfig);
+          tx.signInput(index, keyPair);
+          tx.validateSignaturesOfInput(index);
+        }
+
+        tx.finalizeAllInputs();
+        signedHex = tx.extractTransaction().toHex();
+        return Promise.resolve(signedHex);
       }
 
-      for (var _iterator2 = _createForOfIteratorHelperLoose(dataObj.outputs), _step2; !(_step2 = _iterator2()).done;) {
-        var output = _step2.value;
-        tx.addOutput({
-          address: output.address,
-          value: +output.amount
-        });
-      }
-
-      for (var _iterator3 = _createForOfIteratorHelperLoose(dataObj.inputs.entries()), _step3; !(_step3 = _iterator3()).done;) {
-        var _step3$value = _step3.value,
-            index = _step3$value[0],
-            _input = _step3$value[1];
-        var keyPair = ECPair.fromWIF(mapPrivateKeys[_input.address], this.networkConfig);
-        tx.signInput(index, keyPair);
-        tx.validateSignaturesOfInput(index);
-      }
-
-      tx.finalizeAllInputs();
-      signedHex = tx.extractTransaction().toHex();
-      return signedHex;
+      var key = ECPair.fromWIF(privateKey, _this4.networkConfig);
+      var hash = createHash('sha256').update(data).digest('hex');
+      return Promise.resolve(key.sign(Buffer.from(hash, 'hex')).toString('hex'));
+    } catch (e) {
+      return Promise.reject(e);
     }
-
-    var key = ECPair.fromWIF(privateKey, this.networkConfig);
-    var hash = createHash('sha256').update(data).digest('hex');
-    return key.sign(Buffer.from(hash, 'hex')).toString('hex');
   };
 
   _proto.checkSign = function checkSign(publicKey, data, sign) {
@@ -815,24 +822,30 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
       isTx = true;
     }
 
-    if (isTx) {
-      var chain = this.net === Network.MAINNET ? 'mainnet' : 'ropsten';
-      var transactionObject = JSON.parse(data);
-      var txRaw = new ethTx(transactionObject, {
-        chain: chain
-      });
-      var pk = Buffer.from(privateKey.replace('0x', ''), 'hex');
-      txRaw.sign(pk);
-      return "0x" + txRaw.serialize().toString('hex');
-    }
+    try {
+      var _this3 = this;
 
-    var hash = hashPersonalMessage(Buffer.from(data));
-    var sign = ecsign(hash, Buffer.from(privateKey.replace('0x', ''), 'hex'));
-    return JSON.stringify({
-      r: sign.r.toString('hex'),
-      s: sign.s.toString('hex'),
-      v: sign.v
-    });
+      if (isTx) {
+        var chain = _this3.net === Network.MAINNET ? 'mainnet' : 'ropsten';
+        var transactionObject = JSON.parse(data);
+        var txRaw = new ethTx(transactionObject, {
+          chain: chain
+        });
+        var pk = Buffer.from(privateKey.replace('0x', ''), 'hex');
+        txRaw.sign(pk);
+        return Promise.resolve("0x" + txRaw.serialize().toString('hex'));
+      }
+
+      var hash = hashPersonalMessage(Buffer.from(data));
+      var sign = ecsign(hash, Buffer.from(privateKey.replace('0x', ''), 'hex'));
+      return Promise.resolve(JSON.stringify({
+        r: sign.r.toString('hex'),
+        s: sign.s.toString('hex'),
+        v: sign.v
+      }));
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   _proto.checkSign = function checkSign(_, __, sign) {
@@ -846,6 +859,15 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
 
   return Ethereum;
 }(BitcoinBase);
+
+var _require = /*#__PURE__*/require('eosjs/dist/eosjs-jssig'),
+    JsSignatureProvider = _require.JsSignatureProvider;
+
+var fetch = /*#__PURE__*/require('node-fetch');
+
+var _require2 = /*#__PURE__*/require('util'),
+    TextEncoder = _require2.TextEncoder,
+    TextDecoder = _require2.TextDecoder;
 
 var EOS = /*#__PURE__*/function (_BitcoinBase) {
   _inheritsLoose(EOS, _BitcoinBase);
@@ -890,8 +912,46 @@ var EOS = /*#__PURE__*/function (_BitcoinBase) {
     return publicKey;
   };
 
-  _proto.sign = function sign$1(data, privateKey) {
-    return sign(data, privateKey);
+  _proto.sign = function sign$1(data, privateKey, isTx) {
+    try {
+      var _temp3 = function _temp3(_result) {
+        return _exit2 ? _result : sign(data, privateKey);
+      };
+
+      var _exit2 = false;
+
+      var _temp4 = function () {
+        if (isTx) {
+          var accountPrvKey = Object.values(JSON.parse(privateKey))[0];
+          var signatureProvider = new JsSignatureProvider([accountPrvKey]);
+          var rpc = new JsonRpc(JSON.parse(data).endpoint, {
+            fetch: fetch
+          });
+          var api = new Api({
+            rpc: rpc,
+            signatureProvider: signatureProvider,
+            textDecoder: new TextDecoder(),
+            textEncoder: new TextEncoder()
+          });
+          return Promise.resolve(api.transact({
+            actions: JSON.parse(data).actions
+          }, {
+            broadcast: false,
+            sign: true,
+            blocksBehind: 3,
+            expireSeconds: 3600
+          })).then(function (result) {
+            result.serializedTransaction = Buffer.from(result.serializedTransaction).toString('hex');
+            _exit2 = true;
+            return JSON.stringify(result);
+          });
+        }
+      }();
+
+      return Promise.resolve(_temp4 && _temp4.then ? _temp4.then(_temp3) : _temp3(_temp4));
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   _proto.checkSign = function checkSign(publicKey, data, sign) {
@@ -950,13 +1010,19 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
   };
 
   _proto.sign = function sign(data, privateKey) {
-    var key = ECPair.fromWIF(privateKey, this.networkConfig);
-    var hash = createHash('sha256').update(data).digest('hex');
+    try {
+      var _this3 = this;
 
-    if (key.privateKey) {
-      return sign$1(hash, key.privateKey.toString('hex'));
-    } else {
-      throw Error('Invalid private key');
+      var key = ECPair.fromWIF(privateKey, _this3.networkConfig);
+      var hash = createHash('sha256').update(data).digest('hex');
+
+      if (key.privateKey) {
+        return Promise.resolve(sign$1(hash, key.privateKey.toString('hex')));
+      } else {
+        throw Error('Invalid private key');
+      }
+    } catch (e) {
+      return Promise.reject(e);
     }
   };
 
@@ -1039,7 +1105,13 @@ var Keys = /*#__PURE__*/function () {
       isTx = true;
     }
 
-    return this.lib.sign(data, privateKey, isTx);
+    try {
+      var _this2 = this;
+
+      return Promise.resolve(_this2.lib.sign(data, privateKey, isTx));
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   _proto.getPublicFromPrivate = function getPublicFromPrivate(privateKey) {
