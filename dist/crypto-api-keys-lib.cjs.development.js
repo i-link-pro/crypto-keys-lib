@@ -26,6 +26,7 @@ var rippleUtil = require('ripple-address-codec');
   Blockchain["BITCOIN_SV"] = "bitcoin_sv";
   Blockchain["LITECOIN"] = "litecoin";
   Blockchain["RIPPLE"] = "ripple";
+  Blockchain["DOGECOIN"] = "dogecoin";
 })(exports.Blockchain || (exports.Blockchain = {}));
 
 (function (Network) {
@@ -223,6 +224,30 @@ var litecoin = {
     pubKeyHash: 0x6f,
     scriptHash: 0xc4,
     wif: 0xef
+  }
+};
+var dogecoin = {
+  mainnet: {
+    messagePrefix: '\x19Dogecoin Signed Message:\n',
+    bech32: 'xdg',
+    bip32: {
+      "public": 0x02facafd,
+      "private": 0x02fac398
+    },
+    pubKeyHash: 0x1e,
+    scriptHash: 0x16,
+    wif: 0x9e
+  },
+  testnet: {
+    messagePrefix: '\x18Dogecoin Signed Message:\n',
+    bech32: 'xdg',
+    bip32: {
+      "public": 0x043587cf,
+      "private": 0x04358394
+    },
+    pubKeyHash: 0x71,
+    scriptHash: 0xc4,
+    wif: 0xf1
   }
 };
 var bitcoinsv = {
@@ -709,6 +734,34 @@ var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
   return Litecoin;
 }(BitcoinBase);
 
+var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
+  _inheritsLoose(Dogecoin, _BitcoinBase);
+
+  function Dogecoin(network) {
+    var _this$networks;
+
+    var _this;
+
+    _this = _BitcoinBase.call(this, network) || this;
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.DOGECOIN,
+      network: exports.Network.MAINNET,
+      path: "m/44'/3'/0'",
+      config: dogecoin.mainnet
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.DOGECOIN,
+      network: exports.Network.TESTNET,
+      path: "m/44'/1'/0'",
+      config: dogecoin.testnet
+    }, _this$networks);
+    _this.networkConfig = _this.networks[network].config;
+    _this.defaultPath = _this.networks[network].path;
+    return _this;
+  }
+
+  return Dogecoin;
+}(BitcoinBase);
+
 var ethTx = /*#__PURE__*/require('ethereumjs-tx').Transaction;
 
 var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
@@ -992,7 +1045,8 @@ var blockchainLibs = {
   bitcoin_cash: BitcoinCash,
   ethereum: Ethereum,
   eos: EOS,
-  ripple: Ripple
+  ripple: Ripple,
+  dogecoin: Dogecoin
 };
 var Keys = /*#__PURE__*/function () {
   function Keys(blockchain, network) {

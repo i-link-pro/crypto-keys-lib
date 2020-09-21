@@ -5,7 +5,8 @@ export declare enum Blockchain {
     BITCOIN_CASH = "bitcoin_cash",
     BITCOIN_SV = "bitcoin_sv",
     LITECOIN = "litecoin",
-    RIPPLE = "ripple"
+    RIPPLE = "ripple",
+    DOGECOIN = "dogecoin"
 }
 export declare enum Network {
     MAINNET = "mainnet",
@@ -69,7 +70,7 @@ export interface IKeys {
     generateSeedPhrase(wordCount: number, lang?: SeedDictionaryLang, path?: string, password?: string): SeedWithKeys | Error;
     getDataFromSeed(seedPhrase: string, path?: string, password?: string): SeedWithKeys | Error;
     derivateKeys(from: FromSeedPhrase | FromMasterPublicKey | FromMasterPrivateKey, pathCursor: PathCursor): KeysWithPath[] | Error;
-    sign(data: string, privateKey: PrivateKey, isTx?: boolean): Promise<string | Error>;
+    sign(data: string, privateKey: PrivateKey, isTx?: boolean): string | Error;
     getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error;
     getAddressFromPublic(publicKey: PublicKey, format?: string): Address | Error;
     checkSign(publicKey: PublicKey, data: string, sign: string): boolean | Error;

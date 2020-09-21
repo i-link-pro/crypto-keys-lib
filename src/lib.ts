@@ -23,6 +23,7 @@ import { Bitcoin } from './blockchains/bitcoin'
 import { BitcoinSV } from './blockchains/bitcoinsv'
 import { BitcoinCash } from './blockchains/bitcoin-cash'
 import { Litecoin } from './blockchains/litecoin'
+import { Dogecoin } from './blockchains/dogecoin'
 import { Ethereum } from './blockchains/ethereum'
 import { EOS } from './blockchains/eos'
 import { Ripple } from './blockchains/ripple'
@@ -37,6 +38,7 @@ const blockchainLibs = {
     ethereum: Ethereum,
     eos: EOS,
     ripple: Ripple,
+    dogecoin: Dogecoin,
 }
 
 export class Keys implements IKeys {
