@@ -27,6 +27,7 @@ var rippleUtil = require('ripple-address-codec');
   Blockchain["LITECOIN"] = "litecoin";
   Blockchain["RIPPLE"] = "ripple";
   Blockchain["DOGECOIN"] = "dogecoin";
+  Blockchain["EMERCOIN"] = "emercoin";
 })(exports.Blockchain || (exports.Blockchain = {}));
 
 (function (Network) {
@@ -248,6 +249,41 @@ var dogecoin = {
     pubKeyHash: 0x71,
     scriptHash: 0xc4,
     wif: 0xf1
+  }
+};
+var emercoin = {
+  mainnet: {
+    messagePrefix: '\x18Emercoin Signed Message:\n',
+    bech32: 'emc',
+    bip32: {
+      "public": 0x0488B21E,
+      "private": 0x0488ADE4
+    },
+    pubKeyHash: 0x00,
+    scriptHash: 0x05,
+    wif: 0x80
+  },
+  testnet: {
+    messagePrefix: '\x18Emercoin Signed Message:\n',
+    bech32: 'emc',
+    bip32: {
+      "public": 0x043587CF,
+      "private": 0x04358394
+    },
+    pubKeyHash: 0x6F,
+    scriptHash: 0xC4,
+    wif: 0xEF
+  },
+  regtest: {
+    messagePrefix: '\x18Emercoin Signed Message:\n',
+    bech32: 'emc',
+    bip32: {
+      "public": 0x043587CF,
+      "private": 0x04358394
+    },
+    pubKeyHash: 0x6F,
+    scriptHash: 0xC4,
+    wif: 0xEF
   }
 };
 var bitcoinsv = {
@@ -1038,6 +1074,34 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
   return Ripple;
 }(BitcoinBase);
 
+var Emercoin = /*#__PURE__*/function (_BitcoinBase) {
+  _inheritsLoose(Emercoin, _BitcoinBase);
+
+  function Emercoin(network) {
+    var _this$networks;
+
+    var _this;
+
+    _this = _BitcoinBase.call(this, network) || this;
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.EMERCOIN,
+      network: exports.Network.MAINNET,
+      path: "m/44'/6'/0'",
+      config: emercoin.mainnet
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.DOGECOIN,
+      network: exports.Network.TESTNET,
+      path: "m/44'/6'/0'",
+      config: emercoin.testnet
+    }, _this$networks);
+    _this.networkConfig = _this.networks[network].config;
+    _this.defaultPath = _this.networks[network].path;
+    return _this;
+  }
+
+  return Emercoin;
+}(BitcoinBase);
+
 var blockchainLibs = {
   bitcoin: Bitcoin,
   litecoin: Litecoin,
@@ -1046,7 +1110,8 @@ var blockchainLibs = {
   ethereum: Ethereum,
   eos: EOS,
   ripple: Ripple,
-  dogecoin: Dogecoin
+  dogecoin: Dogecoin,
+  emercoin: Emercoin
 };
 var Keys = /*#__PURE__*/function () {
   function Keys(blockchain, network) {

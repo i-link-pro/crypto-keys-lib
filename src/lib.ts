@@ -27,6 +27,7 @@ import { Dogecoin } from './blockchains/dogecoin'
 import { Ethereum } from './blockchains/ethereum'
 import { EOS } from './blockchains/eos'
 import { Ripple } from './blockchains/ripple'
+import { Emercoin } from './blockchains/emercoin'
 
 const blockchainLibs = {
     bitcoin: Bitcoin,
@@ -39,6 +40,7 @@ const blockchainLibs = {
     eos: EOS,
     ripple: Ripple,
     dogecoin: Dogecoin,
+    emercoin: Emercoin,
 }
 
 export class Keys implements IKeys {
@@ -120,7 +122,11 @@ export class Keys implements IKeys {
         }
     }
 
-    async sign(data: string, privateKey: PrivateKey, isTx = true): Promise<string | Error> {
+    async sign(
+        data: string,
+        privateKey: PrivateKey,
+        isTx = true,
+    ): Promise<string | Error> {
         return await this.lib.sign(data, privateKey, isTx)
     }
 

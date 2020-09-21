@@ -48,8 +48,7 @@ export class EOS extends BitcoinBase {
         return publicKey
     }
 
-    async sign(data: string, privateKey: string, isTx):Promise<string> {
-
+    async sign(data: string, privateKey: string, isTx): Promise<string> {
         if (isTx) {
             const accountPrvKey = Object.values(JSON.parse(privateKey))[0]
             const signatureProvider = new JsSignatureProvider([accountPrvKey])
