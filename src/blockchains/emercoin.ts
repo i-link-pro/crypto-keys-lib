@@ -11,7 +11,7 @@ export class Emercoin extends BitcoinBase {
             config: emercoin.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.DOGECOIN,
+            blockchain: Blockchain.EMERCOIN,
             network: Network.TESTNET,
             path: "m/44'/6'/0'",
             config: emercoin.testnet,
