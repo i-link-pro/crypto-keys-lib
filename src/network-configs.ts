@@ -145,8 +145,8 @@ const dashcoin: NetworkConfig = {
         messagePrefix: '\x18Dashcoin Signed Message:\n',
         bech32: 'dash',
         bip32: {
-            public: 0x0488B21E,
-            private: 0x0488ADE4,
+            public: 0x0488b21e,
+            private: 0x0488ade4,
         },
         pubKeyHash: 0x4c,
         scriptHash: 0x10,
