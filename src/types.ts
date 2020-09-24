@@ -8,6 +8,7 @@ export enum Blockchain {
     RIPPLE = 'ripple',
     DOGECOIN = 'dogecoin',
     EMERCOIN = 'emercoin',
+    DASHCOIN = 'dashcoin',
 }
 
 export enum Network {

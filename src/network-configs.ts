@@ -140,6 +140,31 @@ const emercoin: NetworkConfig = {
     },
 }
 
+const dashcoin: NetworkConfig = {
+    mainnet: {
+        messagePrefix: '\x18Dashcoin Signed Message:\n',
+        bech32: 'dash',
+        bip32: {
+            public: 0x0488B21E,
+            private: 0x0488ADE4,
+        },
+        pubKeyHash: 0x4c,
+        scriptHash: 0x10,
+        wif: 0xcc,
+    },
+    testnet: {
+        messagePrefix: '\x18Dashcoin Signed Message:\n',
+        bech32: 'dash',
+        bip32: {
+            public: 0x043587cf,
+            private: 0x04358394,
+        },
+        pubKeyHash: 0x8c,
+        scriptHash: 0x13,
+        wif: 0xef,
+    },
+}
+
 const bitcoinsv: NetworkConfig = {
     mainnet: {
         messagePrefix: 'unused',
@@ -165,4 +190,4 @@ const bitcoinsv: NetworkConfig = {
     },
 }
 
-export { bitcoin, litecoin, bitcoinsv, dogecoin, emercoin }
+export { bitcoin, litecoin, bitcoinsv, dogecoin, emercoin, dashcoin }
