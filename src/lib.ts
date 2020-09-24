@@ -120,7 +120,11 @@ export class Keys implements IKeys {
         }
     }
 
-    async sign(data: string, privateKey: PrivateKey, isTx = true): Promise<string | Error> {
+    async sign(
+        data: string,
+        privateKey: PrivateKey,
+        isTx = true,
+    ): Promise<string | Error> {
         return await this.lib.sign(data, privateKey, isTx)
     }
 

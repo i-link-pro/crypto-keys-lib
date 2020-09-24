@@ -959,7 +959,7 @@ var EOS = /*#__PURE__*/function (_BitcoinBase) {
   };
 
   _proto.isValidAddress = function isValidAddress(address) {
-    var regex = new RegExp(/^\e.[a-z1-5]{12}$/g);
+    var regex = new RegExp(/^[a-z1-5]{12}$/g);
     return regex.test(address);
   };
 

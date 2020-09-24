@@ -95,7 +95,11 @@ export interface IKeys {
         pathCursor: PathCursor,
     ): KeysWithPath[] | Error
 
-    sign(data: string, privateKey: PrivateKey, isTx?: boolean): Promise<string | Error>
+    sign(
+        data: string,
+        privateKey: PrivateKey,
+        isTx?: boolean,
+    ): Promise<string | Error>
     getPublicFromPrivate(privateKey: PrivateKey): PublicKey | Error
     getAddressFromPublic(publicKey: PublicKey, format?: string): Address | Error
     checkSign(publicKey: PublicKey, data: string, sign: string): boolean | Error
