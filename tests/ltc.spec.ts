@@ -294,10 +294,10 @@ describe('Lib/Litecoin', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+          ['xprv9xvU4igUU3W7sDKa6mQY5c8QzpAVHuauFwACdAok5sSGYAAFGbw3KdnP5nysj6Vq1ceVHebwLuPbyHNMLBgZEURb36ZM8kNRbLNy198FjEH',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+                            'xprv9xvU4igUU3W7sDKa6mQY5c8QzpAVHuauFwACdAok5sSGYAAFGbw3KdnP5nysj6Vq1ceVHebwLuPbyHNMLBgZEURb36ZM8kNRbLNy198FjEH',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -533,10 +533,10 @@ describe('Lib/Litecoin', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPeb86yg7R6Nboa6n4jF8oeJqxgz3pqYBdDmwdeSWJqwjvxDmwYQZHgXntK4N7W8nYYsUCcbaCdgakkc8rLDxahESxaboNgyC',
+          ['tprv8hCsXje7CohQkzdP63QmttSK7FMe7GcRMtAJ4x2nQqKDrKaxPAWbsyqQig9n59cWgYh6bsCwUHHz79ZK99DAkRxn73nY7BY86BkucrGZNC8',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPeb86yg7R6Nboa6n4jF8oeJqxgz3pqYBdDmwdeSWJqwjvxDmwYQZHgXntK4N7W8nYYsUCcbaCdgakkc8rLDxahESxaboNgyC',
+                            'tprv8hCsXje7CohQkzdP63QmttSK7FMe7GcRMtAJ4x2nQqKDrKaxPAWbsyqQig9n59cWgYh6bsCwUHHz79ZK99DAkRxn73nY7BY86BkucrGZNC8',
                             { limit: 1, skip: 1 },
                         ])
                     })

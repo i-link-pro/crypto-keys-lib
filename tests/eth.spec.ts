@@ -283,10 +283,10 @@ describe('Lib/Ethereum', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-              ['xprv9s21ZrQH143K3GjA2ZtLP3PWGvUQskHtGeRMCPcnK3oyzFDjdCf4qUwLDVwnRkPnik2ssTpXAidRfZvgqzrcr1vEvvbknHtyjkeFZ5GZ6fo',
+              ['xprv9yoRjX8RQiQLhUvj1sZ9YNv6LyRZhBu1vU3sX9MezqfdrgsH8Q2KdVgGqeYPEpcPEb5ioCJbqh94Fjm8C6Hvz4LtqKFk8vD2yLfVv5SW2h3',
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K3GjA2ZtLP3PWGvUQskHtGeRMCPcnK3oyzFDjdCf4qUwLDVwnRkPnik2ssTpXAidRfZvgqzrcr1vEvvbknHtyjkeFZ5GZ6fo',
+                            'xprv9yoRjX8RQiQLhUvj1sZ9YNv6LyRZhBu1vU3sX9MezqfdrgsH8Q2KdVgGqeYPEpcPEb5ioCJbqh94Fjm8C6Hvz4LtqKFk8vD2yLfVv5SW2h3',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -532,10 +532,10 @@ describe('Lib/Ethereum', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPeCxL6vrbctP8GhrGvffokP1bfksTVoGWkCNUnq87dHNfhyZmT4scyN9DKfMXhwzBxtufhPGHMMyxEGd3jKdnqKKmHCzm4F7',
+          ['tprv8gLtsipQHyZSyzygbpLQhTZn8oZbwdYBifCfW28FCdBFWmefW7vuG9vZ7v2KMvJwj3X959zxMXQ2NDKBCquNEnr7vnjJgggqQSQw29vBiZQ',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPeCxL6vrbctP8GhrGvffokP1bfksTVoGWkCNUnq87dHNfhyZmT4scyN9DKfMXhwzBxtufhPGHMMyxEGd3jKdnqKKmHCzm4F7',
+                            'tprv8gLtsipQHyZSyzygbpLQhTZn8oZbwdYBifCfW28FCdBFWmefW7vuG9vZ7v2KMvJwj3X959zxMXQ2NDKBCquNEnr7vnjJgggqQSQw29vBiZQ',
                             { limit: 1, skip: 1 },
                         ])
                     })

@@ -305,10 +305,10 @@ describe('Lib/BitcoinBase', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-              ['xprv9s21ZrQH143K3GjA2ZtLP3PWGvUQskHtGeRMCPcnK3oyzFDjdCf4qUwLDVwnRkPnik2ssTpXAidRfZvgqzrcr1vEvvbknHtyjkeFZ5GZ6fo',
+              ['xprv9z5ah3GaSD3VnXzFhpZQEnQuw8JxYaKwX1Rd7iDUUsLQQ8rwCbPFQ4M9qutwFajKtctHFZGvuo9b69X69j6UAwXuZ8VLvJtkRZGjuD8YTuQ',
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K3GjA2ZtLP3PWGvUQskHtGeRMCPcnK3oyzFDjdCf4qUwLDVwnRkPnik2ssTpXAidRfZvgqzrcr1vEvvbknHtyjkeFZ5GZ6fo',
+                            'xprv9z5ah3GaSD3VnXzFhpZQEnQuw8JxYaKwX1Rd7iDUUsLQQ8rwCbPFQ4M9qutwFajKtctHFZGvuo9b69X69j6UAwXuZ8VLvJtkRZGjuD8YTuQ',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -555,10 +555,10 @@ describe('Lib/BitcoinBase', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPdBD4H3iPH6uFSKmJ18hzpDLxnX1pDBZVw3Q3M5eE281mkxzxEHeGMxRUtCwbMzURrEzEtidA5NeeAC5wgdhvhDzLDhxcSzx',
+          ['tprv8fpHND66YGHAydYhpYhW6wPWK3ujE9WukgrUUWTG2BhQoxEXz5jziPqroBCemW4ELqksHU9YHCyFGinsS2KGiNG2Rtxo19gYrtDsiYPXtTb',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPdBD4H3iPH6uFSKmJ18hzpDLxnX1pDBZVw3Q3M5eE281mkxzxEHeGMxRUtCwbMzURrEzEtidA5NeeAC5wgdhvhDzLDhxcSzx',
+                            'tprv8fpHND66YGHAydYhpYhW6wPWK3ujE9WukgrUUWTG2BhQoxEXz5jziPqroBCemW4ELqksHU9YHCyFGinsS2KGiNG2Rtxo19gYrtDsiYPXtTb',
                             { limit: 1, skip: 1 },
                         ])
                     })

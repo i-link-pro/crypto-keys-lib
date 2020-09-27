@@ -105,11 +105,19 @@ export class Keys implements IKeys {
                 from.seedPhrase,
                 from.password,
             )
-
-            return this.lib.derivateFromPrivate(
-                seedData.masterPrivateKey,
-                pathCursor,
-            )
+            if (pathCursor.path && pathCursor.path.indexOf('m') !== -1) {
+                // if full path use master key
+                return this.lib.derivateFromPrivate(
+                    seedData.masterPrivateKey,
+                    pathCursor,
+                )
+            } else {
+                // if short path use master account key
+                return this.lib.derivateFromPrivate(
+                    seedData.masterAccountPrivateKey,
+                    pathCursor,
+                )
+            }
         } else if (this.isMasterPrivate(from)) {
             return this.lib.derivateFromPrivate(
                 from.masterPrivateKey,

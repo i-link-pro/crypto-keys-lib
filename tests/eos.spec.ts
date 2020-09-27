@@ -289,10 +289,10 @@ describe('Lib/EOS', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K2jPo7ik5Wq7V5vx5J8zDALgyzgn9YDHjLwnMWbiVW6Ja7z1yHkQmpkRifgLVPouF2AaU9KgaBXAohpN7QPNPPmi4DNu6bsd',
+          ['xprv9ykCEPhgN7JAnpnmL653deNuqJpvbBoCSNRY2Fwb7TEjqzMakFGcyj9HHP3N5jUpE9U8YFZRpxBQQnLqtNKHuQg6RPpfbeTdmTKr3hMq12s',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K2jPo7ik5Wq7V5vx5J8zDALgyzgn9YDHjLwnMWbiVW6Ja7z1yHkQmpkRifgLVPouF2AaU9KgaBXAohpN7QPNPPmi4DNu6bsd',
+                            'xprv9ykCEPhgN7JAnpnmL653deNuqJpvbBoCSNRY2Fwb7TEjqzMakFGcyj9HHP3N5jUpE9U8YFZRpxBQQnLqtNKHuQg6RPpfbeTdmTKr3hMq12s',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -538,10 +538,10 @@ describe('Lib/EOS', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPfKAaP2Q5eNv8au9dUPcqytJs25PybygLZn5VVueBVpGP3DmFoHgzgus5Mr8cQ1Jm4WMLojE39A8ERV4V9gCt1G54rHEGVvP',
+          ['tprv8gUcC4JcSrXqrmqVPhwSsrrHGQ8bTdYksAwyyvXGgtrGZQD7C3XRPsc9Ypu4dDvvhKdJQqhWdEBEc2tKYxvKTVLycSXhaB7fjYAdkXZ1Trk',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPfKAaP2Q5eNv8au9dUPcqytJs25PybygLZn5VVueBVpGP3DmFoHgzgus5Mr8cQ1Jm4WMLojE39A8ERV4V9gCt1G54rHEGVvP',
+                            'tprv8gUcC4JcSrXqrmqVPhwSsrrHGQ8bTdYksAwyyvXGgtrGZQD7C3XRPsc9Ypu4dDvvhKdJQqhWdEBEc2tKYxvKTVLycSXhaB7fjYAdkXZ1Trk',
                             { limit: 1, skip: 1 },
                         ])
                     })
