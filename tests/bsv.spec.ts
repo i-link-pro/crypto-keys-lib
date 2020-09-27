@@ -579,10 +579,10 @@ describe('Lib/BitcoinSV', () => {
     })
 
     describe('#sign', () => {
-        context('with mainnet network', () => {
+        context('with mainnet network', async () => {
             const privateKey =
                 'L5iKsuPCE27Gq1HpztakBmM6ACUyuh4tRV4Vd92EMvaRoLWwN2w2'
-            const actual = instance.sign('fake_data', privateKey, false)
+            const actual = await instance.sign('fake_data', privateKey, false)
             it('should be return `566ac601ed26a65b05e1bb21367e83aafbd688ebceecaf222e65938a6da4a18c692c6df1a8ba3af9e49d67b57f621bab8bbeea97b1d5ced18dc252ec6f83214d`', () => {
                 assert.strictEqual(
                     actual,
@@ -590,17 +590,17 @@ describe('Lib/BitcoinSV', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')
                 })
             }
         })
-        context('with testnet network', () => {
+        context('with testnet network', async () => {
             const privateKey =
                 'KxXoNWFRuNJgfk1GrHaHVBXccH9qVPsNMnjGUHKR6FR31HtcBvLk'
-            const actual = instanceWithTestnet.sign(
+            const actual = await instanceWithTestnet.sign(
                 'fake_data',
                 privateKey,
                 false,
@@ -612,7 +612,7 @@ describe('Lib/BitcoinSV', () => {
                 )
             })
             try {
-                instanceWithTestnet.sign(
+                await instanceWithTestnet.sign(
                     'fake_data',
                     'Invalid_Private_Key',
                     false,

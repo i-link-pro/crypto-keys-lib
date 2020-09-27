@@ -81,7 +81,9 @@ export class BitcoinBase {
             const derived = wallet.derivePath(currentPath)
 
             return {
-                path: currentPath,
+                path: cursor.path
+                    ? currentPath
+                    : this.defaultPath + '/' + currentPath,
                 address: this.getAddressFromPublic(
                     this.getPublicKey(derived.publicKey.toString('hex')),
                 ),
@@ -110,7 +112,9 @@ export class BitcoinBase {
             const derived = this.deriveRecursive(wallet, pathParts)
 
             return {
-                path: currentPath,
+                path: cursor.path
+                    ? currentPath
+                    : this.defaultPath + '/' + currentPath,
                 address: this.getAddressFromPublic(
                     this.getPublicKey(derived.publicKey.toString('hex')),
                 ),

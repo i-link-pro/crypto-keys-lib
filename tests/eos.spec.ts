@@ -580,10 +580,10 @@ describe('Lib/EOS', () => {
     })
 
     describe('#sign', () => {
-        context('with mainnet network', () => {
+        context('with mainnet network', async () => {
             const privateKey =
                 '5KauJcw5Xh5MazAqcwPBL5gXMP9eZQE8YLqTH2Q9xscLhvdHHSF'
-            const actual = instance.sign('fake_data', privateKey, false)
+            const actual = await instance.sign('fake_data', privateKey, false)
             it('should be return `SIG_K1_KeurYw2XHnXHpi6HpyHGzCz43ucBa5x9JP56ZeYHYLN92WhmZ9nrvyGxisCCkxrNoeAhMwrJxZCkXtuGEmrp9f4tR7HdGo`', () => {
                 assert.strictEqual(
                     actual,
@@ -591,17 +591,17 @@ describe('Lib/EOS', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')
                 })
             }
         })
-        context('with testnet network', () => {
+        context('with testnet network', async () => {
             const privateKey =
                 '5KP4XRfzMTcqnMcDmq2MVp8ApoQTUi12D6Cep55gHsTbctvMYA8'
-            const actual = instanceWithTestnet.sign(
+            const actual = await instanceWithTestnet.sign(
                 'fake_data',
                 privateKey,
                 false,
@@ -613,7 +613,7 @@ describe('Lib/EOS', () => {
                 )
             })
             try {
-                instanceWithTestnet.sign(
+                await instanceWithTestnet.sign(
                     'fake_data',
                     'Invalid_Private_Key',
                     false,
