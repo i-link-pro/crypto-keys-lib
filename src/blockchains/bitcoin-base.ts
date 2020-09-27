@@ -90,7 +90,7 @@ export class BitcoinBase {
         cursor: PathCursor,
     ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig)
-        
+
         let isAccount = false
         if (wallet.parentFingerprint) {
             isAccount = true
