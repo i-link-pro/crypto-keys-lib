@@ -45,7 +45,7 @@ export class Ripple extends BitcoinBase {
     }
 
     // todo: rewrite sign https://github.com/xpring-eng/xpring-common-js/blob/master/src/XRP/signer.ts#L20
-    sign(data: string, privateKey: string): string {
+    async sign(data: string, privateKey: string): Promise<string> {
         const key = ECPair.fromWIF(privateKey, this.networkConfig)
         const hash = createHash('sha256')
             .update(data)

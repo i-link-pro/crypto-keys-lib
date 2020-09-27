@@ -119,7 +119,7 @@ export class BitcoinBase {
         })
     }
 
-    sign(data: string, privateKey: string, isTx = true): string {
+    async sign(data: string, privateKey: string, isTx = true): Promise<string> {
         if (isTx) {
             let dataObj
             let mapPrivateKeys

@@ -17,5 +17,6 @@ declare type NetworkConfig = {
 };
 declare const bitcoin: NetworkConfig;
 declare const litecoin: NetworkConfig;
+declare const dogecoin: NetworkConfig;
 declare const bitcoinsv: NetworkConfig;
-export { bitcoin, litecoin, bitcoinsv };
+export { bitcoin, litecoin, bitcoinsv, dogecoin };

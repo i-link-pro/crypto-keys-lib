@@ -25,7 +25,7 @@ export declare class BitcoinBase {
     protected getPublicKey(publicKey: string): string;
     derivateFromPrivate(masterPrivateKey: string, cursor: PathCursor): KeysWithPath[];
     derivateFromPublic(masterPublicKey: string, cursor: PathCursor): KeysWithPath[];
-    sign(data: string, privateKey: string, isTx?: boolean): string;
+    sign(data: string, privateKey: string, isTx?: boolean): Promise<string>;
     checkSign(publicKey: string, data: string, sign: string): boolean;
     getMasterAddressFromSeed(seed: string, path?: string): MasterKeys;
     getPublicFromPrivate(privateKey: string, isWIF?: boolean): string;
