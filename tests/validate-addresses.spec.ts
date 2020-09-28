@@ -130,9 +130,10 @@ describe('ETHEREUM Address Validator', () => {
 describe('EOS Address Validator', () => {
     const generateEOS = (length = 12, prefix = 'e.') => {
         let text = ''
+        const len = length - prefix.length
         const possible = 'abcdefghijklmnopqrstuvwxyz12345'
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < len; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length))
         }
 
@@ -144,7 +145,7 @@ describe('EOS Address Validator', () => {
             const instance = new EOS(Network.MAINNET)
             const address = generateEOS() /* instance.getAddressFromPublic(publicKey) */
 
-            it('Should generate valid address', () => {
+            it('Should generate valid address: ' + address, () => {
                 assert.equal(instance.isValidAddress(address), true)
             })
         })

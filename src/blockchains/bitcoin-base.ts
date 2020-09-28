@@ -68,20 +68,43 @@ export class BitcoinBase {
         return publicKey
     }
 
+    getPath(path: string, isAccount: boolean): string {
+        if (path.indexOf('m') !== -1) {
+            if (isAccount) {
+                throw new Error(
+                    "invalid path or key\n use full path(m/44'/194'/0'/0/2) with master key\n use short path(0/2) with master account key",
+                )
+            }
+            return path
+        } else {
+            if (isAccount) {
+                return path
+            } else {
+                return this.defaultPath + '/' + path
+            }
+        }
+    }
+
     derivateFromPrivate(
         masterPrivateKey: string,
         cursor: PathCursor,
     ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig)
+
+        let isAccount = false
+        if (wallet.parentFingerprint) {
+            isAccount = true
+        }
+
         const indexes = getIndexes(cursor.skip, cursor.limit)
-        const path = preparePath(cursor.path || '0/0')
+        const path = preparePath(this.getPath(cursor.path || '0/0', isAccount))
 
         return indexes.map(index => {
             const currentPath = path.replace('{index}', index.toString())
             const derived = wallet.derivePath(currentPath)
 
             return {
-                path: currentPath,
+                path: this.getPath(currentPath, false),
                 address: this.getAddressFromPublic(
                     this.getPublicKey(derived.publicKey.toString('hex')),
                 ),
@@ -96,8 +119,14 @@ export class BitcoinBase {
         cursor: PathCursor,
     ): KeysWithPath[] {
         const wallet = bip32.fromBase58(masterPublicKey, this.networkConfig)
+
+        let isAccount = false
+        if (wallet.parentFingerprint) {
+            isAccount = true
+        }
+
         const indexes = getIndexes(cursor.skip, cursor.limit)
-        const path = preparePath(cursor.path || '0/0')
+        const path = preparePath(this.getPath(cursor.path || '0/0', isAccount))
 
         return indexes.map(index => {
             const currentPath = path.replace('{index}', index.toString())
@@ -110,7 +139,7 @@ export class BitcoinBase {
             const derived = this.deriveRecursive(wallet, pathParts)
 
             return {
-                path: currentPath,
+                path: this.getPath(currentPath, false),
                 address: this.getAddressFromPublic(
                     this.getPublicKey(derived.publicKey.toString('hex')),
                 ),

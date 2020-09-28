@@ -289,10 +289,10 @@ describe('Lib/EOS', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K2jPo7ik5Wq7V5vx5J8zDALgyzgn9YDHjLwnMWbiVW6Ja7z1yHkQmpkRifgLVPouF2AaU9KgaBXAohpN7QPNPPmi4DNu6bsd',
+          ['xprv9ykCEPhgN7JAnpnmL653deNuqJpvbBoCSNRY2Fwb7TEjqzMakFGcyj9HHP3N5jUpE9U8YFZRpxBQQnLqtNKHuQg6RPpfbeTdmTKr3hMq12s',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K2jPo7ik5Wq7V5vx5J8zDALgyzgn9YDHjLwnMWbiVW6Ja7z1yHkQmpkRifgLVPouF2AaU9KgaBXAohpN7QPNPPmi4DNu6bsd',
+                            'xprv9ykCEPhgN7JAnpnmL653deNuqJpvbBoCSNRY2Fwb7TEjqzMakFGcyj9HHP3N5jUpE9U8YFZRpxBQQnLqtNKHuQg6RPpfbeTdmTKr3hMq12s',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -538,10 +538,10 @@ describe('Lib/EOS', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPfKAaP2Q5eNv8au9dUPcqytJs25PybygLZn5VVueBVpGP3DmFoHgzgus5Mr8cQ1Jm4WMLojE39A8ERV4V9gCt1G54rHEGVvP',
+          ['tprv8gUcC4JcSrXqrmqVPhwSsrrHGQ8bTdYksAwyyvXGgtrGZQD7C3XRPsc9Ypu4dDvvhKdJQqhWdEBEc2tKYxvKTVLycSXhaB7fjYAdkXZ1Trk',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPfKAaP2Q5eNv8au9dUPcqytJs25PybygLZn5VVueBVpGP3DmFoHgzgus5Mr8cQ1Jm4WMLojE39A8ERV4V9gCt1G54rHEGVvP',
+                            'tprv8gUcC4JcSrXqrmqVPhwSsrrHGQ8bTdYksAwyyvXGgtrGZQD7C3XRPsc9Ypu4dDvvhKdJQqhWdEBEc2tKYxvKTVLycSXhaB7fjYAdkXZ1Trk',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -580,10 +580,10 @@ describe('Lib/EOS', () => {
     })
 
     describe('#sign', () => {
-        context('with mainnet network', () => {
+        context('with mainnet network', async () => {
             const privateKey =
                 '5KauJcw5Xh5MazAqcwPBL5gXMP9eZQE8YLqTH2Q9xscLhvdHHSF'
-            const actual = instance.sign('fake_data', privateKey, false)
+            const actual = await instance.sign('fake_data', privateKey, false)
             it('should be return `SIG_K1_KeurYw2XHnXHpi6HpyHGzCz43ucBa5x9JP56ZeYHYLN92WhmZ9nrvyGxisCCkxrNoeAhMwrJxZCkXtuGEmrp9f4tR7HdGo`', () => {
                 assert.strictEqual(
                     actual,
@@ -591,17 +591,17 @@ describe('Lib/EOS', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')
                 })
             }
         })
-        context('with testnet network', () => {
+        context('with testnet network', async () => {
             const privateKey =
                 '5KP4XRfzMTcqnMcDmq2MVp8ApoQTUi12D6Cep55gHsTbctvMYA8'
-            const actual = instanceWithTestnet.sign(
+            const actual = await instanceWithTestnet.sign(
                 'fake_data',
                 privateKey,
                 false,
@@ -613,7 +613,7 @@ describe('Lib/EOS', () => {
                 )
             })
             try {
-                instanceWithTestnet.sign(
+                await instanceWithTestnet.sign(
                     'fake_data',
                     'Invalid_Private_Key',
                     false,

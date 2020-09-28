@@ -294,10 +294,10 @@ describe('Lib/Litecoin', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+          ['xprv9xvU4igUU3W7sDKa6mQY5c8QzpAVHuauFwACdAok5sSGYAAFGbw3KdnP5nysj6Vq1ceVHebwLuPbyHNMLBgZEURb36ZM8kNRbLNy198FjEH',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K38um1cGFixh4D6ntV4aaRtnTbVHoFk93hkEKRdx5wAqLfehEVeMAa3xYW9yv6UsgQ5ydvinCcDyRx52KF3QrDzoUgpwvNZS',
+                            'xprv9xvU4igUU3W7sDKa6mQY5c8QzpAVHuauFwACdAok5sSGYAAFGbw3KdnP5nysj6Vq1ceVHebwLuPbyHNMLBgZEURb36ZM8kNRbLNy198FjEH',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -533,10 +533,10 @@ describe('Lib/Litecoin', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPeb86yg7R6Nboa6n4jF8oeJqxgz3pqYBdDmwdeSWJqwjvxDmwYQZHgXntK4N7W8nYYsUCcbaCdgakkc8rLDxahESxaboNgyC',
+          ['tprv8hCsXje7CohQkzdP63QmttSK7FMe7GcRMtAJ4x2nQqKDrKaxPAWbsyqQig9n59cWgYh6bsCwUHHz79ZK99DAkRxn73nY7BY86BkucrGZNC8',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPeb86yg7R6Nboa6n4jF8oeJqxgz3pqYBdDmwdeSWJqwjvxDmwYQZHgXntK4N7W8nYYsUCcbaCdgakkc8rLDxahESxaboNgyC',
+                            'tprv8hCsXje7CohQkzdP63QmttSK7FMe7GcRMtAJ4x2nQqKDrKaxPAWbsyqQig9n59cWgYh6bsCwUHHz79ZK99DAkRxn73nY7BY86BkucrGZNC8',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -586,10 +586,10 @@ describe('Lib/Litecoin', () => {
     })
 
     describe('#sign', () => {
-        context('with mainnet network', () => {
+        context('with mainnet network', async () => {
             const privateKey =
                 'T5KAL3bY2BYSoT88UnHiVcKqrqku7wM9WuwGLXV5DiSSWfRGXUNz'
-            const actual = instance.sign('fake_data', privateKey, false)
+            const actual = await instance.sign('fake_data', privateKey, false)
             it('should be return `418b0dd60b32af679df67f781d3f9a3e17c1def9d7fb9408757aec0bbac77f5700de784ca57c99ab296991d831902536e6af171efe9cd83dfa539c600fed7c11`', () => {
                 assert.strictEqual(
                     actual,
@@ -597,17 +597,17 @@ describe('Lib/Litecoin', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')
                 })
             }
         })
-        context('with testnet network', () => {
+        context('with testnet network', async () => {
             const privateKey =
                 'cTaLMV6VEVnt2igKhCzYDPPmA3Rbax8ttFxqBtuBzKS8fPngUmb2'
-            const actual = instanceWithTestnet.sign(
+            const actual = await instanceWithTestnet.sign(
                 'fake_data',
                 privateKey,
                 false,
@@ -619,7 +619,7 @@ describe('Lib/Litecoin', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')

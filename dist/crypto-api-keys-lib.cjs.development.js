@@ -476,17 +476,39 @@ var BitcoinBase = /*#__PURE__*/function () {
     return publicKey;
   };
 
+  _proto.getPath = function getPath(path, isAccount) {
+    if (path.indexOf('m') !== -1) {
+      if (isAccount) {
+        throw new Error("invalid path or key\n use full path(m/44'/194'/0'/0/2) with master key\n use short path(0/2) with master account key");
+      }
+
+      return path;
+    } else {
+      if (isAccount) {
+        return path;
+      } else {
+        return this.defaultPath + '/' + path;
+      }
+    }
+  };
+
   _proto.derivateFromPrivate = function derivateFromPrivate(masterPrivateKey, cursor) {
     var _this = this;
 
     var wallet = bip32.fromBase58(masterPrivateKey, this.networkConfig);
+    var isAccount = false;
+
+    if (wallet.parentFingerprint) {
+      isAccount = true;
+    }
+
     var indexes = getIndexes(cursor.skip, cursor.limit);
-    var path = preparePath(cursor.path || '0/0');
+    var path = preparePath(this.getPath(cursor.path || '0/0', isAccount));
     return indexes.map(function (index) {
       var currentPath = path.replace('{index}', index.toString());
       var derived = wallet.derivePath(currentPath);
       return {
-        path: currentPath,
+        path: _this.getPath(currentPath, false),
         address: _this.getAddressFromPublic(_this.getPublicKey(derived.publicKey.toString('hex'))),
         publicKey: _this.getPublicKey(derived.publicKey.toString('hex')),
         privateKey: _this.getPrivateKey(derived)
@@ -498,8 +520,14 @@ var BitcoinBase = /*#__PURE__*/function () {
     var _this2 = this;
 
     var wallet = bip32.fromBase58(masterPublicKey, this.networkConfig);
+    var isAccount = false;
+
+    if (wallet.parentFingerprint) {
+      isAccount = true;
+    }
+
     var indexes = getIndexes(cursor.skip, cursor.limit);
-    var path = preparePath(cursor.path || '0/0');
+    var path = preparePath(this.getPath(cursor.path || '0/0', isAccount));
     return indexes.map(function (index) {
       var currentPath = path.replace('{index}', index.toString());
       var pathParts = currentPath.replace(getHardenedPath(path), '').split('/').filter(function (part) {
@@ -511,7 +539,7 @@ var BitcoinBase = /*#__PURE__*/function () {
       var derived = _this2.deriveRecursive(wallet, pathParts);
 
       return {
-        path: currentPath,
+        path: _this2.getPath(currentPath, false),
         address: _this2.getAddressFromPublic(_this2.getPublicKey(derived.publicKey.toString('hex'))),
         publicKey: _this2.getPublicKey(derived.publicKey.toString('hex'))
       };
@@ -1020,7 +1048,7 @@ var EOS = /*#__PURE__*/function (_BitcoinBase) {
   };
 
   _proto.isValidAddress = function isValidAddress(address) {
-    var regex = new RegExp(/^\e.[a-z1-5]{12}$/g);
+    var regex = new RegExp(/^[a-z1-5\.]{12}$/g);
     return regex.test(address);
   };
 
@@ -1211,7 +1239,12 @@ var Keys = /*#__PURE__*/function () {
   _proto.derivateKeys = function derivateKeys(from, pathCursor) {
     if (this.isSeed(from)) {
       var seedData = this.getMasterFromSeed(from.seedPhrase, from.password);
-      return this.lib.derivateFromPrivate(seedData.masterPrivateKey, pathCursor);
+
+      if (pathCursor.path && pathCursor.path.indexOf('m') !== -1) {
+        return this.lib.derivateFromPrivate(seedData.masterPrivateKey, pathCursor);
+      } else {
+        return this.lib.derivateFromPrivate(seedData.masterAccountPrivateKey, pathCursor);
+      }
     } else if (this.isMasterPrivate(from)) {
       return this.lib.derivateFromPrivate(from.masterPrivateKey, pathCursor);
     } else {

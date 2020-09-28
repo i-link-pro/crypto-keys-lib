@@ -283,10 +283,10 @@ describe('Lib/Ethereum', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-              ['xprv9s21ZrQH143K3GjA2ZtLP3PWGvUQskHtGeRMCPcnK3oyzFDjdCf4qUwLDVwnRkPnik2ssTpXAidRfZvgqzrcr1vEvvbknHtyjkeFZ5GZ6fo',
+              ['xprv9yoRjX8RQiQLhUvj1sZ9YNv6LyRZhBu1vU3sX9MezqfdrgsH8Q2KdVgGqeYPEpcPEb5ioCJbqh94Fjm8C6Hvz4LtqKFk8vD2yLfVv5SW2h3',
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K3GjA2ZtLP3PWGvUQskHtGeRMCPcnK3oyzFDjdCf4qUwLDVwnRkPnik2ssTpXAidRfZvgqzrcr1vEvvbknHtyjkeFZ5GZ6fo',
+                            'xprv9yoRjX8RQiQLhUvj1sZ9YNv6LyRZhBu1vU3sX9MezqfdrgsH8Q2KdVgGqeYPEpcPEb5ioCJbqh94Fjm8C6Hvz4LtqKFk8vD2yLfVv5SW2h3',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -532,10 +532,10 @@ describe('Lib/Ethereum', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPeCxL6vrbctP8GhrGvffokP1bfksTVoGWkCNUnq87dHNfhyZmT4scyN9DKfMXhwzBxtufhPGHMMyxEGd3jKdnqKKmHCzm4F7',
+          ['tprv8gLtsipQHyZSyzygbpLQhTZn8oZbwdYBifCfW28FCdBFWmefW7vuG9vZ7v2KMvJwj3X959zxMXQ2NDKBCquNEnr7vnjJgggqQSQw29vBiZQ',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPeCxL6vrbctP8GhrGvffokP1bfksTVoGWkCNUnq87dHNfhyZmT4scyN9DKfMXhwzBxtufhPGHMMyxEGd3jKdnqKKmHCzm4F7',
+                            'tprv8gLtsipQHyZSyzygbpLQhTZn8oZbwdYBifCfW28FCdBFWmefW7vuG9vZ7v2KMvJwj3X959zxMXQ2NDKBCquNEnr7vnjJgggqQSQw29vBiZQ',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -574,10 +574,10 @@ describe('Lib/Ethereum', () => {
     })
 
     describe('#sign', () => {
-        context('with mainnet network', () => {
+        context('with mainnet network', async () => {
             const privateKey =
                 'efca4cdd31923b50f4214af5d2ae10e7ac45a5019e9431cc195482d707485378'
-            const actual = instance.sign('fake_data', privateKey, false)
+            const actual = await instance.sign('fake_data', privateKey, false)
             it('should be return `{"r":"58f4a1752fd3b747ba5e4a531bdff163ae20b741f23f1ae2a52e1d83a5133b01","s":"5d6c1dec0f7287495c59bad2b1bea07311d610fbf9b098076ba4103adf5248bc","v":27}`', () => {
                 assert.strictEqual(
                     actual,
@@ -585,7 +585,7 @@ describe('Lib/Ethereum', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Expected private key to be an Uint8Array with length 32`', () => {
                     assert.strictEqual(
@@ -595,10 +595,10 @@ describe('Lib/Ethereum', () => {
                 })
             }
         })
-        context('with testnet network', () => {
+        context('with testnet network', async () => {
             const privateKey =
                 '0xce1d919795a87346b29aeb11bdd95f9608169ed9dc2e60c4dd81d43dd6b69949'
-            const actual = instanceWithTestnet.sign(
+            const actual = await instanceWithTestnet.sign(
                 'fake_data',
                 privateKey,
                 false,
@@ -610,7 +610,7 @@ describe('Lib/Ethereum', () => {
                 )
             })
             try {
-                instanceWithTestnet.sign(
+                await instanceWithTestnet.sign(
                     'fake_data',
                     'Invalid_Private_Key',
                     false,

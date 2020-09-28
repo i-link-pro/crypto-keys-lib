@@ -297,10 +297,10 @@ describe('Lib/Ripple', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['xprv9s21ZrQH143K322zF5PBbG4mLk3nbh3rnqRqPac9tBMp2beRCtNb4qPTztmyarBnw61ncV8WXJZaHagB9tSTdz91gCr9MbHwJaoefXGxEhi',
+          ['xprv9zEFWzJ1fjPGZsQCt9zY6zjUDvpjwFqJDzEECLBKxeRR41DR33ZFvs6hHYZKvFnKffMCiL48wEMQZjFiYLPRiTPwN7hx8ytjhp8BFuY6dLc',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'xprv9s21ZrQH143K322zF5PBbG4mLk3nbh3rnqRqPac9tBMp2beRCtNb4qPTztmyarBnw61ncV8WXJZaHagB9tSTdz91gCr9MbHwJaoefXGxEhi',
+                            'xprv9zEFWzJ1fjPGZsQCt9zY6zjUDvpjwFqJDzEECLBKxeRR41DR33ZFvs6hHYZKvFnKffMCiL48wEMQZjFiYLPRiTPwN7hx8ytjhp8BFuY6dLc',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -546,10 +546,10 @@ describe('Lib/Ripple', () => {
                     })
 
                     it(`should be call {derivateFromPrivate} function with following args 
-          ['tprv8ZgxMBicQKsPd37ZVh3xLHZCzQKKnToE6Et91PbWpcTu5BCEgp2LFWUq3SN84piNbUKhw5Phh4Ew5cwCQGTvAFAYBzxF2ifPHqMieHhzgLn',
+          ['tprv8gyunU4DX6XAHL54QKg1wKmAY7Wp2BeeZ7sknECj71ca5ATM2HG9dQ9RvTQoSM5NmXwx6LjfzFRCJJ8zoXFfhcdUdGgSd1XshSjSXGWqnjS',
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
-                            'tprv8ZgxMBicQKsPd37ZVh3xLHZCzQKKnToE6Et91PbWpcTu5BCEgp2LFWUq3SN84piNbUKhw5Phh4Ew5cwCQGTvAFAYBzxF2ifPHqMieHhzgLn',
+                            'tprv8gyunU4DX6XAHL54QKg1wKmAY7Wp2BeeZ7sknECj71ca5ATM2HG9dQ9RvTQoSM5NmXwx6LjfzFRCJJ8zoXFfhcdUdGgSd1XshSjSXGWqnjS',
                             { limit: 1, skip: 1 },
                         ])
                     })
@@ -588,10 +588,10 @@ describe('Lib/Ripple', () => {
     })
 
     describe('#sign', () => {
-        context('with mainnet network', () => {
+        context('with mainnet network', async () => {
             const privateKey =
                 'L2fDxPGkZTRoasvqbUJDyf5XwHRqLGFGXUhXpinXKY1fPtzkVuM1'
-            const actual = instance.sign('fake_data', privateKey, false)
+            const actual = await instance.sign('fake_data', privateKey, false)
             it('should be return `30440220110A823EC57DE58D2BBFE34E4FE3464BFFD2997E952C00E534B5AF3B92FF51A80220112C3B818AA2BDDEA761236B4A23FBB741071407E56A6C7B1CBD6F93CF36FB08`', () => {
                 assert.strictEqual(
                     actual,
@@ -599,17 +599,17 @@ describe('Lib/Ripple', () => {
                 )
             })
             try {
-                instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
             } catch (ex) {
                 it('should be throw an error with following message `Non-base58 character`', () => {
                     assert.strictEqual(ex.message, 'Non-base58 character')
                 })
             }
         })
-        context('with testnet network', () => {
+        context('with testnet network', async () => {
             const privateKey =
                 'cUVN2CtwaNBTUdRimGn6qVVhzD7wXk4nQQ6u1BU9vaNQ3oGKhKvw'
-            const actual = instanceWithTestnet.sign(
+            const actual = await instanceWithTestnet.sign(
                 'fake_data',
                 privateKey,
                 false,
@@ -621,7 +621,7 @@ describe('Lib/Ripple', () => {
                 )
             })
             try {
-                instanceWithTestnet.sign(
+                await instanceWithTestnet.sign(
                     'fake_data',
                     'Invalid_Private_Key',
                     false,
