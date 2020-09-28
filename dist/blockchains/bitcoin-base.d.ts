@@ -23,6 +23,7 @@ export declare class BitcoinBase {
     deriveRecursive(derived: bip32.BIP32Interface, parts: number[]): bip32.BIP32Interface;
     protected getPrivateKey(privateKey: bip32.BIP32Interface): string;
     protected getPublicKey(publicKey: string): string;
+    getPath(path: string, isAccount: boolean): string;
     derivateFromPrivate(masterPrivateKey: string, cursor: PathCursor): KeysWithPath[];
     derivateFromPublic(masterPublicKey: string, cursor: PathCursor): KeysWithPath[];
     sign(data: string, privateKey: string, isTx?: boolean): Promise<string>;
