@@ -796,4 +796,5 @@ describe('Lib/Ripple', () => {
             assert.strictEqual(actual, true)
         })
     })
+
 })
