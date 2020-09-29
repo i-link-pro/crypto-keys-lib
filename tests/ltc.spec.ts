@@ -812,4 +812,38 @@ describe('Lib/Litecoin', () => {
             }
         })
     })
+
+    describe('#signTx', () => {
+        context('with testnet network', async () => {
+
+            const data = '{"sum":"50000","fee":"452","inputs":[{"txId":"b188ea4c9e5631e9e5b099d9f28d47ce09d0df92bbffe2fa49f7b0d29fc3cd6b","hex":"01000000000101fef9a4243f8059c52fb8ea5f432dc5db65cb656800a64cbd81f719a9fb98de630100000000f0ffffff03400d0300000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988acc71a0c0000000000160014658fa3b17fc277493a0e792bf2e139209cc757c00000000000000000196a1768747470733a2f2f746c74632e6269746170732e636f6d02483045022100b24ae7a9b4427691a28144d94049867a1ff14fe6d4af8ab34e9143cec259e25c02204925f404f49f8e030846d655594590a3cc5ef0a0c727f691b969729a8b3732c30121022183beb67441a0cd53f94a0682cfc12fbd2d1ef44feef38e4a001ca1444dd94900000000","n":0,"value":"200000","address":"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx","type":"pubkeyhash","scriptPubKeyHex":"76a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac"}],"outputs":[{"address":"mqdGFzXHixreCSmicjpcV2RBX5TamMM3zL","amount":"50000"},{"address":"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx","amount":"149548"}]}';
+            const privateKey =
+                JSON.stringify({ 'n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx': 'cUnTHCW9ANikp5t1eXF6a39qUQb4ombmLXqiDHUTfk2JCHHXtot2' })
+
+            const actual = await instanceWithTestnet.sign(
+                data,
+                privateKey,
+                true,
+            )
+
+
+            it('should be return `02000000016bcdc39fd2b0f749fae2ffbb92dfd009ce478df2d999b0e5e931569e4cea88b1000000006a47304402207d3d826262421cd4b3bef987e9461586fe4f819a5c5c805619216e02f4ada2f40220373739fcbfae77d96de3a984c990c4c19e23c42763562d1af71f674ae7be1d4c012103450cc14421e64896fc7f96320083d1a50b66b1ec9a75ed2b533338dc7ea8d0ceffffffff0250c30000000000001976a9146ee2bfe4a80de0a89b0aea9d3a71e9a99f4a788388ac2c480200000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac00000000`', () => {
+                assert.strictEqual(
+                    actual,
+                    '02000000016bcdc39fd2b0f749fae2ffbb92dfd009ce478df2d999b0e5e931569e4cea88b1000000006a47304402207d3d826262421cd4b3bef987e9461586fe4f819a5c5c805619216e02f4ada2f40220373739fcbfae77d96de3a984c990c4c19e23c42763562d1af71f674ae7be1d4c012103450cc14421e64896fc7f96320083d1a50b66b1ec9a75ed2b533338dc7ea8d0ceffffffff0250c30000000000001976a9146ee2bfe4a80de0a89b0aea9d3a71e9a99f4a788388ac2c480200000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac00000000',
+                )
+            })
+            try {
+                await instanceWithTestnet.sign(
+                    data,
+                    "{\"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx\":\"ali32142\"}",
+                    true,
+                ) // check behavior in case of invalid private Key
+            } catch (ex) {
+                it('should be throw an error with following message `Non-base58 character`', () => {
+                    assert.strictEqual(ex.message, 'Non-base58 character')
+                })
+            }
+        })
+    })
 })
