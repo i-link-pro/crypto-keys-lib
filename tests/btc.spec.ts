@@ -1,10 +1,10 @@
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import { describe, it, after, before } from 'mocha'
-import { Keys } from '../src/lib'
-import { Network, Blockchain } from '../src/types'
-import { BitcoinBase } from '../src/blockchains/bitcoin-base'
-import { TEST_VECTORS } from './fixtures/vectors'
+import {describe, it, after, before} from 'mocha'
+import {Keys} from '../src/lib'
+import {Network, Blockchain} from '../src/types'
+import {BitcoinBase} from '../src/blockchains/bitcoin-base'
+import {TEST_VECTORS} from './fixtures/vectors'
 
 describe('BitcoinBase', () => {
     const instance = new BitcoinBase(Network.MAINNET)
@@ -160,7 +160,7 @@ describe('Lib/BitcoinBase', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9s21ZrQH143K3VDSXCXAqm4Wkw7TXBHfkxmaJ7RLRjqFADEeB7CiRjbfz7pxM8uzGFDcmAgz3jfAm2f88FSRFMKGGZeVo1qCpnSdFtXzeHt',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -226,7 +226,7 @@ describe('Lib/BitcoinBase', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xpub661MyMwAqRbcFkod8bRLkBLEpxJuHD1jdsLwzn2PsPLxs3YtAjyKPHFp4m4EssQC9aQNWymqLeKyhELT8MFKQFZgv8VBdrdVod1r9NtESMP',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -309,7 +309,7 @@ describe('Lib/BitcoinBase', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9z5ah3GaSD3VnXzFhpZQEnQuw8JxYaKwX1Rd7iDUUsLQQ8rwCbPFQ4M9qutwFajKtctHFZGvuo9b69X69j6UAwXuZ8VLvJtkRZGjuD8YTuQ',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -401,7 +401,7 @@ describe('Lib/BitcoinBase', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -470,7 +470,7 @@ describe('Lib/BitcoinBase', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tpubDCSJ3GrB3gss1K2ySF1pFezeSmdWZgjAXJC9i7mSVgh1taeg8XM6U522Tq1Yapd4yTn7BBzUzneZVDCLtyZxt42Js7YpVPqQXkTjKBTiytv',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -559,7 +559,7 @@ describe('Lib/BitcoinBase', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8fpHND66YGHAydYhpYhW6wPWK3ujE9WukgrUUWTG2BhQoxEXz5jziPqroBCemW4ELqksHU9YHCyFGinsS2KGiNG2Rtxo19gYrtDsiYPXtTb',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -576,7 +576,7 @@ describe('Lib/BitcoinBase', () => {
                 'xprv9s21ZrQH143K31xYSDQpPDxsXRTUcvj2iNHm5NUtrGiGG5e2DtALGdso3pGz6ssrdK4PFmM8NSpSBHNqPqm55Qn3LqFtT2emdEXVYsCzC2U',
         }
         try {
-            instance.derivateKeys({ masterPrivateKey: 'invalidKey' }, cursor) // check behavior in case of non-base58 charackter
+            instance.derivateKeys({masterPrivateKey: 'invalidKey'}, cursor) // check behavior in case of non-base58 charackter
         } catch (ex) {
             it('should be throw an error with following message `Non-base58 character`', () => {
                 assert.strictEqual(ex.message, 'Non-base58 character')
@@ -861,10 +861,12 @@ describe('Lib/BitcoinBase', () => {
 
     describe('#signTx', () => {
         context('with testnet network', async () => {
+            const data = "{\"sum\":\"0.005\",\"fee\":\"0.00000452\",\"inputs\":[{\"txId\":\"e96b793c978179ec47e03bd6e4524d0c415b0ba5b03a3f8c6d3c1ffe39a7fb70\",\"hex\":\"0200000000010136028c29e28352cf9d1c64e8b968994d53ff09dc57978773f19e97aa0b7adf9a01000000171600142e27c8d5d79128f7f434b859852598f9ae5d9fe9feffffff02212d29000000000017a9143e677d77b2c0211aab77f95e9160f7ce8872823b8740420f00000000001976a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac024730440220102f21ffc1bf16d7948e61170be6c5fa75555c9da0a84dd1171161b364b8c37102207f4aaefc95e0bc8601f1a67619134db58fbb058f4e0ee0f1f60a8bc333762b6c012103c03ae5882eefe3efa40532d8d1d936f8a8c491751125d66a56b0962a2aef413709071c00\",\"n\":1,\"value\":\"1000000\",\"address\":\"mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR\",\"type\":\"pubkeyhash\",\"scriptPubKeyHex\":\"76a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac\"}],\"outputs\":[{\"address\":\"mrM1xefnhqKMAeZV6KJJpzQVEP3VegiqED\",\"amount\":\"500000\"},{\"address\":\"mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR\",\"amount\":\"499548\"}]}"
 
-            const data = '{"sum":"50000","fee":"452","inputs":[{"txId":"b188ea4c9e5631e9e5b099d9f28d47ce09d0df92bbffe2fa49f7b0d29fc3cd6b","hex":"01000000000101fef9a4243f8059c52fb8ea5f432dc5db65cb656800a64cbd81f719a9fb98de630100000000f0ffffff03400d0300000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988acc71a0c0000000000160014658fa3b17fc277493a0e792bf2e139209cc757c00000000000000000196a1768747470733a2f2f746c74632e6269746170732e636f6d02483045022100b24ae7a9b4427691a28144d94049867a1ff14fe6d4af8ab34e9143cec259e25c02204925f404f49f8e030846d655594590a3cc5ef0a0c727f691b969729a8b3732c30121022183beb67441a0cd53f94a0682cfc12fbd2d1ef44feef38e4a001ca1444dd94900000000","n":0,"value":"200000","address":"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx","type":"pubkeyhash","scriptPubKeyHex":"76a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac"}],"outputs":[{"address":"mqdGFzXHixreCSmicjpcV2RBX5TamMM3zL","amount":"50000"},{"address":"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx","amount":"149548"}]}';
             const privateKey =
-                JSON.stringify({ 'n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx': 'cUnTHCW9ANikp5t1eXF6a39qUQb4ombmLXqiDHUTfk2JCHHXtot2' })
+                JSON.stringify({
+                    'mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR': 'cVFDNRVu1nCpBFKxjkckh4aDTeW7r5b9ikHsZ9pH2suSr2eL2wh8'
+                })
 
             const actual = await instanceWithTestnet.sign(
                 data,
@@ -873,16 +875,16 @@ describe('Lib/BitcoinBase', () => {
             )
 
 
-            it('should be return `02000000016bcdc39fd2b0f749fae2ffbb92dfd009ce478df2d999b0e5e931569e4cea88b1000000006a47304402207d3d826262421cd4b3bef987e9461586fe4f819a5c5c805619216e02f4ada2f40220373739fcbfae77d96de3a984c990c4c19e23c42763562d1af71f674ae7be1d4c012103450cc14421e64896fc7f96320083d1a50b66b1ec9a75ed2b533338dc7ea8d0ceffffffff0250c30000000000001976a9146ee2bfe4a80de0a89b0aea9d3a71e9a99f4a788388ac2c480200000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac00000000`', () => {
+            it('should be return `020000000170fba739fe1f3c6d8c3f3ab0a50b5b410c4d52e4d63be047ec7981973c796be9010000006b483045022100f4cda9d8054b53113aab0a873d52ee5fc7c03461351f9a2cd4866558e53ad81c02202bcb3fb6743d77b2aecb03b8580ff51392c122a98020df3fe42e2ba26395c0460121022b1918981f6d0f79dbd1815e7fe6cd93b95003073aca6d238768e520f44229e8ffffffff0220a10700000000001976a91476c848a51e0f653f85e40acf649a1b4a4bc1995c88ac5c9f0700000000001976a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac00000000`', () => {
                 assert.strictEqual(
                     actual,
-                    '02000000016bcdc39fd2b0f749fae2ffbb92dfd009ce478df2d999b0e5e931569e4cea88b1000000006a47304402207d3d826262421cd4b3bef987e9461586fe4f819a5c5c805619216e02f4ada2f40220373739fcbfae77d96de3a984c990c4c19e23c42763562d1af71f674ae7be1d4c012103450cc14421e64896fc7f96320083d1a50b66b1ec9a75ed2b533338dc7ea8d0ceffffffff0250c30000000000001976a9146ee2bfe4a80de0a89b0aea9d3a71e9a99f4a788388ac2c480200000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac00000000',
+                    '020000000170fba739fe1f3c6d8c3f3ab0a50b5b410c4d52e4d63be047ec7981973c796be9010000006b483045022100f4cda9d8054b53113aab0a873d52ee5fc7c03461351f9a2cd4866558e53ad81c02202bcb3fb6743d77b2aecb03b8580ff51392c122a98020df3fe42e2ba26395c0460121022b1918981f6d0f79dbd1815e7fe6cd93b95003073aca6d238768e520f44229e8ffffffff0220a10700000000001976a91476c848a51e0f653f85e40acf649a1b4a4bc1995c88ac5c9f0700000000001976a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac00000000',
                 )
             })
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx\":\"ali32142\"}",
+                    "{\"mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR\":\"ali32142\"}",
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {
