@@ -3,10 +3,10 @@
  */
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import { describe, it, after, before } from 'mocha'
-import { Keys } from '../src/lib'
-import { Network, Blockchain } from '../src/types'
-import { BitcoinCash } from '../src/blockchains/bitcoin-cash'
+import {describe, it, after, before} from 'mocha'
+import {Keys} from '../src/lib'
+import {Network, Blockchain} from '../src/types'
+import {BitcoinCash} from '../src/blockchains/bitcoin-cash'
 
 describe('Lib/BitcoinCash', () => {
     const instance = new Keys(Blockchain.BITCOIN_CASH, Network.MAINNET)
@@ -156,7 +156,7 @@ describe('Lib/BitcoinCash', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9s21ZrQH143K2Hp25mLf4h83JiNCHdX8BwAZcSLiDZopCxZq6t59oZJHFfeGB9mv6kxMkg6C5nNLafSkyAqkQXcurfr1dVcnG4jio4SAK1p',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -223,7 +223,7 @@ describe('Lib/BitcoinCash', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xpub661MyMwAqRbcFkod8bRLkBLEpxJuHD1jdsLwzn2PsPLxs3YtAjyKPHFp4m4EssQC9aQNWymqLeKyhELT8MFKQFZgv8VBdrdVod1r9NtESMP',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -307,7 +307,7 @@ describe('Lib/BitcoinCash', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9zULchJqtEdnxDsvQqKkbatXtHqiDd5F5fvwR8a1teFSY85836oZwTexEMvFYqc9qkrCTJBuHwmui4XBvFTu7rLMnFBdfzKax83JAjf53uE',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -397,7 +397,7 @@ describe('Lib/BitcoinCash', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWARbtRtfnLcJ5MQ2AtHcQJCCRUcMRvmDUjyEmNUWwx8UbK',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -467,7 +467,7 @@ describe('Lib/BitcoinCash', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tpubDCSJ3GrB3gss1K2ySF1pFezeSmdWZgjAXJC9i7mSVgh1taeg8XM6U522Tq1Yapd4yTn7BBzUzneZVDCLtyZxt42Js7YpVPqQXkTjKBTiytv',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -557,7 +557,7 @@ describe('Lib/BitcoinCash', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8fpHND66YGHAydYhpYhW6wPWK3ujE9WukgrUUWTG2BhQoxEXz5jziPqroBCemW4ELqksHU9YHCyFGinsS2KGiNG2Rtxo19gYrtDsiYPXtTb',
-                            { limit: 1, skip: 1 },
+                            {limit: 1, skip: 1},
                         ])
                     })
                 })
@@ -575,7 +575,7 @@ describe('Lib/BitcoinCash', () => {
                 'xprv9s21ZrQH143K3HUKu4RWfCYy7K5ZvtvLqHvXpSxdF9Bwe7W3AD3hB3Yaj8AsLfvjNK3jfjsmnGnxDsedZCZmiTy9ngS6DiomecHwnEipEMy',
         }
         try {
-            instance.derivateKeys({ masterPrivateKey: 'invalidKey' }, cursor) // check behavior in case of non-base58 charackter
+            instance.derivateKeys({masterPrivateKey: 'invalidKey'}, cursor) // check behavior in case of non-base58 charackter
         } catch (ex) {
             it('should be throw an error with following message `Non-base58 character`', () => {
                 assert.strictEqual(ex.message, 'Non-base58 character')
@@ -849,9 +849,9 @@ describe('Lib/BitcoinCash', () => {
     describe('#signTx', () => {
         context('with testnet network', async () => {
 
-            const data = '{"sum":"50000","fee":"452","inputs":[{"txId":"b188ea4c9e5631e9e5b099d9f28d47ce09d0df92bbffe2fa49f7b0d29fc3cd6b","hex":"01000000000101fef9a4243f8059c52fb8ea5f432dc5db65cb656800a64cbd81f719a9fb98de630100000000f0ffffff03400d0300000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988acc71a0c0000000000160014658fa3b17fc277493a0e792bf2e139209cc757c00000000000000000196a1768747470733a2f2f746c74632e6269746170732e636f6d02483045022100b24ae7a9b4427691a28144d94049867a1ff14fe6d4af8ab34e9143cec259e25c02204925f404f49f8e030846d655594590a3cc5ef0a0c727f691b969729a8b3732c30121022183beb67441a0cd53f94a0682cfc12fbd2d1ef44feef38e4a001ca1444dd94900000000","n":0,"value":"200000","address":"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx","type":"pubkeyhash","scriptPubKeyHex":"76a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac"}],"outputs":[{"address":"mqdGFzXHixreCSmicjpcV2RBX5TamMM3zL","amount":"50000"},{"address":"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx","amount":"149548"}]}';
+            const data = '{"sum":"0.00007","fee":"0.00000452","inputs":[{"txId":"2890b9c88dbf4f45dddfdd12fb0514725184083230e56590840acfbdb1eaa139","hex":"020000000183e456644889b8fc23bc40b856b1749cd62bd0d2a6870de18e43ce05c8f86e87000000006a473044022052a7de892385cbc5aa0cb350237de22110441fb9a514205a7726ba63308bb7240220268b8b4f0b072e9457aada3b8791a27fba5db83005a95e497fee511b786d71ee4121033ee6aaf63904f06aaa811e568d6601867fb08438c5b5c01d01b1527e3367b782ffffffff02946d6b27020000001976a91497a808f1d39ae863ed78500504780e2ca0c21b7288ac80969800000000001976a9142b6be58d677b495e9f1e30de3bec3260dfebe96188ac00000000","n":1,"value":"10000000","address":"bchtest:qq4khevdvaa5jh5lrccduwlvxfsdl6lfvy7peukxzh","type":"pubkeyhash","scriptPubKeyHex":"76a9142b6be58d677b495e9f1e30de3bec3260dfebe96188ac"}],"outputs":[{"address":"bchtest:qq4khevdvaa5jh5lrccduwlvxfsdl6lfvy7peukxzh","amount":"7000"},{"address":"bchtest:qq4khevdvaa5jh5lrccduwlvxfsdl6lfvy7peukxzh","amount":"9992548"}]}'
             const privateKey =
-                JSON.stringify({ 'n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx': 'cUnTHCW9ANikp5t1eXF6a39qUQb4ombmLXqiDHUTfk2JCHHXtot2' })
+                JSON.stringify({'bchtest:qq4khevdvaa5jh5lrccduwlvxfsdl6lfvy7peukxzh': 'cUhQbRTZwoiWQvyV7MGxoT7196igv4csSBkP8S7KrrtJuiA6aA4f'})
 
             const actual = await instanceWithTestnet.sign(
                 data,
@@ -859,6 +859,7 @@ describe('Lib/BitcoinCash', () => {
                 true,
             )
 
+            console.log(actual)
 
             it('should be return `02000000016bcdc39fd2b0f749fae2ffbb92dfd009ce478df2d999b0e5e931569e4cea88b1000000006a47304402207d3d826262421cd4b3bef987e9461586fe4f819a5c5c805619216e02f4ada2f40220373739fcbfae77d96de3a984c990c4c19e23c42763562d1af71f674ae7be1d4c012103450cc14421e64896fc7f96320083d1a50b66b1ec9a75ed2b533338dc7ea8d0ceffffffff0250c30000000000001976a9146ee2bfe4a80de0a89b0aea9d3a71e9a99f4a788388ac2c480200000000001976a914dbf95284089cdc64d92a1f6ef3ef50a0b396e15988ac00000000`', () => {
                 assert.strictEqual(
@@ -869,7 +870,7 @@ describe('Lib/BitcoinCash', () => {
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"n1a4xHRCNYGQhQDA19j83xdXSsM83oFrkx\":\"ali32142\"}",
+                    "{\"bchtest:qq4khevdvaa5jh5lrccduwlvxfsdl6lfvy7peukxzh\":\"ali32142\"}",
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {
