@@ -127,17 +127,6 @@ const emercoin: NetworkConfig = {
         scriptHash: 0xc4,
         wif: 0xef,
     },
-    regtest: {
-        messagePrefix: '\x18Emercoin Signed Message:\n',
-        bech32: 'emc',
-        bip32: {
-            public: 0x043587cf,
-            private: 0x04358394,
-        },
-        pubKeyHash: 0x6f,
-        scriptHash: 0xc4,
-        wif: 0xef,
-    },
 }
 
 const dashcoin: NetworkConfig = {
