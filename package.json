@@ -10,7 +10,7 @@
     "scripts": {
         "start": "tsdx watch",
         "build": "tsdx build --tsconfig ./tsconfig.build.json",
-        "test": "mocha -r ts-node/register 'tests/**/eth*.ts'",
+        "test": "mocha -r ts-node/register 'tests/**/*.ts'",
         "lint:ts": "eslint \"{src,tests}/**/*.ts\" --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
         "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\""
     },
