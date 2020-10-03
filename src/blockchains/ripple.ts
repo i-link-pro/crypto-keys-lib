@@ -5,6 +5,9 @@ import * as rippleKeyPair from 'ripple-keypairs'
 import * as rippleUtil from 'ripple-address-codec'
 import createHash from 'create-hash'
 import { ECPair } from 'bitcoinjs-lib'
+import * as bip32 from 'bip32'
+import { RippleAPI } from 'ripple-lib'
+import { KeyPair } from 'ripple-lib/dist/npm/transaction/types'
 
 export class Ripple extends BitcoinBase {
     protected networks = {
@@ -27,6 +30,10 @@ export class Ripple extends BitcoinBase {
         this.defaultPath = this.networks[network].path
     }
 
+    protected getPrivateKey(privateKey: bip32.BIP32Interface): string {
+        return privateKey.privateKey.toString('hex')
+    }
+
     // format: classic | xaddress = xaddress
     getAddressFromPublic(publicKey: string, format?: string): string {
         const classicAddress = rippleKeyPair.deriveAddress(publicKey)
@@ -45,7 +52,24 @@ export class Ripple extends BitcoinBase {
     }
 
     // todo: rewrite sign https://github.com/xpring-eng/xpring-common-js/blob/master/src/XRP/signer.ts#L20
-    async sign(data: string, privateKey: string): Promise<string> {
+    async sign(
+        data: string,
+        privateKey: string,
+        isTx: boolean,
+    ): Promise<string> {
+        if (isTx) {
+            const api = await new RippleAPI()
+            const privateKeyString: string = Object.values(
+                JSON.parse(privateKey),
+            )[0].toString()
+            const publicKey = this.getPublicFromPrivate(privateKeyString, false)
+            const keypair: KeyPair = {
+                privateKey: privateKeyString.toUpperCase(),
+                publicKey: publicKey.toUpperCase(),
+            }
+            return api.sign(data, keypair).signedTransaction
+        }
+
         const key = ECPair.fromWIF(privateKey, this.networkConfig)
         const hash = createHash('sha256')
             .update(data)
