@@ -61,10 +61,14 @@ export class Ethereum extends BitcoinBase {
 
     async sign(data: string, privateKey: string, isTx = true): Promise<string> {
         if (isTx) {
+            const privateKeyString: string = Object.values(
+                JSON.parse(privateKey),
+            )[0].toString()
+
             const chain = this.net === Network.MAINNET ? 'mainnet' : 'ropsten'
             const transactionObject = JSON.parse(data)
             const txRaw = new ethTx(transactionObject, { chain: chain })
-            const pk = Buffer.from(privateKey.replace('0x', ''), 'hex')
+            const pk = Buffer.from(privateKeyString.replace('0x', ''), 'hex')
             txRaw.sign(pk)
             return `0x${txRaw.serialize().toString('hex')}`
         }

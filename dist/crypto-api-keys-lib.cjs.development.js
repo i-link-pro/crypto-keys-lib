@@ -855,12 +855,13 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
       var _this3 = this;
 
       if (isTx) {
+        var privateKeyString = Object.values(JSON.parse(privateKey))[0].toString();
         var chain = _this3.net === exports.Network.MAINNET ? 'mainnet' : 'ropsten';
         var transactionObject = JSON.parse(data);
         var txRaw = new ethTx(transactionObject, {
           chain: chain
         });
-        var pk = Buffer.from(privateKey.replace('0x', ''), 'hex');
+        var pk = Buffer.from(privateKeyString.replace('0x', ''), 'hex');
         txRaw.sign(pk);
         return Promise.resolve("0x" + txRaw.serialize().toString('hex'));
       }
