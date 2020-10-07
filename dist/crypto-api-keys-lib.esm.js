@@ -11,6 +11,7 @@ import { privateToPublic, PrivateKey, PublicKey, sign, verify } from 'eosjs-ecc'
 import { JsonRpc, Api } from 'eosjs';
 import { deriveAddress, sign as sign$1, verify as verify$1 } from 'ripple-keypairs';
 import { classicAddressToXAddress, isValidXAddress, isValidClassicAddress } from 'ripple-address-codec';
+import { RippleAPI } from 'ripple-lib';
 
 var Blockchain;
 
@@ -915,12 +916,13 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
       var _this3 = this;
 
       if (isTx) {
+        var privateKeyString = Object.values(JSON.parse(privateKey))[0].toString();
         var chain = _this3.net === Network.MAINNET ? 'mainnet' : 'ropsten';
         var transactionObject = JSON.parse(data);
         var txRaw = new ethTx(transactionObject, {
           chain: chain
         });
-        var pk = Buffer.from(privateKey.replace('0x', ''), 'hex');
+        var pk = Buffer.from(privateKeyString.replace('0x', ''), 'hex');
         txRaw.sign(pk);
         return Promise.resolve("0x" + txRaw.serialize().toString('hex'));
       }
@@ -1082,6 +1084,10 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
 
   var _proto = Ripple.prototype;
 
+  _proto.getPrivateKey = function getPrivateKey(privateKey) {
+    return privateKey.privateKey.toString('hex');
+  };
+
   _proto.getAddressFromPublic = function getAddressFromPublic(publicKey, format) {
     var classicAddress = deriveAddress(publicKey);
 
@@ -1098,18 +1104,42 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
     return xAddress;
   };
 
-  _proto.sign = function sign(data, privateKey) {
+  _proto.sign = function sign(data, privateKey, isTx) {
     try {
+      var _temp3 = function _temp3(_result) {
+        if (_exit2) return _result;
+        var key = ECPair.fromWIF(privateKey, _this3.networkConfig);
+        var hash = createHash('sha256').update(data).digest('hex');
+
+        if (key.privateKey) {
+          return sign$1(hash, key.privateKey.toString('hex'));
+        } else {
+          throw Error('Invalid private key');
+        }
+      };
+
+      var _exit2 = false;
+
       var _this3 = this;
 
-      var key = ECPair.fromWIF(privateKey, _this3.networkConfig);
-      var hash = createHash('sha256').update(data).digest('hex');
+      var _temp4 = function () {
+        if (isTx) {
+          return Promise.resolve(new RippleAPI()).then(function (api) {
+            var privateKeyString = Object.values(JSON.parse(privateKey))[0].toString();
 
-      if (key.privateKey) {
-        return Promise.resolve(sign$1(hash, key.privateKey.toString('hex')));
-      } else {
-        throw Error('Invalid private key');
-      }
+            var publicKey = _this3.getPublicFromPrivate(privateKeyString, false);
+
+            var keypair = {
+              privateKey: privateKeyString.toUpperCase(),
+              publicKey: publicKey.toUpperCase()
+            };
+            _exit2 = true;
+            return api.sign(data, keypair).signedTransaction;
+          });
+        }
+      }();
+
+      return Promise.resolve(_temp4 && _temp4.then ? _temp4.then(_temp3) : _temp3(_temp4));
     } catch (e) {
       return Promise.reject(e);
     }
