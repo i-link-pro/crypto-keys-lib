@@ -11,9 +11,9 @@ describe('Lib/Emercoin', () => {
     describe('#signTx', () => {
         context('with testnet network', async () => {
             const data =
-                '{"sum":"0.00002","fee":"0.00000452","inputs":[{"txId":"81a324487f7981837554e79e1d0d2225ba5dd175368897ed6c0567f2e565bb15","hex":"02000000a652755f015b02675ebbc567cb97b08f97f5887db338ac5af77698ad28ae6d1572974ae94c0100000049483045022100fbb2051c9043ab8b7c7de1764c99b32a8dfd9130acc504b81838340acba5f0c902203edea5582635462f382e14231994383978eab518dbde6ab43ba1982860409e5d01feffffff0280969800000000001976a9147dbde6768ac035ab3293a913aa1d8bcb5ef680e288acbc150100000000001976a914b1edad1084288e1ce1c8cba26fdb621560cc1aa088acf7320200","n":0,"value":"1000000000","address":"mrypFXt7XugH37CAzJkieFb3znMWQRSLd2","type":"pubkeyhash","scriptPubKeyHex":"76a9147dbde6768ac035ab3293a913aa1d8bcb5ef680e288ac"}],"outputs":[{"address":"mxgNHuKnqah6Q71Yf2Y92azdQ6frrdkAEx","amount":"2000"},{"address":"mrypFXt7XugH37CAzJkieFb3znMWQRSLd2","amount":"999997548"}]}'
+                '{"sum":"0.00002","fee":"0.00000452","inputs":[{"txId":"81a324487f7981837554e79e1d0d2225ba5dd175368897ed6c0567f2e565bb15","hex":"02000000a652755f015b02675ebbc567cb97b08f97f5887db338ac5af77698ad28ae6d1572974ae94c0100000049483045022100fbb2051c9043ab8b7c7de1764c99b32a8dfd9130acc504b81838340acba5f0c902203edea5582635462f382e14231994383978eab518dbde6ab43ba1982860409e5d01feffffff0280969800000000001976a9147dbde6768ac035ab3293a913aa1d8bcb5ef680e288acbc150100000000001976a914b1edad1084288e1ce1c8cba26fdb621560cc1aa088acf7320200","n":0,"value":"1000000000","address":"mjfDNnBFx6P2EYN1W23CkLBJPBUu1Jaewu","type":"pubkeyhash","scriptPubKeyHex":"76a9147dbde6768ac035ab3293a913aa1d8bcb5ef680e288ac"}],"outputs":[{"address":"mrypFXt7XugH37CAzJkieFb3znMWQRSLd2","amount":"2000"},{"address":"mrypFXt7XugH37CAzJkieFb3znMWQRSLd2","amount":"999997548"}]}'
             const privateKey =
-                "{\"mrypFXt7XugH37CAzJkieFb3znMWQRSLd2\":\"cShaqka14VuShjqd5QV69JyEtvLMhWDeugyTq6Vnj1SBvcvGKZdr\"}"
+                "{\"mjfDNnBFx6P2EYN1W23CkLBJPBUu1Jaewu\":\"cN9nu9mkEyzY7MNUuv6yh8NDTyARF2t6WDFoz41VNKct3JwwbC1e\"}"
 
             const actual = await instanceWithTestnet.sign(
                 data,

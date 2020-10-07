@@ -160,6 +160,7 @@ export class BitcoinBase {
             }
             let signedHex = ''
             const tx = new Psbt({ network: this.networkConfig })
+
             for (const input of dataObj.inputs) {
                 if (input.type.includes('witness')) {
                     tx.addInput({
@@ -195,6 +196,8 @@ export class BitcoinBase {
             }
             tx.finalizeAllInputs()
             signedHex = tx.extractTransaction().toHex()
+
+
             return signedHex
         }
 
