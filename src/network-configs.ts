@@ -4,9 +4,10 @@ export type Network = {
     bip32: Bip32
     pubKeyHash: number
     scriptHash: number
-    wif: number,
-    dustThreshold: number;
-    timeInTransaction: boolean;
+    wif: number
+    dustThreshold: number,
+    timeInTransaction: boolean,
+    maximumFeeRate?: number
 }
 
 type Bip32 = {
@@ -73,8 +74,9 @@ const litecoin: NetworkConfig = {
         pubKeyHash: 0x6f,
         scriptHash: 0xc4,
         wif: 0xef,
-        dustThreshold: 0,
-        timeInTransaction: true,
+        dustThreshold: 500,
+        timeInTransaction: false,
+        maximumFeeRate: 50000
     },
 }
 
@@ -109,30 +111,45 @@ const dogecoin: NetworkConfig = {
 
 const emercoin: NetworkConfig = {
     mainnet: {
-        messagePrefix: '\x17Emercoin Signed Message:\n',
+        messagePrefix: '\x18Emercoin Signed Message:\n',
         bech32: 'emc',
         bip32: {
-            public: 0x01da950b,
-            private: 0x01da90d0,
+            public: 0x0488b21e,
+            private: 0x0488ade4,
         },
-        pubKeyHash: 0x37,
-        scriptHash: 0x75,
-        wif: 0xb7,
-        dustThreshold: 0,
+        pubKeyHash: 0x00,
+        scriptHash: 0x05,
+        wif: 0x80,
+        dustThreshold: 50000,
         timeInTransaction: true,
+        maximumFeeRate: 50000
     },
     testnet: {
-        messagePrefix: '\x17Emercoin Signed Message:\n',
+        messagePrefix: '\x18Emercoin Signed Message:\n',
         bech32: 'emc',
         bip32: {
-            public: 0x01da950b,
-            private: 0x01da90d0,
+            public: 0x043587cf,
+            private: 0x04358394,
         },
-        pubKeyHash: 0x37,
-        scriptHash: 0x75,
-        wif: 0xb7,
-        dustThreshold: 0,
+        pubKeyHash: 0x6f,
+        scriptHash: 0xc4,
+        wif: 0xef,
+        dustThreshold: 500,
         timeInTransaction: true,
+        maximumFeeRate: 50000
+    },
+    regtest: {
+        messagePrefix: '\x18Emercoin Signed Message:\n',
+        bech32: 'emc',
+        bip32: {
+            public: 0x043587cf,
+            private: 0x04358394,
+        },
+        pubKeyHash: 0x6f,
+        scriptHash: 0xc4,
+        wif: 0xef,
+        dustThreshold: 500,
+        timeInTransaction: true
     },
 }
 
@@ -146,8 +163,9 @@ const dashcoin: NetworkConfig = {
         },
         pubKeyHash: 0x4c,
         scriptHash: 0x10,
-        wif: 0xcc,  dustThreshold: 0,
-        timeInTransaction: true,
+        wif: 0xcc,
+        dustThreshold: 0,
+        timeInTransaction: false,
     },
     testnet: {
         messagePrefix: '\x18Dashcoin Signed Message:\n',
@@ -159,8 +177,9 @@ const dashcoin: NetworkConfig = {
         pubKeyHash: 0x8c,
         scriptHash: 0x13,
         wif: 0xef,
-        dustThreshold: 0,
-        timeInTransaction: true,
+        dustThreshold: 500,
+        timeInTransaction: false,
+        maximumFeeRate: 50000
     },
 }
 
@@ -176,7 +195,7 @@ const bitcoinsv: NetworkConfig = {
         scriptHash: 0x05,
         wif: 0x80,
         dustThreshold: 0,
-        timeInTransaction: true,
+        timeInTransaction: false,
     },
     testnet: {
         messagePrefix: 'unused',
@@ -189,7 +208,7 @@ const bitcoinsv: NetworkConfig = {
         scriptHash: 0xc4,
         wif: 0x80,
         dustThreshold: 0,
-        timeInTransaction: true,
+        timeInTransaction: false,
     },
 }
 
