@@ -3,10 +3,10 @@
  */
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import {describe, it, after, before} from 'mocha'
-import {Keys} from '../src/lib'
-import {Network, Blockchain} from '../src/types'
-import {BitcoinSV} from '../src/blockchains/bitcoinsv'
+import { describe, it, after, before } from 'mocha'
+import { Keys } from '../src/lib'
+import { Network, Blockchain } from '../src/types'
+import { BitcoinSV } from '../src/blockchains/bitcoinsv'
 
 describe('Lib/BitcoinSV', () => {
     const instance = new Keys(Blockchain.BITCOIN_SV, Network.MAINNET)
@@ -150,7 +150,7 @@ describe('Lib/BitcoinSV', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9s21ZrQH143K3bESDm6VzuysGU5SE5SasdExKzL6PvBAJGwHFPVL6THi8PxG994bdmLedRGj2abd5BuLzaWvGVounBsFwmqPGiGpcygApuP',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -216,7 +216,7 @@ describe('Lib/BitcoinSV', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xpub661MyMwAqRbcFkod8bRLkBLEpxJuHD1jdsLwzn2PsPLxs3YtAjyKPHFp4m4EssQC9aQNWymqLeKyhELT8MFKQFZgv8VBdrdVod1r9NtESMP',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -296,7 +296,7 @@ describe('Lib/BitcoinSV', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9zKMDeW4JBMDocjvoXoVpnaTaZ59KuaEUZ7C1iWBevUWK8hDdj2fqhpxKJKHULaWoFhhmUVyfyxzivqGKrZHHRt6k51hRFzxSZy2jxSniSU',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -384,7 +384,7 @@ describe('Lib/BitcoinSV', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8ZgxMBicQKsPdnHse7r5kbsbLJWKiZeym81SAXHLvZ6CJoE9XtH8yHWMC8xJVaVSihoTXG1mMoC3wL9FVvyZ59b8WQu8HkySy8gWFbMobLJ',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -456,7 +456,7 @@ describe('Lib/BitcoinSV', () => {
               { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tpubDG4hzHBhdZFnFV6KGpqDgQRj9gntid7QGSEhsLyQ3Ltn6qAB31vh8fAZVtSubfVCcnCiagzUqVVzE8gjAgY2xxcQN3W9T7gCqD9ZfEKdjpq',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -542,7 +542,7 @@ describe('Lib/BitcoinSV', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8fpHND66YGHAydYhpYhW6wPWK3ujE9WukgrUUWTG2BhQoxEXz5jziPqroBCemW4ELqksHU9YHCyFGinsS2KGiNG2Rtxo19gYrtDsiYPXtTb',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -560,7 +560,7 @@ describe('Lib/BitcoinSV', () => {
                 'xprv9s21ZrQH143K39tiX5u6qsvmLPcitnTdwKPtbErXAQEHG5an2tQbk5kMDz8F9aB4YCmCC14UvAiukX4zd59SYbCZMAfQAD9vzMHUep5X6Wi',
         }
         try {
-            instance.derivateKeys({masterPrivateKey: 'invalidKey'}, cursor) // check behavior in case of non-base58 charackter
+            instance.derivateKeys({ masterPrivateKey: 'invalidKey' }, cursor) // check behavior in case of non-base58 charackter
         } catch (ex) {
             it('should be throw an error with following message `Non-base58 character`', () => {
                 assert.strictEqual(ex.message, 'Non-base58 character')
@@ -840,17 +840,18 @@ describe('Lib/BitcoinSV', () => {
 
     describe('#signTx', () => {
         context('with testnet network', async () => {
-
-            const data = '{"sum":"0.00005","fee":"0.00000452","inputs":[{"txId":"55b7542d139eebd8d931339b2b19744c8db19de95e5cc935ab4f2433176ed336","hex":"0200000001ff500a3bffcd83a5ee263d0afad1f76cdf82c573c7b5c9d5febe912c7039c686010000006a47304402202c867596131b88dff81f9e204a8de8108d7865e9b1d951b3df132d0d0db4d0370220581cbd7cce08cbc6ae6e5358e2521017c2c1ae84ecd4fd487bf62350bd19f1c5412102194eb2dca91c9d1ab03269beb917dcd761699cbc16ea55a5bfb66f90cc86cf1cfeffffff0270dd1701000000001976a91400af7228a263ff1ce5c1a4508d84984c57e0d11788ac80969800000000001976a9143fee8f3d43f09ac201c4aa4e6d9b7f1c929ed68188ac71f11400","n":1,"value":"10000000","address":"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG","type":"pubkeyhash","scriptPubKeyHex":"76a9143fee8f3d43f09ac201c4aa4e6d9b7f1c929ed68188ac"}],"outputs":[{"address":"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG","amount":"5000"},{"address":"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG","amount":"9994548"}]}'
-            const privateKey =
-                JSON.stringify({'mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG': 'KwVyNPKxvaM3hD3W8sDrf2bYfjJezNhpfgTZYUjWFXwQeHLANa1b'})
+            const data =
+                '{"sum":"0.00005","fee":"0.00000452","inputs":[{"txId":"55b7542d139eebd8d931339b2b19744c8db19de95e5cc935ab4f2433176ed336","hex":"0200000001ff500a3bffcd83a5ee263d0afad1f76cdf82c573c7b5c9d5febe912c7039c686010000006a47304402202c867596131b88dff81f9e204a8de8108d7865e9b1d951b3df132d0d0db4d0370220581cbd7cce08cbc6ae6e5358e2521017c2c1ae84ecd4fd487bf62350bd19f1c5412102194eb2dca91c9d1ab03269beb917dcd761699cbc16ea55a5bfb66f90cc86cf1cfeffffff0270dd1701000000001976a91400af7228a263ff1ce5c1a4508d84984c57e0d11788ac80969800000000001976a9143fee8f3d43f09ac201c4aa4e6d9b7f1c929ed68188ac71f11400","n":1,"value":"10000000","address":"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG","type":"pubkeyhash","scriptPubKeyHex":"76a9143fee8f3d43f09ac201c4aa4e6d9b7f1c929ed68188ac"}],"outputs":[{"address":"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG","amount":"5000"},{"address":"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG","amount":"9994548"}]}'
+            const privateKey = JSON.stringify({
+                mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG:
+                    'KwVyNPKxvaM3hD3W8sDrf2bYfjJezNhpfgTZYUjWFXwQeHLANa1b',
+            })
 
             const actual = await instanceWithTestnet.sign(
                 data,
                 privateKey,
                 true,
             )
-
 
             it('should be return `020000000136d36e1733244fab35c95c5ee99db18d4c74192b9b3331d9d8eb9e132d54b755010000006b483045022100f6d5babeef01c4aa1ba2af9e475431dca776c8c1a24d782cd484d5ad0d7e3c4b022038424b8aaeb48f5364ea0744735e501ac0ff07c84d2f046dc1d8cb6a304fc77401210210cf1ce69b2c0bfca75d5365d84ed45fa331b332324c05b2d5f9a1bdc8219019ffffffff0288130000000000001976a9143fee8f3d43f09ac201c4aa4e6d9b7f1c929ed68188ac34819800000000001976a9143fee8f3d43f09ac201c4aa4e6d9b7f1c929ed68188ac00000000`', () => {
                 assert.strictEqual(
@@ -861,7 +862,7 @@ describe('Lib/BitcoinSV', () => {
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG\":\"ali32142\"}",
+                    '{"mmLzeYctxYUtBXnMJN9ADYw7wqqUrbrzpG":"ali32142"}',
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {

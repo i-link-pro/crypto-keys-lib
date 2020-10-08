@@ -799,18 +799,18 @@ describe('Lib/Ripple', () => {
 
     describe('#signTx', () => {
         context('with testnet network', async () => {
-const data = '{"TransactionType":"Payment","Account":"rwAJdrPAgg5UET1i6ogXtNiD6SYC8C98wy","Destination":"rhwnKpzV4LrvDc56kU4JzwqkkUDbNQB4Dg","Amount":"100000","Flags":2147483648,"Fee":"12","LastLedgerSequence":11268803,"Sequence":11047194}'
-            const privateKey =
-                JSON.stringify({
-                    'XVrvjLaYovoGnqyhJV2rsZH9H9E6ycYdfPT4PsncMKoNbfN': 'bd5ed94a1d3bd21784b29ea4752a092109b31ae73f5e90800f457c1b9ed59a38'
-                })
+            const data =
+                '{"TransactionType":"Payment","Account":"rwAJdrPAgg5UET1i6ogXtNiD6SYC8C98wy","Destination":"rhwnKpzV4LrvDc56kU4JzwqkkUDbNQB4Dg","Amount":"100000","Flags":2147483648,"Fee":"12","LastLedgerSequence":11268803,"Sequence":11047194}'
+            const privateKey = JSON.stringify({
+                XVrvjLaYovoGnqyhJV2rsZH9H9E6ycYdfPT4PsncMKoNbfN:
+                    'bd5ed94a1d3bd21784b29ea4752a092109b31ae73f5e90800f457c1b9ed59a38',
+            })
 
             const actual = await instanceWithTestnet.sign(
                 data,
                 privateKey,
                 true,
             )
-
 
             it('should be return `12000022800000002400A8911A201B00ABF2C36140000000000186A068400000000000000C73210284A9439F6DDF2429B12064445E07A129DAF774B70C65ABB97096B3E79A4DB8077446304402205154AD0484DB83B9E4D19858BCC2D0507A90455E01DB7E37718F215332C8C32802205E8880B582B3A3E3311D0639FDBAF4E2606842353BD9BDEDB0BFB843AB6649E181146CFE4D97F22565284F389FC222332335CD04F0FA8314229FB83774ECD1F6BF020A1A1888AB0E53910529`', () => {
                 assert.strictEqual(
@@ -821,7 +821,7 @@ const data = '{"TransactionType":"Payment","Account":"rwAJdrPAgg5UET1i6ogXtNiD6S
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"XVrvjLaYovoGnqyhJV2rsZH9H9E6ycYdfPT4PsncMKoNbfN\":\"bd5ed94a1d3bd21784b29ea4752a092109b31ae73f5e90800f457c1b9ed59a31\"}",
+                    '{"XVrvjLaYovoGnqyhJV2rsZH9H9E6ycYdfPT4PsncMKoNbfN":"bd5ed94a1d3bd21784b29ea4752a092109b31ae73f5e90800f457c1b9ed59a31"}',
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {
@@ -831,5 +831,4 @@ const data = '{"TransactionType":"Payment","Account":"rwAJdrPAgg5UET1i6ogXtNiD6S
             }
         })
     })
-
 })

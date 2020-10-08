@@ -1,8 +1,8 @@
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import {describe, it, after, before} from 'mocha'
-import {Keys} from '../src'
-import {Network, Blockchain} from '../src'
+import { describe, it, after, before } from 'mocha'
+import { Keys } from '../src'
+import { Network, Blockchain } from '../src'
 
 describe('Lib/Emercoin', () => {
     const instance = new Keys(Blockchain.EMERCOIN, Network.MAINNET)
@@ -30,7 +30,7 @@ describe('Lib/Emercoin', () => {
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"mjfDNnBFx6P2EYN1W23CkLBJPBUu1Jaewu\":\"ali32142\"}",
+                    '{"mjfDNnBFx6P2EYN1W23CkLBJPBUu1Jaewu":"ali32142"}',
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {

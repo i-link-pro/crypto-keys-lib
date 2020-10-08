@@ -1,9 +1,9 @@
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import {describe, it, after, before} from 'mocha'
-import {Keys} from '../src'
-import {Network, Blockchain} from '../src'
-import {Dogecoin} from '../src/blockchains/dogecoin'
+import { describe, it, after, before } from 'mocha'
+import { Keys } from '../src'
+import { Network, Blockchain } from '../src'
+import { Dogecoin } from '../src/blockchains/dogecoin'
 
 describe('Lib/Dogecoin', () => {
     const instance = new Keys(Blockchain.DOGECOIN, Network.MAINNET)
@@ -144,7 +144,7 @@ describe('Lib/Dogecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8gddMNxfRf4iFfrP2tFseUVkzjEA1SAn15gEVkN4vjr18qjbdYjZ3zFPdbmh7TJxeE7WH6TPHEGiys945UqpEsidg8y4GkKjMRnqWPRw4aj',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -217,7 +217,7 @@ describe('Lib/Dogecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tpubDDKfVnzua2kP98tAvXvU3t9sZkk6AmMgaPH1nGQNM1ePyKzNFwZ9EUsFojY6sxGVxtcGe1vw96yUtufVFhVTVccnDumXUcpZ2jvzv95x3aR',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -304,7 +304,7 @@ describe('Lib/Dogecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8gddMNxfRf4iFfrP2tFseUVkzjEA1SAn15gEVkN4vjr18qjbdYjZ3zFPdbmh7TJxeE7WH6TPHEGiys945UqpEsidg8y4GkKjMRnqWPRw4aj',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -324,7 +324,7 @@ describe('Lib/Dogecoin', () => {
             }
             try {
                 instanceWithTestnet.derivateKeys(
-                    {masterPrivateKey: 'invalidKey'},
+                    { masterPrivateKey: 'invalidKey' },
                     cursor,
                 ) // check behavior in case of non-base58 charackter
             } catch (ex) {
@@ -603,9 +603,9 @@ describe('Lib/Dogecoin', () => {
     describe('#signTx', () => {
         context('with testnet network', async () => {
             const data =
-                "{\"sum\":\"1.5e-7\",\"fee\":\"0.00000452\",\"inputs\":[{\"txId\":\"8a78b4b670a0f80fb6c02899f911282385a1b903a240edad44bbb7f40137ed84\",\"hex\":\"010000000152b13c4293458642099ff60359d8109dc1700ecdb89c93e2c742668762f02559010000006b4830450221008b4d3f3198068db11d53fafc281062c94bdd2d98ff780f4edb46532697c1ee7b02201fa64932f2a6e8b69a8761458f9f93a6509ce9b4155c6e55faccebaf0be4f8010121038d74ef5a5f484ba0d8b073c190cf54c5d38206310adcd879136501fa18b020c0feffffff0270eca475010000001976a914d8fdd2d888c20dcfbf72101773a0bfb94fa49f2c88acc0a6cabc120400001976a9146c501b1ae6d576b50fd8d048d53202f86d7a6fac88ac56072d00\",\"n\":0,\"value\":\"6268710000\",\"address\":\"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak\",\"type\":\"pubkeyhash\",\"scriptPubKeyHex\":\"76a914d8fdd2d888c20dcfbf72101773a0bfb94fa49f2c88ac\"}],\"outputs\":[{\"address\":\"niAb6eaM2eLaFehN4gShpQcEneWijMwfNu\",\"amount\":\"15\"},{\"address\":\"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak\",\"amount\":\"6268709533\"}]}"
+                '{"sum":"1.5e-7","fee":"0.00000452","inputs":[{"txId":"8a78b4b670a0f80fb6c02899f911282385a1b903a240edad44bbb7f40137ed84","hex":"010000000152b13c4293458642099ff60359d8109dc1700ecdb89c93e2c742668762f02559010000006b4830450221008b4d3f3198068db11d53fafc281062c94bdd2d98ff780f4edb46532697c1ee7b02201fa64932f2a6e8b69a8761458f9f93a6509ce9b4155c6e55faccebaf0be4f8010121038d74ef5a5f484ba0d8b073c190cf54c5d38206310adcd879136501fa18b020c0feffffff0270eca475010000001976a914d8fdd2d888c20dcfbf72101773a0bfb94fa49f2c88acc0a6cabc120400001976a9146c501b1ae6d576b50fd8d048d53202f86d7a6fac88ac56072d00","n":0,"value":"6268710000","address":"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak","type":"pubkeyhash","scriptPubKeyHex":"76a914d8fdd2d888c20dcfbf72101773a0bfb94fa49f2c88ac"}],"outputs":[{"address":"niAb6eaM2eLaFehN4gShpQcEneWijMwfNu","amount":"15"},{"address":"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak","amount":"6268709533"}]}'
             const privateKey =
-                "{\"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak\":\"cmpTyzrNexmW8PWkPhUv9V5Tj2QJBMdteuV4oJLYTNehi6nWjDGT\"}"
+                '{"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak":"cmpTyzrNexmW8PWkPhUv9V5Tj2QJBMdteuV4oJLYTNehi6nWjDGT"}'
 
             const actual = await instanceWithTestnet.sign(
                 data,
@@ -622,7 +622,7 @@ describe('Lib/Dogecoin', () => {
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak\":\"ali32142\"}",
+                    '{"noyWHgRsXnyQ4jH8vHS5ink28DNGNcvzak":"ali32142"}',
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {
@@ -632,5 +632,4 @@ describe('Lib/Dogecoin', () => {
             }
         })
     })
-
 })

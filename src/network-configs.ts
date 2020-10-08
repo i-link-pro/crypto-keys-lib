@@ -5,8 +5,8 @@ export type Network = {
     pubKeyHash: number
     scriptHash: number
     wif: number
-    dustThreshold: number,
-    timeInTransaction: boolean,
+    dustThreshold: number
+    timeInTransaction: boolean
     maximumFeeRate?: number
 }
 
@@ -76,7 +76,7 @@ const litecoin: NetworkConfig = {
         wif: 0xef,
         dustThreshold: 500,
         timeInTransaction: false,
-        maximumFeeRate: 50000
+        maximumFeeRate: 50000,
     },
 }
 
@@ -122,7 +122,7 @@ const emercoin: NetworkConfig = {
         wif: 0x80,
         dustThreshold: 50000,
         timeInTransaction: true,
-        maximumFeeRate: 50000
+        maximumFeeRate: 50000,
     },
     testnet: {
         messagePrefix: '\x18Emercoin Signed Message:\n',
@@ -136,7 +136,7 @@ const emercoin: NetworkConfig = {
         wif: 0xef,
         dustThreshold: 500,
         timeInTransaction: true,
-        maximumFeeRate: 50000
+        maximumFeeRate: 50000,
     },
     regtest: {
         messagePrefix: '\x18Emercoin Signed Message:\n',
@@ -149,7 +149,7 @@ const emercoin: NetworkConfig = {
         scriptHash: 0xc4,
         wif: 0xef,
         dustThreshold: 500,
-        timeInTransaction: true
+        timeInTransaction: true,
     },
 }
 
@@ -179,7 +179,7 @@ const dashcoin: NetworkConfig = {
         wif: 0xef,
         dustThreshold: 500,
         timeInTransaction: false,
-        maximumFeeRate: 50000
+        maximumFeeRate: 50000,
     },
 }
 

@@ -1,9 +1,9 @@
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import {describe, it, after, before} from 'mocha'
-import {Keys} from '../src/lib'
-import {Network, Blockchain} from '../src/types'
-import {Litecoin} from '../src/blockchains/litecoin'
+import { describe, it, after, before } from 'mocha'
+import { Keys } from '../src/lib'
+import { Network, Blockchain } from '../src/types'
+import { Litecoin } from '../src/blockchains/litecoin'
 
 describe('Lib/Litecoin', () => {
     const instance = new Keys(Blockchain.LITECOIN, Network.MAINNET)
@@ -146,7 +146,7 @@ describe('Lib/Litecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9s21ZrQH143K2ipfB4dMesTX5mCbYqUSQuznQffV3x28noGDwU9La12RcJa8HYFaKVw96By7THGttKo9N7YyKDTGfcYUJKXBkJHy58Xpgpi',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -215,7 +215,7 @@ describe('Lib/Litecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xpub6ADEEufzPwGvd9iMW3QPB9p9WdpoD1nZx4YZmJbSbTpAjKj39vsbW2THocpT17LtQCvHp4QGR2HfNJrY9H7s3xSdc39WBQEoJDnGsj8UVni',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -298,7 +298,7 @@ describe('Lib/Litecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'xprv9xvU4igUU3W7sDKa6mQY5c8QzpAVHuauFwACdAok5sSGYAAFGbw3KdnP5nysj6Vq1ceVHebwLuPbyHNMLBgZEURb36ZM8kNRbLNy198FjEH',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -379,7 +379,7 @@ describe('Lib/Litecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8ZgxMBicQKsPdx9HgB7ktcK3XED6iacamShaTuiFjidXVLyQR1HqSvCnaprtW1jUwVVKWFbgFqTUrwXP3w89RHF2UiEcuQ8u96Yu8U2qzaX',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -451,7 +451,7 @@ describe('Lib/Litecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tpubDHUsrHqi3VfStvjecN1UpjKjfZNYaTkr2C8oabhchCxtA5YWNj3VjL8ffk5LNz3CZTxzrTHfWWr1z2Dnf7kM4RexwrFcfFcTpMXAQACzM9x',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -537,7 +537,7 @@ describe('Lib/Litecoin', () => {
           { limit: 1, skip: 1 }]`, () => {
                         assert.deepEqual(spy.args[0], [
                             'tprv8hCsXje7CohQkzdP63QmttSK7FMe7GcRMtAJ4x2nQqKDrKaxPAWbsyqQig9n59cWgYh6bsCwUHHz79ZK99DAkRxn73nY7BY86BkucrGZNC8',
-                            {limit: 1, skip: 1},
+                            { limit: 1, skip: 1 },
                         ])
                     })
                 })
@@ -555,7 +555,7 @@ describe('Lib/Litecoin', () => {
                 'xprv9s21ZrQH143K2QbSWMWSscALjtkQ6GrUnNJh6UhKXQKtzzvKGkoyHDRiRmAouoy4H9J7G6fUm8vScVp12wodtsd83cAzQhKfvWyqoad35Zj',
         }
         try {
-            instance.derivateKeys({masterPrivateKey: 'invalidKey'}, cursor) // check behavior in case of non-base58 charackter
+            instance.derivateKeys({ masterPrivateKey: 'invalidKey' }, cursor) // check behavior in case of non-base58 charackter
         } catch (ex) {
             it('should be throw an error with following message `Non-base58 character`', () => {
                 assert.strictEqual(ex.message, 'Non-base58 character')
@@ -815,18 +815,18 @@ describe('Lib/Litecoin', () => {
 
     describe('#signTx', () => {
         context('with testnet network', async () => {
-            const data = '{"sum":"0.00005","fee":"0.00000452","inputs":[{"txId":"7929db80f7257af38197b47845306a979ea4994d0b75c58cd937696779d14d4b","hex":"0200000000010168de15fd1b179afab0e5f34f70cce357610cb117c3c616d465c23b49cdb20c2400000000171600143ff3c8105e6242a016ccf6d836306e49fc79070cfeffffff02c9190000000000001976a914a9fc52efcb6bbec70446fca9d103f1849e6ab03088ac102700000000000017a914cf38dbf58ced000ebdff7432a83a2bd413da3c4d8702473044022073ee6cdffc16517c16c52aa9857fd5f650089e9cd93d0e1d9063df2bb618dc0502207a7f0e30bf0e35cbc9232f9f76493796cc322dae50138872d54c8006802920d1012103bd82572f8895802ae4f520dfafef2e0401f1aa63dd3356b9ee34de8660e3e892a2be1800","n":0,"value":"6601","address":"mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4","type":"pubkeyhash","scriptPubKeyHex":"76a914a9fc52efcb6bbec70446fca9d103f1849e6ab03088ac"}],"outputs":[{"address":"mxS7vDDELEZcNwK6XUmcw2jzWaFYepBUE8","amount":"5000"},{"address":"mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4","amount":"1149"}]}'
-            const privateKey =
-                JSON.stringify({
-                    'mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4': 'cRug6WJgaSr7mscGAdM74bfjHsRGU575bzMYhczxx5MCG8wSSczr'
-                })
+            const data =
+                '{"sum":"0.00005","fee":"0.00000452","inputs":[{"txId":"7929db80f7257af38197b47845306a979ea4994d0b75c58cd937696779d14d4b","hex":"0200000000010168de15fd1b179afab0e5f34f70cce357610cb117c3c616d465c23b49cdb20c2400000000171600143ff3c8105e6242a016ccf6d836306e49fc79070cfeffffff02c9190000000000001976a914a9fc52efcb6bbec70446fca9d103f1849e6ab03088ac102700000000000017a914cf38dbf58ced000ebdff7432a83a2bd413da3c4d8702473044022073ee6cdffc16517c16c52aa9857fd5f650089e9cd93d0e1d9063df2bb618dc0502207a7f0e30bf0e35cbc9232f9f76493796cc322dae50138872d54c8006802920d1012103bd82572f8895802ae4f520dfafef2e0401f1aa63dd3356b9ee34de8660e3e892a2be1800","n":0,"value":"6601","address":"mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4","type":"pubkeyhash","scriptPubKeyHex":"76a914a9fc52efcb6bbec70446fca9d103f1849e6ab03088ac"}],"outputs":[{"address":"mxS7vDDELEZcNwK6XUmcw2jzWaFYepBUE8","amount":"5000"},{"address":"mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4","amount":"1149"}]}'
+            const privateKey = JSON.stringify({
+                mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4:
+                    'cRug6WJgaSr7mscGAdM74bfjHsRGU575bzMYhczxx5MCG8wSSczr',
+            })
 
             const actual = await instanceWithTestnet.sign(
                 data,
                 privateKey,
                 true,
             )
-
 
             it('should be return `02000000014b4dd179676937d98cc5750b4d99a49e976a304578b49781f37a25f780db2979000000006b483045022100aa722ebdf0e51f3c885996a7a111966e1507b7662e887df2b2420adcb869d2850220722ad539aca60a689bc2b7b6449f9e690c70f3fe43e25a4cdb534c15bdf3968c012102dac37916b0b14552ed910b2483730f2db8ab23bca21a84ab675c41a03b708ec2ffffffff0288130000000000001976a914b990177b69b3accf5ab81bbee201a314443a2d6188ac7d040000000000001976a914a9fc52efcb6bbec70446fca9d103f1849e6ab03088ac00000000`', () => {
                 assert.strictEqual(
@@ -837,7 +837,7 @@ describe('Lib/Litecoin', () => {
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4\":\"ali32142\"}",
+                    '{"mw1kmFU6yZPxdPrPiCWsHcLbKXpXmMRDm4":"ali32142"}',
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {

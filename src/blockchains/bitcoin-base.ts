@@ -197,7 +197,6 @@ export class BitcoinBase {
             tx.finalizeAllInputs()
             signedHex = tx.extractTransaction().toHex()
 
-
             return signedHex
         }
 
