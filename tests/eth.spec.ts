@@ -784,11 +784,10 @@ describe('Lib/Ethereum', () => {
 
     describe('#signTx', () => {
         context('with testnet network', async () => {
-            const data = "{\"sum\":\"0.005\",\"fee\":\"0.00000452\",\"inputs\":[{\"txId\":\"e96b793c978179ec47e03bd6e4524d0c415b0ba5b03a3f8c6d3c1ffe39a7fb70\",\"hex\":\"0200000000010136028c29e28352cf9d1c64e8b968994d53ff09dc57978773f19e97aa0b7adf9a01000000171600142e27c8d5d79128f7f434b859852598f9ae5d9fe9feffffff02212d29000000000017a9143e677d77b2c0211aab77f95e9160f7ce8872823b8740420f00000000001976a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac024730440220102f21ffc1bf16d7948e61170be6c5fa75555c9da0a84dd1171161b364b8c37102207f4aaefc95e0bc8601f1a67619134db58fbb058f4e0ee0f1f60a8bc333762b6c012103c03ae5882eefe3efa40532d8d1d936f8a8c491751125d66a56b0962a2aef413709071c00\",\"n\":1,\"value\":\"1000000\",\"address\":\"mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR\",\"type\":\"pubkeyhash\",\"scriptPubKeyHex\":\"76a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac\"}],\"outputs\":[{\"address\":\"mrM1xefnhqKMAeZV6KJJpzQVEP3VegiqED\",\"amount\":\"500000\"},{\"address\":\"mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR\",\"amount\":\"499548\"}]}"
-
+const data = '{"nonce":"0x27","gasPrice":"0x4a817c800","gasLimit":"0x5208","to":"0x277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8","value":"0xfa0","data":"0x"}'
             const privateKey =
                 JSON.stringify({
-                    'mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR': 'cVFDNRVu1nCpBFKxjkckh4aDTeW7r5b9ikHsZ9pH2suSr2eL2wh8'
+                    '0x277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8': '0x03ee2d03f16cb976bb3250331124117f98f1a10d82c392d2868dea8713751eae'
                 })
 
             const actual = await instanceWithTestnet.sign(
@@ -798,16 +797,16 @@ describe('Lib/Ethereum', () => {
             )
 
 
-            it('should be return `020000000170fba739fe1f3c6d8c3f3ab0a50b5b410c4d52e4d63be047ec7981973c796be9010000006b483045022100f4cda9d8054b53113aab0a873d52ee5fc7c03461351f9a2cd4866558e53ad81c02202bcb3fb6743d77b2aecb03b8580ff51392c122a98020df3fe42e2ba26395c0460121022b1918981f6d0f79dbd1815e7fe6cd93b95003073aca6d238768e520f44229e8ffffffff0220a10700000000001976a91476c848a51e0f653f85e40acf649a1b4a4bc1995c88ac5c9f0700000000001976a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac00000000`', () => {
+            it('should be return `0xf866278504a817c80082520894277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8820fa08029a001befc981ef8c1ee89cc5c39bb63e65d69d8329829c9cc0ba9a37586bc51cb69a00df9f33340e990ce2b6ff2ef528780db5f9241e38da1c800427491d137934e78`', () => {
                 assert.strictEqual(
                     actual,
-                    '020000000170fba739fe1f3c6d8c3f3ab0a50b5b410c4d52e4d63be047ec7981973c796be9010000006b483045022100f4cda9d8054b53113aab0a873d52ee5fc7c03461351f9a2cd4866558e53ad81c02202bcb3fb6743d77b2aecb03b8580ff51392c122a98020df3fe42e2ba26395c0460121022b1918981f6d0f79dbd1815e7fe6cd93b95003073aca6d238768e520f44229e8ffffffff0220a10700000000001976a91476c848a51e0f653f85e40acf649a1b4a4bc1995c88ac5c9f0700000000001976a914397dcffcd46a53500a99de1ddbb296846cb1f07688ac00000000',
+                    '0xf866278504a817c80082520894277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8820fa08029a001befc981ef8c1ee89cc5c39bb63e65d69d8329829c9cc0ba9a37586bc51cb69a00df9f33340e990ce2b6ff2ef528780db5f9241e38da1c800427491d137934e78',
                 )
             })
             try {
                 await instanceWithTestnet.sign(
                     data,
-                    "{\"mkkwXbDWzwx81N9iumqjo2CWUKaQszPEqR\":\"ali32142\"}",
+                    "{\"0x277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8\":\"0x03ee2d03f16cb976bb3250331124117f98f1a10d82c392d2868dea8713751eaf\"}",
                     true,
                 ) // check behavior in case of invalid private Key
             } catch (ex) {
