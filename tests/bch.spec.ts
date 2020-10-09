@@ -3,9 +3,9 @@
  */
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import { describe, it, after, before } from 'mocha'
-import { Keys } from '../src/lib'
-import { Network, Blockchain } from '../src/types'
+import { after, before, describe, it } from 'mocha'
+import { Keys } from '../src'
+import { Blockchain, Network } from '../src'
 import { BitcoinCash } from '../src/blockchains/bitcoin-cash'
 
 describe('Lib/BitcoinCash', () => {
@@ -14,6 +14,7 @@ describe('Lib/BitcoinCash', () => {
         Blockchain.BITCOIN_CASH,
         Network.TESTNET,
     )
+
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)
         const actual = instance.getDataFromSeed(seed['seedPhrase'])
@@ -595,50 +596,63 @@ describe('Lib/BitcoinCash', () => {
     })
 
     describe('#sign', () => {
-        context('with mainnet network', async () => {
-            const privateKey =
-                'Kwk5LVAQBpckqhBnmiHTgYxvNKhZs3U1L9QAn7sbvSc8Ez1F1iPc'
-            const actual = await instance.sign('fake_data', privateKey, false)
-            it('should be return `88f5749a9e8aa4f54988ad7924508061032fe612dabcc041bded2626c51594c51aa0f1c30834b339120cb925c2d7dee50eda7f9d281a922bc2c9f2f692fff278`', () => {
-                assert.strictEqual(
-                    actual,
-                    '88f5749a9e8aa4f54988ad7924508061032fe612dabcc041bded2626c51594c51aa0f1c30834b339120cb925c2d7dee50eda7f9d281a922bc2c9f2f692fff278',
-                )
-            })
-            try {
-                await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
-            } catch (ex) {
-                it('should be throw an error with following message `Non-base58 character`', () => {
-                    assert.strictEqual(ex.message, 'Non-base58 character')
-                })
-            }
-        })
-        context('with testnet network', async () => {
-            const privateKey =
-                'cUVN2CtwaNBTUdRimGn6qVVhzD7wXk4nQQ6u1BU9vaNQ3oGKhKvw'
-            const actual = await instanceWithTestnet.sign(
-                'fake_data',
-                privateKey,
-                false,
+        it('signs', async () => {
+            const transactionAsJSON = '{\"sum\":\"0.00001\",\"fee\":\"1000\",\"inputs\":[{\"txId\":\"11c5db45d8aef91605795438554484458ae3bb1e19e0eab43d3f1cf79d01a23f\",\"hex\":\"02000000017607db59718783281e620a8376fe23ca9d7dec9a4aa264ec195ba60cdab2198f000000006b48304502210083b260a6873296a5106aed58a7eb11605e3093c26dd974821b0dfd249d25fbad02203697063ad9b4419238b7595b68a6f58fd5ab853031bae4fee2ecc7452c3f9eaa4121033ee6aaf63904f06aaa811e568d6601867fb08438c5b5c01d01b1527e3367b782ffffffff027a4decd3010000001976a91497a808f1d39ae863ed78500504780e2ca0c21b7288ac40420f00000000001976a91417011c32363b905d799c77ed5d76624c0d70a35f88ac00000000\",\"n\":1,\"value\":\"1000000\",\"address\":\"bchtest:qqtsz8pjxcaeqhten3m76htkvfxq6u9rtukf0n7rc2\",\"type\":\"pubkeyhash\",\"scriptPubKeyHex\":\"76a91417011c32363b905d799c77ed5d76624c0d70a35f88ac\"}],\"outputs\":[{\"address\":\"bchtest:qpsphnjujdmf0mhrhmzv9pux8l3znwgrsc7yjxkvmr\",\"amount\":\"1000\"},{\"address\":\"bchtest:qpq7qwv4ddrcu0x6y4cwtsv835yhkjma3v4rn00p3u\",\"amount\":\"998000\"}]}'
+            const keysMap = JSON.stringify({
+                'bchtest:qqtsz8pjxcaeqhten3m76htkvfxq6u9rtukf0n7rc2': 'cVXHeNoVjkBunVQUrYc4fkTLugWAnJqkh56DJAVLJ4Y9nRgFRF13',
+            });
+            const bch = new BitcoinCash(Network.TESTNET);
+            const hash = await bch.sign(transactionAsJSON, keysMap);
+            assert.strictEqual(
+                hash,
+                '02000000013fa2019df71c3f3db4eae0191ebbe38a458444553854790516f9aed845dbc511010000006b4830450221009f1d4e4156356536bec49d535613ac910fe21128b7b8c44fbf55928cba81bdab02205fc3a4d65a62f675e08a13da0e2e81d6d6a55a3fce50d719d8bd01ccac66b820412102e82e717b1866f8ed9f5546b8a10d95b34d15019cdb52211b0de4dff7b2ac463dffffffff02e8030000000000001976a914601bce5c937697eee3bec4c287863fe229b9038688ac703a0f00000000001976a91441e039956b478e3cda2570e5c1878d097b4b7d8b88ac00000000',
             )
-            it(`should be return 1fac94bc837983a6569d42a46e6fa5156c2b23b3be9d4c90e1a68f804ed85d6e6b31b044f4b2eac5853d91d29e04bbb9f2f7b4d2a3465fe2ad2a0181abd345ca`, () => {
-                assert.strictEqual(
-                    actual,
-                    '1fac94bc837983a6569d42a46e6fa5156c2b23b3be9d4c90e1a68f804ed85d6e6b31b044f4b2eac5853d91d29e04bbb9f2f7b4d2a3465fe2ad2a0181abd345ca',
-                )
-            })
-            try {
-                await instanceWithTestnet.sign(
-                    'fake_data',
-                    'Invalid_Private_Key',
-                    false,
-                ) // check behavior in case of invalid private Key
-            } catch (ex) {
-                it('should be throw an error with following message `Non-base58 character`', () => {
-                    assert.strictEqual(ex.message, 'Non-base58 character')
-                })
-            }
         })
+
+        // context('with mainnet network', async () => {
+        //     const privateKey =
+        //         'Kwk5LVAQBpckqhBnmiHTgYxvNKhZs3U1L9QAn7sbvSc8Ez1F1iPc'
+        //     const actual = await instance.sign('fake_data', privateKey, false)
+        //     it('should be return `88f5749a9e8aa4f54988ad7924508061032fe612dabcc041bded2626c51594c51aa0f1c30834b339120cb925c2d7dee50eda7f9d281a922bc2c9f2f692fff278`', () => {
+        //         assert.strictEqual(
+        //             actual,
+        //             '88f5749a9e8aa4f54988ad7924508061032fe612dabcc041bded2626c51594c51aa0f1c30834b339120cb925c2d7dee50eda7f9d281a922bc2c9f2f692fff278',
+        //         )
+        //     })
+        //     try {
+        //         await instance.sign('fake_data', 'Invalid_Private_Key', false) // check behavior in case of invalid private Key
+        //     } catch (ex) {
+        //         it('should be throw an error with following message `Non-base58 character`', () => {
+        //             assert.strictEqual(ex.message, 'Non-base58 character')
+        //         })
+        //     }
+        // })
+        // context('with testnet network', async () => {
+        //     const privateKey =
+        //         'cUVN2CtwaNBTUdRimGn6qVVhzD7wXk4nQQ6u1BU9vaNQ3oGKhKvw'
+        //     const actual = await instanceWithTestnet.sign(
+        //         'fake_data',
+        //         privateKey,
+        //         false,
+        //     )
+        //     it(`should be return 1fac94bc837983a6569d42a46e6fa5156c2b23b3be9d4c90e1a68f804ed85d6e6b31b044f4b2eac5853d91d29e04bbb9f2f7b4d2a3465fe2ad2a0181abd345ca`, () => {
+        //         assert.strictEqual(
+        //             actual,
+        //             '1fac94bc837983a6569d42a46e6fa5156c2b23b3be9d4c90e1a68f804ed85d6e6b31b044f4b2eac5853d91d29e04bbb9f2f7b4d2a3465fe2ad2a0181abd345ca',
+        //         )
+        //     })
+        //     try {
+        //         await instanceWithTestnet.sign(
+        //             'fake_data',
+        //             'Invalid_Private_Key',
+        //             false,
+        //         ) // check behavior in case of invalid private Key
+        //     } catch (ex) {
+        //         it('should be throw an error with following message `Non-base58 character`', () => {
+        //             assert.strictEqual(ex.message, 'Non-base58 character')
+        //         })
+        //     }
+        // })
     })
 
     describe('#getPublicFromPrivate', () => {
