@@ -70,7 +70,7 @@ export class BitcoinCash extends BitcoinBase {
                 input.value === undefined ||
                 input.n === undefined
             ) {
-                throw new Error(`Wrong input: ${JSON.stringify(input)}`);
+                throw new Error(`Wrong input: ${JSON.stringify(input)}`)
             }
             return {
                 txId: input.txId,
@@ -83,9 +83,9 @@ export class BitcoinCash extends BitcoinBase {
         const outputs: Array<{
             address: string
             amount: number
-        }> = dataObj.outputs.map(output  => {
+        }> = dataObj.outputs.map(output => {
             if (output.amount === undefined || output.address === undefined) {
-                throw new Error(`Wrong output: ${JSON.stringify(output)}`);
+                throw new Error(`Wrong output: ${JSON.stringify(output)}`)
             }
             return {
                 address: output.address,
