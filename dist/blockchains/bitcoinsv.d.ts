@@ -4,7 +4,7 @@ export interface UnsignedInput {
     txId?: string;
     hex?: string;
     n?: number;
-    sum?: string;
+    value?: string;
     address: string;
     type?: string;
     scriptPubKeyHex?: string;
