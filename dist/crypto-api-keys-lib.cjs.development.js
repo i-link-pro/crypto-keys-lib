@@ -35,6 +35,7 @@ var rippleLib = require('ripple-lib');
 (function (Network) {
   Network["MAINNET"] = "mainnet";
   Network["TESTNET"] = "testnet";
+  Network["REGTEST"] = "regtest";
 })(exports.Network || (exports.Network = {}));
 
 (function (SeedDictionaryLang) {

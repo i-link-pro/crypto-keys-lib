@@ -14,6 +14,7 @@ export enum Blockchain {
 export enum Network {
     MAINNET = 'mainnet',
     TESTNET = 'testnet',
+    REGTEST = 'regtest',
 }
 
 export enum SeedDictionaryLang {
