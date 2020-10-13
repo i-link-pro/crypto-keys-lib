@@ -28,6 +28,8 @@ var rippleLib = require('ripple-lib');
   Blockchain["LITECOIN"] = "litecoin";
   Blockchain["RIPPLE"] = "ripple";
   Blockchain["DOGECOIN"] = "dogecoin";
+  Blockchain["EMERCOIN"] = "emercoin";
+  Blockchain["DASHCOIN"] = "dashcoin";
 })(exports.Blockchain || (exports.Blockchain = {}));
 
 (function (Network) {

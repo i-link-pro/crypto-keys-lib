@@ -24,6 +24,8 @@ var Blockchain;
   Blockchain["LITECOIN"] = "litecoin";
   Blockchain["RIPPLE"] = "ripple";
   Blockchain["DOGECOIN"] = "dogecoin";
+  Blockchain["EMERCOIN"] = "emercoin";
+  Blockchain["DASHCOIN"] = "dashcoin";
 })(Blockchain || (Blockchain = {}));
 
 var Network;
