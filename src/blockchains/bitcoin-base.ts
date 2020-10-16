@@ -159,7 +159,8 @@ export class BitcoinBase {
                 throw new Error('Invalid data or key, must be json string')
             }
             let signedHex = ''
-            const tx = new Psbt({ network: this.networkConfig })
+            const tx = new Psbt({ network: this.networkConfig }, null)
+
             for (const input of dataObj.inputs) {
                 if (input.type.includes('witness')) {
                     tx.addInput({
@@ -195,6 +196,7 @@ export class BitcoinBase {
             }
             tx.finalizeAllInputs()
             signedHex = tx.extractTransaction().toHex()
+
             return signedHex
         }
 

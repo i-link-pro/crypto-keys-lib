@@ -5,6 +5,9 @@ export type Network = {
     pubKeyHash: number
     scriptHash: number
     wif: number
+    dustThreshold: number
+    timeInTransaction: boolean
+    maximumFeeRate?: number
 }
 
 type Bip32 = {
@@ -29,17 +32,8 @@ const bitcoin: NetworkConfig = {
         pubKeyHash: 0x00,
         scriptHash: 0x05,
         wif: 0x80,
-    },
-    regtest: {
-        messagePrefix: '\x18Bitcoin Signed Message:\n',
-        bech32: 'bcrt',
-        bip32: {
-            public: 0x043587cf,
-            private: 0x04358394,
-        },
-        pubKeyHash: 0x6f,
-        scriptHash: 0xc4,
-        wif: 0xef,
+        dustThreshold: 546,
+        timeInTransaction: false,
     },
     testnet: {
         messagePrefix: '\x18Bitcoin Signed Message:\n',
@@ -51,6 +45,8 @@ const bitcoin: NetworkConfig = {
         pubKeyHash: 0x6f,
         scriptHash: 0xc4,
         wif: 0xef,
+        dustThreshold: 546,
+        timeInTransaction: false,
     },
 }
 
@@ -65,6 +61,8 @@ const litecoin: NetworkConfig = {
         pubKeyHash: 0x30,
         scriptHash: 0x32,
         wif: 0xb0,
+        dustThreshold: 0,
+        timeInTransaction: true,
     },
     testnet: {
         messagePrefix: '\x18Litecoin Signed Message:\n',
@@ -76,6 +74,9 @@ const litecoin: NetworkConfig = {
         pubKeyHash: 0x6f,
         scriptHash: 0xc4,
         wif: 0xef,
+        dustThreshold: 500,
+        timeInTransaction: false,
+        maximumFeeRate: 50000,
     },
 }
 
@@ -90,6 +91,8 @@ const dogecoin: NetworkConfig = {
         pubKeyHash: 0x1e,
         scriptHash: 0x16,
         wif: 0x9e,
+        dustThreshold: 0,
+        timeInTransaction: false,
     },
     testnet: {
         messagePrefix: '\x18Dogecoin Signed Message:\n',
@@ -101,6 +104,82 @@ const dogecoin: NetworkConfig = {
         pubKeyHash: 0x71,
         scriptHash: 0xc4,
         wif: 0xf1,
+        dustThreshold: 0,
+        timeInTransaction: false,
+    },
+}
+
+const emercoin: NetworkConfig = {
+    mainnet: {
+        messagePrefix: '\x18Emercoin Signed Message:\n',
+        bech32: 'emc',
+        bip32: {
+            public: 0x0488b21e,
+            private: 0x0488ade4,
+        },
+        pubKeyHash: 0x00,
+        scriptHash: 0x05,
+        wif: 0x80,
+        dustThreshold: 50000,
+        timeInTransaction: true,
+        maximumFeeRate: 50000,
+    },
+    testnet: {
+        messagePrefix: '\x18Emercoin Signed Message:\n',
+        bech32: 'emc',
+        bip32: {
+            public: 0x043587cf,
+            private: 0x04358394,
+        },
+        pubKeyHash: 0x6f,
+        scriptHash: 0xc4,
+        wif: 0xef,
+        dustThreshold: 500,
+        timeInTransaction: true,
+        maximumFeeRate: 50000,
+    },
+    regtest: {
+        messagePrefix: '\x18Emercoin Signed Message:\n',
+        bech32: 'emc',
+        bip32: {
+            public: 0x043587cf,
+            private: 0x04358394,
+        },
+        pubKeyHash: 0x6f,
+        scriptHash: 0xc4,
+        wif: 0xef,
+        dustThreshold: 500,
+        timeInTransaction: true,
+    },
+}
+
+const dashcoin: NetworkConfig = {
+    mainnet: {
+        messagePrefix: '\x18Dashcoin Signed Message:\n',
+        bech32: 'dash',
+        bip32: {
+            public: 0x0488b21e,
+            private: 0x0488ade4,
+        },
+        pubKeyHash: 0x4c,
+        scriptHash: 0x10,
+        wif: 0xcc,
+        dustThreshold: 0,
+        timeInTransaction: false,
+    },
+    testnet: {
+        messagePrefix: '\x18Dashcoin Signed Message:\n',
+        bech32: 'dash',
+        bip32: {
+            public: 0x043587cf,
+            private: 0x04358394,
+        },
+        pubKeyHash: 0x8c,
+        scriptHash: 0x13,
+        wif: 0xef,
+        dustThreshold: 500,
+        timeInTransaction: false,
+        maximumFeeRate: 50000,
     },
 }
 
@@ -115,6 +194,8 @@ const bitcoinsv: NetworkConfig = {
         pubKeyHash: 0x00,
         scriptHash: 0x05,
         wif: 0x80,
+        dustThreshold: 0,
+        timeInTransaction: false,
     },
     testnet: {
         messagePrefix: 'unused',
@@ -126,7 +207,9 @@ const bitcoinsv: NetworkConfig = {
         pubKeyHash: 0x6f,
         scriptHash: 0xc4,
         wif: 0x80,
+        dustThreshold: 0,
+        timeInTransaction: false,
     },
 }
 
-export { bitcoin, litecoin, bitcoinsv, dogecoin }
+export { bitcoin, litecoin, bitcoinsv, dogecoin, emercoin, dashcoin }

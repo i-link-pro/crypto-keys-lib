@@ -181,18 +181,9 @@ var bitcoin = {
     },
     pubKeyHash: 0x00,
     scriptHash: 0x05,
-    wif: 0x80
-  },
-  regtest: {
-    messagePrefix: '\x18Bitcoin Signed Message:\n',
-    bech32: 'bcrt',
-    bip32: {
-      "public": 0x043587cf,
-      "private": 0x04358394
-    },
-    pubKeyHash: 0x6f,
-    scriptHash: 0xc4,
-    wif: 0xef
+    wif: 0x80,
+    dustThreshold: 546,
+    timeInTransaction: false
   },
   testnet: {
     messagePrefix: '\x18Bitcoin Signed Message:\n',
@@ -203,7 +194,9 @@ var bitcoin = {
     },
     pubKeyHash: 0x6f,
     scriptHash: 0xc4,
-    wif: 0xef
+    wif: 0xef,
+    dustThreshold: 546,
+    timeInTransaction: false
   }
 };
 var litecoin = {
@@ -216,7 +209,9 @@ var litecoin = {
     },
     pubKeyHash: 0x30,
     scriptHash: 0x32,
-    wif: 0xb0
+    wif: 0xb0,
+    dustThreshold: 0,
+    timeInTransaction: true
   },
   testnet: {
     messagePrefix: '\x18Litecoin Signed Message:\n',
@@ -227,7 +222,10 @@ var litecoin = {
     },
     pubKeyHash: 0x6f,
     scriptHash: 0xc4,
-    wif: 0xef
+    wif: 0xef,
+    dustThreshold: 500,
+    timeInTransaction: false,
+    maximumFeeRate: 50000
   }
 };
 var dogecoin = {
@@ -240,7 +238,9 @@ var dogecoin = {
     },
     pubKeyHash: 0x1e,
     scriptHash: 0x16,
-    wif: 0x9e
+    wif: 0x9e,
+    dustThreshold: 0,
+    timeInTransaction: false
   },
   testnet: {
     messagePrefix: '\x18Dogecoin Signed Message:\n',
@@ -251,7 +251,81 @@ var dogecoin = {
     },
     pubKeyHash: 0x71,
     scriptHash: 0xc4,
-    wif: 0xf1
+    wif: 0xf1,
+    dustThreshold: 0,
+    timeInTransaction: false
+  }
+};
+var emercoin = {
+  mainnet: {
+    messagePrefix: '\x18Emercoin Signed Message:\n',
+    bech32: 'emc',
+    bip32: {
+      "public": 0x0488b21e,
+      "private": 0x0488ade4
+    },
+    pubKeyHash: 0x00,
+    scriptHash: 0x05,
+    wif: 0x80,
+    dustThreshold: 50000,
+    timeInTransaction: true,
+    maximumFeeRate: 50000
+  },
+  testnet: {
+    messagePrefix: '\x18Emercoin Signed Message:\n',
+    bech32: 'emc',
+    bip32: {
+      "public": 0x043587cf,
+      "private": 0x04358394
+    },
+    pubKeyHash: 0x6f,
+    scriptHash: 0xc4,
+    wif: 0xef,
+    dustThreshold: 500,
+    timeInTransaction: true,
+    maximumFeeRate: 50000
+  },
+  regtest: {
+    messagePrefix: '\x18Emercoin Signed Message:\n',
+    bech32: 'emc',
+    bip32: {
+      "public": 0x043587cf,
+      "private": 0x04358394
+    },
+    pubKeyHash: 0x6f,
+    scriptHash: 0xc4,
+    wif: 0xef,
+    dustThreshold: 500,
+    timeInTransaction: true
+  }
+};
+var dashcoin = {
+  mainnet: {
+    messagePrefix: '\x18Dashcoin Signed Message:\n',
+    bech32: 'dash',
+    bip32: {
+      "public": 0x0488b21e,
+      "private": 0x0488ade4
+    },
+    pubKeyHash: 0x4c,
+    scriptHash: 0x10,
+    wif: 0xcc,
+    dustThreshold: 0,
+    timeInTransaction: false
+  },
+  testnet: {
+    messagePrefix: '\x18Dashcoin Signed Message:\n',
+    bech32: 'dash',
+    bip32: {
+      "public": 0x043587cf,
+      "private": 0x04358394
+    },
+    pubKeyHash: 0x8c,
+    scriptHash: 0x13,
+    wif: 0xef,
+    dustThreshold: 500,
+    timeInTransaction: false,
+    maximumFeeRate: 50000
   }
 };
 var bitcoinsv = {
@@ -264,7 +338,9 @@ var bitcoinsv = {
     },
     pubKeyHash: 0x00,
     scriptHash: 0x05,
-    wif: 0x80
+    wif: 0x80,
+    dustThreshold: 0,
+    timeInTransaction: false
   },
   testnet: {
     messagePrefix: 'unused',
@@ -275,7 +351,9 @@ var bitcoinsv = {
     },
     pubKeyHash: 0x6f,
     scriptHash: 0xc4,
-    wif: 0x80
+    wif: 0x80,
+    dustThreshold: 0,
+    timeInTransaction: false
   }
 };
 
@@ -511,7 +589,7 @@ var BitcoinBase = /*#__PURE__*/function () {
         var signedHex = '';
         var tx = new bitcoinjsLib.Psbt({
           network: _this4.networkConfig
-        });
+        }, null);
 
         for (var _iterator = _createForOfIteratorHelperLoose(dataObj.inputs), _step; !(_step = _iterator()).done;) {
           var input = _step.value;
@@ -1205,6 +1283,62 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
   return Ripple;
 }(BitcoinBase);
 
+var Emercoin = /*#__PURE__*/function (_BitcoinBase) {
+  _inheritsLoose(Emercoin, _BitcoinBase);
+
+  function Emercoin(network) {
+    var _this$networks;
+
+    var _this;
+
+    _this = _BitcoinBase.call(this, network) || this;
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.EMERCOIN,
+      network: exports.Network.MAINNET,
+      path: "m/44'/6'/0'",
+      config: emercoin.mainnet
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.EMERCOIN,
+      network: exports.Network.TESTNET,
+      path: "m/44'/6'/0'",
+      config: emercoin.testnet
+    }, _this$networks);
+    _this.networkConfig = _this.networks[network].config;
+    _this.defaultPath = _this.networks[network].path;
+    return _this;
+  }
+
+  return Emercoin;
+}(BitcoinBase);
+
+var Dashcoin = /*#__PURE__*/function (_BitcoinBase) {
+  _inheritsLoose(Dashcoin, _BitcoinBase);
+
+  function Dashcoin(network) {
+    var _this$networks;
+
+    var _this;
+
+    _this = _BitcoinBase.call(this, network) || this;
+    _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
+      blockchain: exports.Blockchain.DASHCOIN,
+      network: exports.Network.MAINNET,
+      path: "m/44'/5'/0'",
+      config: dashcoin.mainnet
+    }, _this$networks[exports.Network.TESTNET] = {
+      blockchain: exports.Blockchain.DASHCOIN,
+      network: exports.Network.TESTNET,
+      path: "m/44'/1'/0'",
+      config: dashcoin.testnet
+    }, _this$networks);
+    _this.networkConfig = _this.networks[network].config;
+    _this.defaultPath = _this.networks[network].path;
+    return _this;
+  }
+
+  return Dashcoin;
+}(BitcoinBase);
+
 var blockchainLibs = {
   bitcoin: Bitcoin,
   litecoin: Litecoin,
@@ -1213,7 +1347,9 @@ var blockchainLibs = {
   ethereum: Ethereum,
   eos: EOS,
   ripple: Ripple,
-  dogecoin: Dogecoin
+  dogecoin: Dogecoin,
+  emercoin: Emercoin,
+  dashcoin: Dashcoin
 };
 var Keys = /*#__PURE__*/function () {
   function Keys(blockchain, network) {

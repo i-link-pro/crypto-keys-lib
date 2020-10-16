@@ -5,6 +5,9 @@ export declare type Network = {
     pubKeyHash: number;
     scriptHash: number;
     wif: number;
+    dustThreshold: number;
+    timeInTransaction: boolean;
+    maximumFeeRate?: number;
 };
 declare type Bip32 = {
     public: number;
@@ -18,5 +21,7 @@ declare type NetworkConfig = {
 declare const bitcoin: NetworkConfig;
 declare const litecoin: NetworkConfig;
 declare const dogecoin: NetworkConfig;
+declare const emercoin: NetworkConfig;
+declare const dashcoin: NetworkConfig;
 declare const bitcoinsv: NetworkConfig;
-export { bitcoin, litecoin, bitcoinsv, dogecoin };
+export { bitcoin, litecoin, bitcoinsv, dogecoin, emercoin, dashcoin };

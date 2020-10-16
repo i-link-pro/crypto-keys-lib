@@ -780,4 +780,39 @@ describe('Lib/Ethereum', () => {
             }
         })
     })
+
+    describe('#signTx', () => {
+        context('with testnet network', async () => {
+            const data =
+                '{"nonce":"0x27","gasPrice":"0x4a817c800","gasLimit":"0x5208","to":"0x277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8","value":"0xfa0","data":"0x"}'
+            const privateKey = JSON.stringify({
+                '0x277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8':
+                    '0x03ee2d03f16cb976bb3250331124117f98f1a10d82c392d2868dea8713751eae',
+            })
+
+            const actual = await instanceWithTestnet.sign(
+                data,
+                privateKey,
+                true,
+            )
+
+            it('should be return `0xf866278504a817c80082520894277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8820fa08029a001befc981ef8c1ee89cc5c39bb63e65d69d8329829c9cc0ba9a37586bc51cb69a00df9f33340e990ce2b6ff2ef528780db5f9241e38da1c800427491d137934e78`', () => {
+                assert.strictEqual(
+                    actual,
+                    '0xf866278504a817c80082520894277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8820fa08029a001befc981ef8c1ee89cc5c39bb63e65d69d8329829c9cc0ba9a37586bc51cb69a00df9f33340e990ce2b6ff2ef528780db5f9241e38da1c800427491d137934e78',
+                )
+            })
+            try {
+                await instanceWithTestnet.sign(
+                    data,
+                    '{"0x277e9782ea398c64a287aa5ae1ed1f03f3f9fcd8":"0x03ee2d03f16cb976bb3250331124117f98f1a10d82c392d2868dea8713751eaf"}',
+                    true,
+                ) // check behavior in case of invalid private Key
+            } catch (ex) {
+                it('should be throw an error with following message `Non-base58 character`', () => {
+                    assert.strictEqual(ex.message, 'Non-base58 character')
+                })
+            }
+        })
+    })
 })

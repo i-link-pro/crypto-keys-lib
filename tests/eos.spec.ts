@@ -819,4 +819,39 @@ describe('Lib/EOS', () => {
             }
         })
     })
+
+    describe('#signTx', () => {
+        context('with testnet network', async () => {
+            const data =
+                '{"actions":[{"account":"eosio.token","name":"transfer","authorization":[{"actor":"adallllltes2","permission":"active"}],"data":{"from":"adallllltes2","to":"adallllltest","quantity":"0.0030 EOS","memo":"hi roman"}}],"endpoint":"https://jungle3.cryptolions.io:443"}'
+            const privateKey = JSON.stringify({
+                adallllltes2:
+                    '5K7cAJ38u9UesDpyaAV98Fo5Lu4AaJ9ZUywUVufb455rJfJzPKx',
+            })
+
+            const actual = await instanceWithTestnet.sign(
+                data,
+                privateKey,
+                true,
+            )
+
+            it('should be return `{"signatures":["SIG_K1_JwAK8JGTSEF5VANf9U5X2f5YoUeYsDcXBKxzeW4Po9zBrQAzLjfVtqQdPAAr3M6JmGnDFR9RiWa9WSxjAAnHY4xeyVoLf4"],"serializedTransaction":"4692755ffd6ddef9ad7f000000000100a6823403ea3055000000572d3ccdcd0120b0ca31c6184d3200000000a8ed32322920b0ca31c6184d3290b1ca31c6184d321e0000000000000004454f530000000008686920726f6d616e00","serializedContextFreeData":null}`', () => {
+                assert.strictEqual(
+                    actual,
+                    '{"signatures":["SIG_K1_JwAK8JGTSEF5VANf9U5X2f5YoUeYsDcXBKxzeW4Po9zBrQAzLjfVtqQdPAAr3M6JmGnDFR9RiWa9WSxjAAnHY4xeyVoLf4"],"serializedTransaction":"4692755ffd6ddef9ad7f000000000100a6823403ea3055000000572d3ccdcd0120b0ca31c6184d3200000000a8ed32322920b0ca31c6184d3290b1ca31c6184d321e0000000000000004454f530000000008686920726f6d616e00","serializedContextFreeData":null}',
+                )
+            })
+            try {
+                await instanceWithTestnet.sign(
+                    data,
+                    '{"adallllltes2":"ali32142"}',
+                    true,
+                ) // check behavior in case of invalid private Key
+            } catch (ex) {
+                it('should be throw an error with following message `Non-base58 character`', () => {
+                    assert.strictEqual(ex.message, 'Non-base58 character')
+                })
+            }
+        })
+    })
 })
