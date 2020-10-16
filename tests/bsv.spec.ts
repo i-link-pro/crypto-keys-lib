@@ -3,14 +3,14 @@
  */
 import * as assert from 'assert'
 import * as sinon from 'sinon'
-import { describe, it, after, before } from 'mocha'
-import { Keys } from '../src/lib'
-import { Network, Blockchain } from '../src/types'
+import { after, before, describe, it } from 'mocha'
+import { Blockchain, Keys, Network } from '../src'
 import { BitcoinSV } from '../src/blockchains/bitcoinsv'
 
 describe('Lib/BitcoinSV', () => {
     const instance = new Keys(Blockchain.BITCOIN_SV, Network.MAINNET)
     const instanceWithTestnet = new Keys(Blockchain.BITCOIN_SV, Network.TESTNET)
+
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)
         const actual = instance.getDataFromSeed(seed['seedPhrase'])
@@ -579,6 +579,27 @@ describe('Lib/BitcoinSV', () => {
     })
 
     describe('#sign', () => {
+        context('with testnet network', () => {
+            const bsv = new BitcoinSV(Network.TESTNET)
+            it('signs correct transaction', async () => {
+                const transaction =
+                    '{"sum":"0.00001","fee":"134","inputs":[{"txId":"a3614889a4ec8f68e9d3f18d47f95f6eed0abfcfb4907c900bf2aaab74c8aab5","hex":"0200000001208a8622cd6a24805ee552556891ca82f82649ef3df769b1b333a6a736444d63010000006b483045022100ad4ab99216f2a693a6f99097c876d36bc3fbbcf4edaf8d256d46ae621fc4f78702200a9b1f456985656c5ca43d7a28a12b3ea9a801e5f060eac4fd30f939b7a46deb41210211874fafbaf073f96802dc046a7e858b75d667f1b6db65c57c1e787932b9dbf7feffffff0240548900000000001976a91498f16ded439fef02517e4b8b35ffb5f4e207f7f488ac283bb603000000001976a9140147dae848778d1b6a25da7ecc3c1ecd4ca7200688ac71321500","n":0,"value":"9000000","address":"muTeE2BQVWwhP6hK7aGN8Hy8HnkrhNxH2M","type":"pubkeyhash","scriptPubKeyHex":"76a91498f16ded439fef02517e4b8b35ffb5f4e207f7f488ac"}],"outputs":[{"address":"mmdnUVZPYqbDDWL6ofoKDsKj88wvGWkbJ5","amount":"1000"},{"address":"mquGEzwExar415QREP1fPoQcUEaFZ9Vwdq","amount":"8998866"}]}'
+                const keysMap = {
+                    muTeE2BQVWwhP6hK7aGN8Hy8HnkrhNxH2M:
+                        'Kyibmf4L1zjZfHbypdxJ3oFyq7iPJoDuqajdWMzcr27zf9Xp2bcN',
+                }
+                const hash = await bsv.sign(
+                    transaction,
+                    JSON.stringify(keysMap),
+                )
+                assert.strictEqual(
+                    hash,
+                    '0200000001b5aac874abaaf20b907c90b4cfbf0aed6e5ff9478df1d3e9688feca4894861a3000000006a4730440220650316b134b3bba3f4ce29ce440ce20df064f12ab30102397dbe4bb2a351f36e022038a1f05e19548510b11d34b5844a972764560a05d3b2d7fa9ecce4188df6e22841210247c0e4ce7876aecb8e67c3a8cbcadc580970eb901657a1c4cb5d4ed95320ae5effffffff02e8030000000000001976a914431b7816f3fda1fa117a12454ed9fd3fc22eece988acd24f8900000000001976a91471e96403b3dc3305258c77860fd04716fb16fa5e88ac00000000',
+                )
+            })
+        })
+    })
+    /* describe('#sign', () => {
         context('with mainnet network', async () => {
             const privateKey =
                 'L5iKsuPCE27Gq1HpztakBmM6ACUyuh4tRV4Vd92EMvaRoLWwN2w2'
@@ -623,7 +644,7 @@ describe('Lib/BitcoinSV', () => {
                 })
             }
         })
-    })
+    }) */
 
     describe('#getPublicFromPrivate', () => {
         context('with mainnet network', () => {
