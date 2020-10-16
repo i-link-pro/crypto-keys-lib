@@ -107,7 +107,7 @@ describe('Lib/Ripple', () => {
                             publicKey:
                                 '02d12ff6f0db434aa2f4ea4c4893a8ebcc81ca4ec36bdde8c8348e927e38f2c547',
                             privateKey:
-                                'L2YwKqBH4Q7KfToXiGrGqQXYkhpsXVd59t9zojxyy95L2yuvEpGi',
+                                '9f13ee780021fe7a8c3ebc7c78cfcbc9acdc1aa6df8bea77a6ac3039e166d04d',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -261,7 +261,7 @@ describe('Lib/Ripple', () => {
                             publicKey:
                                 '02d12ff6f0db434aa2f4ea4c4893a8ebcc81ca4ec36bdde8c8348e927e38f2c547',
                             privateKey:
-                                'L2YwKqBH4Q7KfToXiGrGqQXYkhpsXVd59t9zojxyy95L2yuvEpGi',
+                                '9f13ee780021fe7a8c3ebc7c78cfcbc9acdc1aa6df8bea77a6ac3039e166d04d',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -350,7 +350,7 @@ describe('Lib/Ripple', () => {
                             publicKey:
                                 '02c32badd397806e72c44279e673bb592394124ea28198fb0e514261a1a275229d',
                             privateKey:
-                                'cUVN2CtwaNBTUdRimGn6qVVhzD7wXk4nQQ6u1BU9vaNQ3oGKhKvw',
+                                'ce1d919795a87346b29aeb11bdd95f9608169ed9dc2e60c4dd81d43dd6b69949',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
@@ -510,7 +510,7 @@ describe('Lib/Ripple', () => {
                             publicKey:
                                 '034a10344d4794febdd46a1afe38e421cd4d88c8c1f33081958ee31cb689287f76',
                             privateKey:
-                                'cR4AhvMYkYmnd7VNQQ8rpqYHBe5gfVjBMVQuMHdKXdEWqRFCfGWp',
+                                '67a45a6273fe2157a152f3cdcf097e3645f24a1ee89786d704f66be1eeb86309',
                         },
                     ]
                     it(`should be return correct ${expected[0]['path']} path`, () => {
