@@ -33,6 +33,7 @@ var Network;
 (function (Network) {
   Network["MAINNET"] = "mainnet";
   Network["TESTNET"] = "testnet";
+  Network["REGTEST"] = "regtest";
 })(Network || (Network = {}));
 
 var SeedDictionaryLang;
