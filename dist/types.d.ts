@@ -6,11 +6,14 @@ export declare enum Blockchain {
     BITCOIN_SV = "bitcoin_sv",
     LITECOIN = "litecoin",
     RIPPLE = "ripple",
-    DOGECOIN = "dogecoin"
+    DOGECOIN = "dogecoin",
+    EMERCOIN = "emercoin",
+    DASHCOIN = "dashcoin"
 }
 export declare enum Network {
     MAINNET = "mainnet",
-    TESTNET = "testnet"
+    TESTNET = "testnet",
+    REGTEST = "regtest"
 }
 export declare enum SeedDictionaryLang {
     ENGLISH = "english",

@@ -7,11 +7,14 @@ export enum Blockchain {
     LITECOIN = 'litecoin',
     RIPPLE = 'ripple',
     DOGECOIN = 'dogecoin',
+    EMERCOIN = 'emercoin',
+    DASHCOIN = 'dashcoin',
 }
 
 export enum Network {
     MAINNET = 'mainnet',
     TESTNET = 'testnet',
+    REGTEST = 'regtest',
 }
 
 export enum SeedDictionaryLang {

@@ -24,6 +24,8 @@ var Blockchain;
   Blockchain["LITECOIN"] = "litecoin";
   Blockchain["RIPPLE"] = "ripple";
   Blockchain["DOGECOIN"] = "dogecoin";
+  Blockchain["EMERCOIN"] = "emercoin";
+  Blockchain["DASHCOIN"] = "dashcoin";
 })(Blockchain || (Blockchain = {}));
 
 var Network;
@@ -31,6 +33,7 @@ var Network;
 (function (Network) {
   Network["MAINNET"] = "mainnet";
   Network["TESTNET"] = "testnet";
+  Network["REGTEST"] = "regtest";
 })(Network || (Network = {}));
 
 var SeedDictionaryLang;
