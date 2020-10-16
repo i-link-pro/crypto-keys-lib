@@ -2,7 +2,7 @@ import { SodiumPlus, CryptographyKey } from 'sodium-plus';
 import createHash from 'create-hash';
 import { mnemonicToSeedSync, validateMnemonic as validateMnemonic$1, setDefaultWordlist, generateMnemonic as generateMnemonic$1 } from 'bip39';
 import baseX from 'base-x';
-import { Psbt, ECPair, payments } from 'bitcoinjs-lib';
+import { Psbt, ECPair, payments, signBSV } from 'bitcoinjs-lib';
 import { fromBase58, fromSeed } from 'bip32';
 import bech32 from 'bech32';
 import { toCashAddress, toBitpayAddress, isValidAddress } from 'bchaddrjs';
@@ -763,6 +763,60 @@ var BitcoinSV = /*#__PURE__*/function (_BitcoinBase) {
     return _this;
   }
 
+  var _proto = BitcoinSV.prototype;
+
+  _proto.sign = function sign(data, keysMap) {
+    try {
+      var dataObj, privateKeys;
+
+      try {
+        dataObj = JSON.parse(data);
+        var parsedKeysMap = JSON.parse(keysMap);
+        privateKeys = Object.values(parsedKeysMap);
+      } catch (e) {
+        throw new Error("data must be a JSON string: " + e.toLocaleString());
+      }
+
+      var inputs = dataObj.inputs.map(function (input) {
+        if (input.scriptPubKeyHex === undefined || input.txId === undefined || input.value === undefined || input.n === undefined) {
+          throw new Error("Wrong input: " + JSON.stringify(input));
+        }
+
+        return {
+          txId: input.txId,
+          index: input.n,
+          script: input.scriptPubKeyHex,
+          address: input.address,
+          amount: parseFloat(input.value)
+        };
+      });
+      var outputs = dataObj.outputs.map(function (output) {
+        if (output.amount === undefined || output.address === undefined) {
+          throw new Error("Wrong output: " + JSON.stringify(output));
+        }
+
+        return {
+          address: output.address,
+          amount: parseFloat(output.amount)
+        };
+      });
+      var transaction = {
+        inputs: inputs,
+        outputs: outputs,
+        sum: parseFloat(dataObj.sum),
+        fee: parseFloat(dataObj.fee),
+        keyPairs: privateKeys.map(function (key) {
+          return {
+            privateKey: key
+          };
+        })
+      };
+      return Promise.resolve(signBSV(transaction));
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+
   return BitcoinSV;
 }(BitcoinBase);
 
@@ -811,6 +865,58 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinBase) {
 
   _proto.isValidAddress = function isValidAddress$1(address) {
     return isValidAddress(address);
+  };
+
+  _proto.sign = function sign(data, keysMap) {
+    try {
+      var dataObj, privateKeys;
+
+      try {
+        dataObj = JSON.parse(data);
+        var parsedKeysMap = JSON.parse(keysMap);
+        privateKeys = Object.values(parsedKeysMap);
+      } catch (e) {
+        throw new Error("data must be a JSON string: " + e.toLocaleString());
+      }
+
+      var inputs = dataObj.inputs.map(function (input) {
+        if (input.scriptPubKeyHex === undefined || input.txId === undefined || input.value === undefined || input.n === undefined) {
+          throw new Error("Wrong input: " + JSON.stringify(input));
+        }
+
+        return {
+          txId: input.txId,
+          index: input.n,
+          script: input.scriptPubKeyHex,
+          address: input.address,
+          amount: parseFloat(input.value)
+        };
+      });
+      var outputs = dataObj.outputs.map(function (output) {
+        if (output.amount === undefined || output.address === undefined) {
+          throw new Error("Wrong output: " + JSON.stringify(output));
+        }
+
+        return {
+          address: output.address,
+          amount: parseFloat(output.amount)
+        };
+      });
+      var transaction = {
+        inputs: inputs,
+        outputs: outputs,
+        sum: parseFloat(dataObj.sum),
+        fee: parseFloat(dataObj.fee),
+        keyPairs: privateKeys.map(function (key) {
+          return {
+            privateKey: key
+          };
+        })
+      };
+      return Promise.resolve(signBSV(transaction));
+    } catch (e) {
+      return Promise.reject(e);
+    }
   };
 
   return BitcoinCash;
