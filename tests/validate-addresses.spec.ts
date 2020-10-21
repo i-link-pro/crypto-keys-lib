@@ -224,11 +224,11 @@ describe('getFormat', () => {
     })
 
     generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
-        it("Should return 'bech32' format for bech32 addresses", () => {
+        it("Should return 'base58' format for base58 addresses", () => {
             const instance = new BitcoinBase(Network.MAINNET)
-            const address = instance.getAddressFromPublic(publicKey, 'bech32')
+            const address = instance.getAddressFromPublic(publicKey, 'base58')
 
-            assert.strictEqual(instance.getFormat(address), 'bech32')
+            assert.strictEqual(instance.getFormat(address), 'base58')
         })
     })
 
