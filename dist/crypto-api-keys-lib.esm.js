@@ -738,32 +738,19 @@ var Bitcoin = /*#__PURE__*/function (_BitcoinBase) {
   return Bitcoin;
 }(BitcoinBase);
 
-var BitcoinSV = /*#__PURE__*/function (_BitcoinBase) {
-  _inheritsLoose(BitcoinSV, _BitcoinBase);
+var BitcoinSvBase = /*#__PURE__*/function (_BitcoinBase) {
+  _inheritsLoose(BitcoinSvBase, _BitcoinBase);
 
-  function BitcoinSV(network) {
-    var _this$networks;
-
+  function BitcoinSvBase(network) {
     var _this;
 
     _this = _BitcoinBase.call(this, network) || this;
-    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.BITCOIN_SV,
-      network: Network.MAINNET,
-      path: "m/44'/236'/0'",
-      config: bitcoinsv.mainnet
-    }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.BITCOIN_SV,
-      network: Network.TESTNET,
-      path: "m/44'/1'/0'",
-      config: bitcoinsv.testnet
-    }, _this$networks);
     _this.networkConfig = _this.networks[network].config;
     _this.defaultPath = _this.networks[network].path;
     return _this;
   }
 
-  var _proto = BitcoinSV.prototype;
+  var _proto = BitcoinSvBase.prototype;
 
   _proto.sign = function sign(data, keysMap) {
     try {
@@ -817,18 +804,46 @@ var BitcoinSV = /*#__PURE__*/function (_BitcoinBase) {
     }
   };
 
-  return BitcoinSV;
+  return BitcoinSvBase;
 }(BitcoinBase);
 
-var BitcoinCash = /*#__PURE__*/function (_BitcoinBase) {
-  _inheritsLoose(BitcoinCash, _BitcoinBase);
+var BitcoinSV = /*#__PURE__*/function (_BitcoinSvBase) {
+  _inheritsLoose(BitcoinSV, _BitcoinSvBase);
+
+  function BitcoinSV(network) {
+    var _this$networks;
+
+    var _this;
+
+    _this = _BitcoinSvBase.call(this, network) || this;
+    _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
+      blockchain: Blockchain.BITCOIN_SV,
+      network: Network.MAINNET,
+      path: "m/44'/236'/0'",
+      config: bitcoinsv.mainnet
+    }, _this$networks[Network.TESTNET] = {
+      blockchain: Blockchain.BITCOIN_SV,
+      network: Network.TESTNET,
+      path: "m/44'/1'/0'",
+      config: bitcoinsv.testnet
+    }, _this$networks);
+    _this.networkConfig = _this.networks[network].config;
+    _this.defaultPath = _this.networks[network].path;
+    return _this;
+  }
+
+  return BitcoinSV;
+}(BitcoinSvBase);
+
+var BitcoinCash = /*#__PURE__*/function (_BitcoinSvBase) {
+  _inheritsLoose(BitcoinCash, _BitcoinSvBase);
 
   function BitcoinCash(network) {
     var _this$networks;
 
     var _this;
 
-    _this = _BitcoinBase.call(this, network) || this;
+    _this = _BitcoinSvBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
       blockchain: Blockchain.BITCOIN_CASH,
       network: Network.MAINNET,
@@ -848,7 +863,7 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinBase) {
   var _proto = BitcoinCash.prototype;
 
   _proto.getAddressFromPublic = function getAddressFromPublic(publicKey, format) {
-    var legacy = _BitcoinBase.prototype.getAddressFromPublic.call(this, publicKey);
+    var legacy = _BitcoinSvBase.prototype.getAddressFromPublic.call(this, publicKey);
 
     var address = toCashAddress(legacy);
 
@@ -867,60 +882,8 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinBase) {
     return isValidAddress(address);
   };
 
-  _proto.sign = function sign(data, keysMap) {
-    try {
-      var dataObj, privateKeys;
-
-      try {
-        dataObj = JSON.parse(data);
-        var parsedKeysMap = JSON.parse(keysMap);
-        privateKeys = Object.values(parsedKeysMap);
-      } catch (e) {
-        throw new Error("data must be a JSON string: " + e.toLocaleString());
-      }
-
-      var inputs = dataObj.inputs.map(function (input) {
-        if (input.scriptPubKeyHex === undefined || input.txId === undefined || input.value === undefined || input.n === undefined) {
-          throw new Error("Wrong input: " + JSON.stringify(input));
-        }
-
-        return {
-          txId: input.txId,
-          index: input.n,
-          script: input.scriptPubKeyHex,
-          address: input.address,
-          amount: parseFloat(input.value)
-        };
-      });
-      var outputs = dataObj.outputs.map(function (output) {
-        if (output.amount === undefined || output.address === undefined) {
-          throw new Error("Wrong output: " + JSON.stringify(output));
-        }
-
-        return {
-          address: output.address,
-          amount: parseFloat(output.amount)
-        };
-      });
-      var transaction = {
-        inputs: inputs,
-        outputs: outputs,
-        sum: parseFloat(dataObj.sum),
-        fee: parseFloat(dataObj.fee),
-        keyPairs: privateKeys.map(function (key) {
-          return {
-            privateKey: key
-          };
-        })
-      };
-      return Promise.resolve(signBSV(transaction));
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
-
   return BitcoinCash;
-}(BitcoinBase);
+}(BitcoinSvBase);
 
 var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
   _inheritsLoose(Litecoin, _BitcoinBase);
