@@ -784,7 +784,7 @@ var BitcoinSvBase = /*#__PURE__*/function (_BitcoinBase) {
 
         return {
           address: output.address,
-          amount: parseFloat(output.amount)
+          amount: parseFloat(output.amount.toString())
         };
       });
       var transaction = {

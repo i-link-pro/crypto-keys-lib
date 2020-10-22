@@ -1,11 +1,10 @@
 import * as assert from 'assert'
-import * as sinon from 'sinon'
-import { describe, it, after, before } from 'mocha'
+import { describe, it } from 'mocha'
 import { Keys } from '../src'
 import { Network, Blockchain } from '../src'
 
 describe('Lib/Emercoin', () => {
-    const instance = new Keys(Blockchain.EMERCOIN, Network.MAINNET)
+    // const instance = new Keys(Blockchain.EMERCOIN, Network.MAINNET)
     const instanceWithTestnet = new Keys(Blockchain.EMERCOIN, Network.TESTNET)
 
     describe('#signTx', () => {

@@ -1,10 +1,9 @@
 import { BitcoinBase } from './bitcoin-base'
-import { bitcoinsv } from '../network-configs'
-import { Network, Blockchain } from '../types'
+import { Network } from '../types'
 import { signBSV } from 'bitcoinjs-lib'
 
 export interface UnsignedInput {
-    txId?: string
+    txId: string
     hex?: string
     n?: number
     value?: string
@@ -12,11 +11,14 @@ export interface UnsignedInput {
     type?: string
     scriptPubKeyHex?: string
     json?: string
+    amount: number
+    index: number
+    script: string
 }
 
 export interface UnsignedOutput {
-    address?: string
-    amount?: string
+    address: string
+    amount: number
 }
 
 export interface TransactionForSign {
@@ -43,13 +45,7 @@ export class BitcoinSvBase extends BitcoinBase {
         } catch (e) {
             throw new Error(`data must be a JSON string: ${e.toLocaleString()}`)
         }
-        const inputs: Array<{
-            txId: string
-            address: string
-            amount: number
-            script: string
-            index: number
-        }> = dataObj.inputs.map(input => {
+        const inputs: Array<UnsignedInput> = dataObj.inputs.map(input => {
             if (
                 input.scriptPubKeyHex === undefined ||
                 input.txId === undefined ||
@@ -66,16 +62,13 @@ export class BitcoinSvBase extends BitcoinBase {
                 amount: parseFloat(input.value),
             }
         })
-        const outputs: Array<{
-            address: string
-            amount: number
-        }> = dataObj.outputs.map(output => {
+        const outputs: Array<UnsignedOutput> = dataObj.outputs.map(output => {
             if (output.amount === undefined || output.address === undefined) {
                 throw new Error(`Wrong output: ${JSON.stringify(output)}`)
             }
             return {
                 address: output.address,
-                amount: parseFloat(output.amount),
+                amount: parseFloat(output.amount.toString()),
             }
         })
         const transaction = {
