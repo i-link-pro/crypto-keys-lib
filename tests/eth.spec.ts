@@ -6,8 +6,8 @@ import { Network, Blockchain } from '../src/types'
 import { Ethereum } from '../src/blockchains/ethereum'
 
 describe('Lib/Ethereum', () => {
-    const instance = new Keys(Blockchain.ETHEREUM, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.ETHEREUM, Network.TESTNET)
+    const instance = new Keys(Blockchain.ETH, Network.MAINNET)
+    const instanceWithTestnet = new Keys(Blockchain.ETH, Network.TESTNET)
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)
         const actual = instance.getDataFromSeed(seed['seedPhrase'])

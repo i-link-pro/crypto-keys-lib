@@ -16,16 +16,16 @@ import { RippleAPI } from 'ripple-lib';
 var Blockchain;
 
 (function (Blockchain) {
-  Blockchain["BITCOIN"] = "bitcoin";
-  Blockchain["ETHEREUM"] = "ethereum";
+  Blockchain["BTC"] = "bitcoin";
+  Blockchain["ETH"] = "ethereum";
   Blockchain["EOS"] = "eos";
-  Blockchain["BITCOIN_CASH"] = "bitcoin_cash";
-  Blockchain["BITCOIN_SV"] = "bitcoin_sv";
-  Blockchain["LITECOIN"] = "litecoin";
-  Blockchain["RIPPLE"] = "ripple";
-  Blockchain["DOGECOIN"] = "dogecoin";
-  Blockchain["EMERCOIN"] = "emercoin";
-  Blockchain["DASHCOIN"] = "dashcoin";
+  Blockchain["BCH"] = "bitcoin_cash";
+  Blockchain["BSV"] = "bitcoin_sv";
+  Blockchain["LTC"] = "litecoin";
+  Blockchain["XRP"] = "ripple";
+  Blockchain["DOGE"] = "dogecoin";
+  Blockchain["EMC"] = "emercoin";
+  Blockchain["DASH"] = "dashcoin";
 })(Blockchain || (Blockchain = {}));
 
 var Network;
@@ -453,12 +453,12 @@ var BitcoinBase = /*#__PURE__*/function () {
     var _this$networks;
 
     this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.BITCOIN,
+      blockchain: Blockchain.BTC,
       network: Network.MAINNET,
       path: "m/44'/0'/0'",
       config: bitcoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.BITCOIN,
+      blockchain: Blockchain.BTC,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -817,12 +817,12 @@ var BitcoinSV = /*#__PURE__*/function (_BitcoinSvBase) {
 
     _this = _BitcoinSvBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.BITCOIN_SV,
+      blockchain: Blockchain.BSV,
       network: Network.MAINNET,
       path: "m/44'/236'/0'",
       config: bitcoinsv.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.BITCOIN_SV,
+      blockchain: Blockchain.BSV,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoinsv.testnet
@@ -845,12 +845,12 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinSvBase) {
 
     _this = _BitcoinSvBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.BITCOIN_CASH,
+      blockchain: Blockchain.BCH,
       network: Network.MAINNET,
       path: "m/44'/145'/0'",
       config: bitcoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.BITCOIN_CASH,
+      blockchain: Blockchain.BCH,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -895,12 +895,12 @@ var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.LITECOIN,
+      blockchain: Blockchain.LTC,
       network: Network.MAINNET,
       path: "m/44'/2'/0'",
       config: litecoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.LITECOIN,
+      blockchain: Blockchain.LTC,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: litecoin.testnet
@@ -923,12 +923,12 @@ var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.DOGECOIN,
+      blockchain: Blockchain.DOGE,
       network: Network.MAINNET,
       path: "m/44'/3'/0'",
       config: dogecoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.DOGECOIN,
+      blockchain: Blockchain.DOGE,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: dogecoin.testnet
@@ -953,12 +953,12 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.ETHEREUM,
+      blockchain: Blockchain.ETH,
       network: Network.MAINNET,
       path: "m/44'/60'/0'",
       config: bitcoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.ETHEREUM,
+      blockchain: Blockchain.ETH,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -1156,12 +1156,12 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.RIPPLE,
+      blockchain: Blockchain.XRP,
       network: Network.MAINNET,
       path: "m/44'/144'/0'",
       config: bitcoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.RIPPLE,
+      blockchain: Blockchain.XRP,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -1256,12 +1256,12 @@ var Emercoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.EMERCOIN,
+      blockchain: Blockchain.EMC,
       network: Network.MAINNET,
       path: "m/44'/6'/0'",
       config: emercoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.EMERCOIN,
+      blockchain: Blockchain.EMC,
       network: Network.TESTNET,
       path: "m/44'/6'/0'",
       config: emercoin.testnet
@@ -1284,12 +1284,12 @@ var Dashcoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[Network.MAINNET] = {
-      blockchain: Blockchain.DASHCOIN,
+      blockchain: Blockchain.DASH,
       network: Network.MAINNET,
       path: "m/44'/5'/0'",
       config: dashcoin.mainnet
     }, _this$networks[Network.TESTNET] = {
-      blockchain: Blockchain.DASHCOIN,
+      blockchain: Blockchain.DASH,
       network: Network.TESTNET,
       path: "m/44'/1'/0'",
       config: dashcoin.testnet

@@ -5,7 +5,7 @@ import { Network, Blockchain } from '../src'
 
 describe('Lib/Emercoin', () => {
     // const instance = new Keys(Blockchain.EMERCOIN, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.EMERCOIN, Network.TESTNET)
+    const instanceWithTestnet = new Keys(Blockchain.EMC, Network.TESTNET)
 
     describe('#signTx', () => {
         context('with testnet network', async () => {

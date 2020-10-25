@@ -8,8 +8,8 @@ import { Blockchain, Keys, Network } from '../src'
 import { BitcoinSV } from '../src/blockchains/bitcoinsv'
 
 describe('Lib/BitcoinSV', () => {
-    const instance = new Keys(Blockchain.BITCOIN_SV, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.BITCOIN_SV, Network.TESTNET)
+    const instance = new Keys(Blockchain.BSV, Network.MAINNET)
+    const instanceWithTestnet = new Keys(Blockchain.BSV, Network.TESTNET)
 
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)

@@ -9,13 +9,13 @@ const ethTx = require('ethereumjs-tx').Transaction
 export class Ethereum extends BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
-            blockchain: Blockchain.ETHEREUM,
+            blockchain: Blockchain.ETH,
             network: Network.MAINNET,
             path: "m/44'/60'/0'",
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.ETHEREUM,
+            blockchain: Blockchain.ETH,
             network: Network.TESTNET,
             path: "m/44'/1'/0'",
             config: bitcoin.testnet,

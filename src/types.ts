@@ -1,14 +1,14 @@
 export enum Blockchain {
-    BITCOIN = 'bitcoin',
-    ETHEREUM = 'ethereum',
+    BTC = 'bitcoin',
+    ETH = 'ethereum',
     EOS = 'eos',
-    BITCOIN_CASH = 'bitcoin_cash',
-    BITCOIN_SV = 'bitcoin_sv',
-    LITECOIN = 'litecoin',
-    RIPPLE = 'ripple',
-    DOGECOIN = 'dogecoin',
-    EMERCOIN = 'emercoin',
-    DASHCOIN = 'dashcoin',
+    BCH = 'bitcoin_cash',
+    BSV = 'bitcoin_sv',
+    LTC = 'litecoin',
+    XRP = 'ripple',
+    DOGE = 'dogecoin',
+    EMC = 'emercoin',
+    DASH = 'dashcoin',
 }
 
 export enum Network {

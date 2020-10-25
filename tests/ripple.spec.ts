@@ -6,8 +6,8 @@ import { Network, Blockchain } from '../src/types'
 import { Ripple } from '../src/blockchains/ripple'
 
 describe('Lib/Ripple', () => {
-    const instance = new Keys(Blockchain.RIPPLE, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.RIPPLE, Network.TESTNET)
+    const instance = new Keys(Blockchain.XRP, Network.MAINNET)
+    const instanceWithTestnet = new Keys(Blockchain.XRP, Network.TESTNET)
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)
         const actual = instance.getDataFromSeed(seed['seedPhrase'])

@@ -28,8 +28,8 @@ describe('BitcoinBase', () => {
 })
 
 describe('Lib/BitcoinBase', () => {
-    const instance = new Keys(Blockchain.BITCOIN, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.BITCOIN, Network.TESTNET)
+    const instance = new Keys(Blockchain.BTC, Network.MAINNET)
+    const instanceWithTestnet = new Keys(Blockchain.BTC, Network.TESTNET)
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)
         const actual = instance.getDataFromSeed(seed['seedPhrase'])
@@ -81,7 +81,7 @@ describe('Lib/BitcoinBase', () => {
     })
     describe('#derivateKeys', () => {
         context('with mainnet network', () => {
-            const instance = new Keys(Blockchain.BITCOIN, Network.MAINNET)
+            const instance = new Keys(Blockchain.BTC, Network.MAINNET)
             context('with masterPrivateKey', () => {
                 let spy
                 let actual

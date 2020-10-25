@@ -6,8 +6,8 @@ import { Network, Blockchain } from '../src/types'
 import { Litecoin } from '../src/blockchains/litecoin'
 
 describe('Lib/Litecoin', () => {
-    const instance = new Keys(Blockchain.LITECOIN, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.LITECOIN, Network.TESTNET)
+    const instance = new Keys(Blockchain.LTC, Network.MAINNET)
+    const instanceWithTestnet = new Keys(Blockchain.LTC, Network.TESTNET)
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)
         const actual = instance.getDataFromSeed(seed['seedPhrase'])

@@ -10,13 +10,13 @@ import { BitcoinSvBase } from './bsv-base'
 export class BitcoinCash extends BitcoinSvBase {
     protected networks = {
         [Network.MAINNET]: {
-            blockchain: Blockchain.BITCOIN_CASH,
+            blockchain: Blockchain.BCH,
             network: Network.MAINNET,
             path: "m/44'/145'/0'",
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.BITCOIN_CASH,
+            blockchain: Blockchain.BCH,
             network: Network.TESTNET,
             path: "m/44'/1'/0'",
             config: bitcoin.testnet,

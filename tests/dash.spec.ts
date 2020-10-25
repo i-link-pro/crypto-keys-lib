@@ -5,7 +5,7 @@ import { Network, Blockchain } from '../src'
 
 describe('Lib/Dashcoin', () => {
     // const instance = new Keys(Blockchain.DASHCOIN, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.DASHCOIN, Network.TESTNET)
+    const instanceWithTestnet = new Keys(Blockchain.DASH, Network.TESTNET)
 
     describe('#signTx', () => {
         context('with testnet network', async () => {

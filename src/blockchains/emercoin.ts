@@ -5,13 +5,13 @@ import { Network, Blockchain } from '../types'
 export class Emercoin extends BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
-            blockchain: Blockchain.EMERCOIN,
+            blockchain: Blockchain.EMC,
             network: Network.MAINNET,
             path: "m/44'/6'/0'",
             config: emercoin.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.EMERCOIN,
+            blockchain: Blockchain.EMC,
             network: Network.TESTNET,
             path: "m/44'/6'/0'",
             config: emercoin.testnet,

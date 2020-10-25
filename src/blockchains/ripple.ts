@@ -12,13 +12,13 @@ import { KeyPair } from 'ripple-lib/dist/npm/transaction/types'
 export class Ripple extends BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
-            blockchain: Blockchain.RIPPLE,
+            blockchain: Blockchain.XRP,
             network: Network.MAINNET,
             path: "m/44'/144'/0'",
             config: bitcoin.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.RIPPLE,
+            blockchain: Blockchain.XRP,
             network: Network.TESTNET,
             path: "m/44'/1'/0'",
             config: bitcoin.testnet,

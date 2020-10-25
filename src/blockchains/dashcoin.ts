@@ -5,13 +5,13 @@ import { Network, Blockchain } from '../types'
 export class Dashcoin extends BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
-            blockchain: Blockchain.DASHCOIN,
+            blockchain: Blockchain.DASH,
             network: Network.MAINNET,
             path: "m/44'/5'/0'",
             config: dashcoin.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.DASHCOIN,
+            blockchain: Blockchain.DASH,
             network: Network.TESTNET,
             path: "m/44'/1'/0'",
             config: dashcoin.testnet,

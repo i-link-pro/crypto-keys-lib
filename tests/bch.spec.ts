@@ -9,9 +9,9 @@ import { Blockchain, Network } from '../src'
 import { BitcoinCash } from '../src/blockchains/bitcoin-cash'
 
 describe('Lib/BitcoinCash', () => {
-    const instance = new Keys(Blockchain.BITCOIN_CASH, Network.MAINNET)
+    const instance = new Keys(Blockchain.BCH, Network.MAINNET)
     const instanceWithTestnet = new Keys(
-        Blockchain.BITCOIN_CASH,
+        Blockchain.BCH,
         Network.TESTNET,
     )
 

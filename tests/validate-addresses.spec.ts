@@ -33,7 +33,7 @@ const generateAddress = (
 
 describe('Bitcoin Address Validator', () => {
     describe('Bitcoin MAINNET', () => {
-        generateAddress(Network.MAINNET, Blockchain.BITCOIN, publicKey => {
+        generateAddress(Network.MAINNET, Blockchain.BTC, publicKey => {
             const instance = new Bitcoin(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -44,7 +44,7 @@ describe('Bitcoin Address Validator', () => {
     })
 
     describe('Bitcoin TESTNET', () => {
-        generateAddress(Network.TESTNET, Blockchain.BITCOIN, publicKey => {
+        generateAddress(Network.TESTNET, Blockchain.BTC, publicKey => {
             const instance = new Bitcoin(Network.TESTNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -57,7 +57,7 @@ describe('Bitcoin Address Validator', () => {
 
 describe('BCH Address Validator', () => {
     describe('BitcoinCash MAINNET', () => {
-        generateAddress(Network.MAINNET, Blockchain.BITCOIN_CASH, publicKey => {
+        generateAddress(Network.MAINNET, Blockchain.BCH, publicKey => {
             const instance = new BitcoinCash(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -68,7 +68,7 @@ describe('BCH Address Validator', () => {
     })
 
     describe('BitcoinCash TESTNET', () => {
-        generateAddress(Network.TESTNET, Blockchain.BITCOIN_CASH, publicKey => {
+        generateAddress(Network.TESTNET, Blockchain.BCH, publicKey => {
             const instance = new BitcoinCash(Network.TESTNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -81,7 +81,7 @@ describe('BCH Address Validator', () => {
 
 describe('BSV Address Validator', () => {
     describe('BitcoinSV MAINNET', () => {
-        generateAddress(Network.MAINNET, Blockchain.BITCOIN_SV, publicKey => {
+        generateAddress(Network.MAINNET, Blockchain.BSV, publicKey => {
             const instance = new BitcoinSV(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -92,7 +92,7 @@ describe('BSV Address Validator', () => {
     })
 
     describe('BitcoinSV TESTNET', () => {
-        generateAddress(Network.TESTNET, Blockchain.BITCOIN_SV, publicKey => {
+        generateAddress(Network.TESTNET, Blockchain.BSV, publicKey => {
             const instance = new BitcoinSV(Network.TESTNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -105,7 +105,7 @@ describe('BSV Address Validator', () => {
 
 describe('ETHEREUM Address Validator', () => {
     describe('ETHEREUM MAINNET', () => {
-        generateAddress(Network.MAINNET, Blockchain.ETHEREUM, publicKey => {
+        generateAddress(Network.MAINNET, Blockchain.ETH, publicKey => {
             const instance = new Ethereum(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -116,7 +116,7 @@ describe('ETHEREUM Address Validator', () => {
     })
 
     describe('ETHEREUM TESTNET', () => {
-        generateAddress(Network.TESTNET, Blockchain.ETHEREUM, publicKey => {
+        generateAddress(Network.TESTNET, Blockchain.ETH, publicKey => {
             const instance = new Ethereum(Network.TESTNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -165,7 +165,7 @@ describe('EOS Address Validator', () => {
 
 describe('LITECOIN Address Validator', () => {
     describe('LITECOIN MAINNET', () => {
-        generateAddress(Network.MAINNET, Blockchain.LITECOIN, publicKey => {
+        generateAddress(Network.MAINNET, Blockchain.LTC, publicKey => {
             const instance = new Litecoin(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -176,7 +176,7 @@ describe('LITECOIN Address Validator', () => {
     })
 
     describe('LITECOIN TESTNET', () => {
-        generateAddress(Network.TESTNET, Blockchain.LITECOIN, publicKey => {
+        generateAddress(Network.TESTNET, Blockchain.LTC, publicKey => {
             const instance = new Litecoin(Network.TESTNET)
             const address = instance.getAddressFromPublic(publicKey)
 
@@ -190,7 +190,7 @@ describe('LITECOIN Address Validator', () => {
 describe('RIPPLE Address Validator', () => {
     ;['base58', 'bech32'].forEach(format => {
         describe('RIPPLE MAINNET', () => {
-            generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
+            generateAddress(Network.MAINNET, Blockchain.XRP, publicKey => {
                 const instance = new Ripple(Network.MAINNET)
                 const address = instance.getAddressFromPublic(publicKey, format)
 
@@ -201,7 +201,7 @@ describe('RIPPLE Address Validator', () => {
         })
 
         describe('RIPPLE TESTNET', () => {
-            generateAddress(Network.TESTNET, Blockchain.RIPPLE, publicKey => {
+            generateAddress(Network.TESTNET, Blockchain.XRP, publicKey => {
                 const instance = new Ripple(Network.TESTNET)
                 const address = instance.getAddressFromPublic(publicKey, format)
 
@@ -214,7 +214,7 @@ describe('RIPPLE Address Validator', () => {
 })
 
 describe('getFormat', () => {
-    generateAddress(Network.MAINNET, Blockchain.BITCOIN, publicKey => {
+    generateAddress(Network.MAINNET, Blockchain.BTC, publicKey => {
         it("Should return 'base58' format for base58 addresses", () => {
             const instance = new Bitcoin(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey)
@@ -223,7 +223,7 @@ describe('getFormat', () => {
         })
     })
 
-    generateAddress(Network.MAINNET, Blockchain.RIPPLE, publicKey => {
+    generateAddress(Network.MAINNET, Blockchain.XRP, publicKey => {
         it("Should return 'base58' format for base58 addresses", () => {
             const instance = new BitcoinBase(Network.MAINNET)
             const address = instance.getAddressFromPublic(publicKey, 'base58')

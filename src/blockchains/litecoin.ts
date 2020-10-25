@@ -5,13 +5,13 @@ import { Network, Blockchain } from '../types'
 export class Litecoin extends BitcoinBase {
     protected networks = {
         [Network.MAINNET]: {
-            blockchain: Blockchain.LITECOIN,
+            blockchain: Blockchain.LTC,
             network: Network.MAINNET,
             path: "m/44'/2'/0'",
             config: litecoin.mainnet,
         },
         [Network.TESTNET]: {
-            blockchain: Blockchain.LITECOIN,
+            blockchain: Blockchain.LTC,
             network: Network.TESTNET,
             path: "m/44'/1'/0'",
             config: litecoin.testnet,

@@ -6,8 +6,8 @@ import { Network, Blockchain } from '../src'
 import { Dogecoin } from '../src/blockchains/dogecoin'
 
 describe('Lib/Dogecoin', () => {
-    const instance = new Keys(Blockchain.DOGECOIN, Network.MAINNET)
-    const instanceWithTestnet = new Keys(Blockchain.DOGECOIN, Network.TESTNET)
+    const instance = new Keys(Blockchain.DOGE, Network.MAINNET)
+    const instanceWithTestnet = new Keys(Blockchain.DOGE, Network.TESTNET)
 
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)

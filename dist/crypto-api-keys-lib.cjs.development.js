@@ -20,16 +20,16 @@ var rippleUtil = require('ripple-address-codec');
 var rippleLib = require('ripple-lib');
 
 (function (Blockchain) {
-  Blockchain["BITCOIN"] = "bitcoin";
-  Blockchain["ETHEREUM"] = "ethereum";
+  Blockchain["BTC"] = "bitcoin";
+  Blockchain["ETH"] = "ethereum";
   Blockchain["EOS"] = "eos";
-  Blockchain["BITCOIN_CASH"] = "bitcoin_cash";
-  Blockchain["BITCOIN_SV"] = "bitcoin_sv";
-  Blockchain["LITECOIN"] = "litecoin";
-  Blockchain["RIPPLE"] = "ripple";
-  Blockchain["DOGECOIN"] = "dogecoin";
-  Blockchain["EMERCOIN"] = "emercoin";
-  Blockchain["DASHCOIN"] = "dashcoin";
+  Blockchain["BCH"] = "bitcoin_cash";
+  Blockchain["BSV"] = "bitcoin_sv";
+  Blockchain["LTC"] = "litecoin";
+  Blockchain["XRP"] = "ripple";
+  Blockchain["DOGE"] = "dogecoin";
+  Blockchain["EMC"] = "emercoin";
+  Blockchain["DASH"] = "dashcoin";
 })(exports.Blockchain || (exports.Blockchain = {}));
 
 (function (Network) {
@@ -453,12 +453,12 @@ var BitcoinBase = /*#__PURE__*/function () {
     var _this$networks;
 
     this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.BITCOIN,
+      blockchain: exports.Blockchain.BTC,
       network: exports.Network.MAINNET,
       path: "m/44'/0'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.BITCOIN,
+      blockchain: exports.Blockchain.BTC,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -817,12 +817,12 @@ var BitcoinSV = /*#__PURE__*/function (_BitcoinSvBase) {
 
     _this = _BitcoinSvBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.BITCOIN_SV,
+      blockchain: exports.Blockchain.BSV,
       network: exports.Network.MAINNET,
       path: "m/44'/236'/0'",
       config: bitcoinsv.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.BITCOIN_SV,
+      blockchain: exports.Blockchain.BSV,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoinsv.testnet
@@ -845,12 +845,12 @@ var BitcoinCash = /*#__PURE__*/function (_BitcoinSvBase) {
 
     _this = _BitcoinSvBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.BITCOIN_CASH,
+      blockchain: exports.Blockchain.BCH,
       network: exports.Network.MAINNET,
       path: "m/44'/145'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.BITCOIN_CASH,
+      blockchain: exports.Blockchain.BCH,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -895,12 +895,12 @@ var Litecoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.LITECOIN,
+      blockchain: exports.Blockchain.LTC,
       network: exports.Network.MAINNET,
       path: "m/44'/2'/0'",
       config: litecoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.LITECOIN,
+      blockchain: exports.Blockchain.LTC,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: litecoin.testnet
@@ -923,12 +923,12 @@ var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.DOGECOIN,
+      blockchain: exports.Blockchain.DOGE,
       network: exports.Network.MAINNET,
       path: "m/44'/3'/0'",
       config: dogecoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.DOGECOIN,
+      blockchain: exports.Blockchain.DOGE,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: dogecoin.testnet
@@ -953,12 +953,12 @@ var Ethereum = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.ETHEREUM,
+      blockchain: exports.Blockchain.ETH,
       network: exports.Network.MAINNET,
       path: "m/44'/60'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.ETHEREUM,
+      blockchain: exports.Blockchain.ETH,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -1156,12 +1156,12 @@ var Ripple = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.RIPPLE,
+      blockchain: exports.Blockchain.XRP,
       network: exports.Network.MAINNET,
       path: "m/44'/144'/0'",
       config: bitcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.RIPPLE,
+      blockchain: exports.Blockchain.XRP,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: bitcoin.testnet
@@ -1256,12 +1256,12 @@ var Emercoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.EMERCOIN,
+      blockchain: exports.Blockchain.EMC,
       network: exports.Network.MAINNET,
       path: "m/44'/6'/0'",
       config: emercoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.EMERCOIN,
+      blockchain: exports.Blockchain.EMC,
       network: exports.Network.TESTNET,
       path: "m/44'/6'/0'",
       config: emercoin.testnet
@@ -1284,12 +1284,12 @@ var Dashcoin = /*#__PURE__*/function (_BitcoinBase) {
 
     _this = _BitcoinBase.call(this, network) || this;
     _this.networks = (_this$networks = {}, _this$networks[exports.Network.MAINNET] = {
-      blockchain: exports.Blockchain.DASHCOIN,
+      blockchain: exports.Blockchain.DASH,
       network: exports.Network.MAINNET,
       path: "m/44'/5'/0'",
       config: dashcoin.mainnet
     }, _this$networks[exports.Network.TESTNET] = {
-      blockchain: exports.Blockchain.DASHCOIN,
+      blockchain: exports.Blockchain.DASH,
       network: exports.Network.TESTNET,
       path: "m/44'/1'/0'",
       config: dashcoin.testnet
