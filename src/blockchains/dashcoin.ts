@@ -27,6 +27,9 @@ export class Dashcoin extends BitcoinBase {
         if (!address) {
             return false
         }
-        return addressValidator.validate(address, 'DASH')
+        return (
+            addressValidator.validate(address, 'DASH') ||
+            addressValidator.validate(address, 'DASH', 'testnet')
+        )
     }
 }

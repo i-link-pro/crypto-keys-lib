@@ -10,10 +10,7 @@ import { BitcoinCash } from '../src/blockchains/bitcoin-cash'
 
 describe('Lib/BitcoinCash', () => {
     const instance = new Keys(Blockchain.BCH, Network.MAINNET)
-    const instanceWithTestnet = new Keys(
-        Blockchain.BCH,
-        Network.TESTNET,
-    )
+    const instanceWithTestnet = new Keys(Blockchain.BCH, Network.TESTNET)
 
     describe('#getDataFromSeed/generateSeedPhrase', () => {
         const seed = instance.generateSeedPhrase(12)

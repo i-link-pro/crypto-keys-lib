@@ -27,6 +27,9 @@ export class Emercoin extends BitcoinBase {
         if (!address) {
             return false
         }
-        return addressValidator.validate(address, 'EMC')
+        return (
+            addressValidator.validate(address, 'EMC') ||
+            addressValidator.validate(address, 'EMC', 'testnet')
+        )
     }
 }

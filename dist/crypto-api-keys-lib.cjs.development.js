@@ -946,7 +946,7 @@ var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
       return false;
     }
 
-    return addressValidator.validate(address, 'DOGE');
+    return addressValidator.validate(address, 'DOGE') || addressValidator.validate(address, 'DOGE', 'testnet');
   };
 
   return Dogecoin;
@@ -1289,7 +1289,7 @@ var Emercoin = /*#__PURE__*/function (_BitcoinBase) {
       return false;
     }
 
-    return addressValidator.validate(address, 'EMC');
+    return addressValidator.validate(address, 'EMC') || addressValidator.validate(address, 'EMC', 'testnet');
   };
 
   return Emercoin;
@@ -1327,7 +1327,7 @@ var Dashcoin = /*#__PURE__*/function (_BitcoinBase) {
       return false;
     }
 
-    return addressValidator.validate(address, 'DASH');
+    return addressValidator.validate(address, 'DASH') || addressValidator.validate(address, 'DASH', 'testnet');
   };
 
   return Dashcoin;

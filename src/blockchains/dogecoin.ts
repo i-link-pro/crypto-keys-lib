@@ -27,6 +27,9 @@ export class Dogecoin extends BitcoinBase {
         if (!address) {
             return false
         }
-        return addressValidator.validate(address, 'DOGE')
+        return (
+            addressValidator.validate(address, 'DOGE') ||
+            addressValidator.validate(address, 'DOGE', 'testnet')
+        )
     }
 }
