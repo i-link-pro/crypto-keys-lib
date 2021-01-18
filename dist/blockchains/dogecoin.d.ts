@@ -16,4 +16,5 @@ export declare class Dogecoin extends BitcoinBase {
         };
     };
     constructor(network: Network);
+    isValidAddress(address: string, format?: string): boolean;
 }

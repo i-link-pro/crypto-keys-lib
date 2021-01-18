@@ -6,6 +6,7 @@ import { Psbt, ECPair, payments, signBSV } from 'bitcoinjs-lib';
 import { fromBase58, fromSeed } from 'bip32';
 import bech32 from 'bech32';
 import { toCashAddress, toBitpayAddress, isValidAddress } from 'bchaddrjs';
+import addressValidator from 'wallet-address-validator';
 import { addHexPrefix, bufferToHex, importPublic, publicToAddress, toChecksumAddress, hashPersonalMessage, ecsign, isValidSignature, isValidAddress as isValidAddress$1 } from 'ethereumjs-util';
 import { privateToPublic, PrivateKey, PublicKey, sign, verify } from 'eosjs-ecc';
 import { JsonRpc, Api } from 'eosjs';
@@ -938,6 +939,16 @@ var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
     return _this;
   }
 
+  var _proto = Dogecoin.prototype;
+
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    if (!address) {
+      return false;
+    }
+
+    return addressValidator.validate(address, 'DOGE');
+  };
+
   return Dogecoin;
 }(BitcoinBase);
 
@@ -1271,6 +1282,16 @@ var Emercoin = /*#__PURE__*/function (_BitcoinBase) {
     return _this;
   }
 
+  var _proto = Emercoin.prototype;
+
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    if (!address) {
+      return false;
+    }
+
+    return addressValidator.validate(address, 'EMC');
+  };
+
   return Emercoin;
 }(BitcoinBase);
 
@@ -1298,6 +1319,16 @@ var Dashcoin = /*#__PURE__*/function (_BitcoinBase) {
     _this.defaultPath = _this.networks[network].path;
     return _this;
   }
+
+  var _proto = Dashcoin.prototype;
+
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    if (!address) {
+      return false;
+    }
+
+    return addressValidator.validate(address, 'DASH');
+  };
 
   return Dashcoin;
 }(BitcoinBase);

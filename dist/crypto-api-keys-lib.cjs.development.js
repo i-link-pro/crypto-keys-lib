@@ -12,6 +12,7 @@ var bitcoinjsLib = require('bitcoinjs-lib');
 var bip32 = require('bip32');
 var bech32 = _interopDefault(require('bech32'));
 var bchaddrjs = require('bchaddrjs');
+var addressValidator = _interopDefault(require('wallet-address-validator'));
 var ethUtil = require('ethereumjs-util');
 var eosUtil = require('eosjs-ecc');
 var eosjs = require('eosjs');
@@ -938,6 +939,16 @@ var Dogecoin = /*#__PURE__*/function (_BitcoinBase) {
     return _this;
   }
 
+  var _proto = Dogecoin.prototype;
+
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    if (!address) {
+      return false;
+    }
+
+    return addressValidator.validate(address, 'DOGE');
+  };
+
   return Dogecoin;
 }(BitcoinBase);
 
@@ -1271,6 +1282,16 @@ var Emercoin = /*#__PURE__*/function (_BitcoinBase) {
     return _this;
   }
 
+  var _proto = Emercoin.prototype;
+
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    if (!address) {
+      return false;
+    }
+
+    return addressValidator.validate(address, 'EMC');
+  };
+
   return Emercoin;
 }(BitcoinBase);
 
@@ -1298,6 +1319,16 @@ var Dashcoin = /*#__PURE__*/function (_BitcoinBase) {
     _this.defaultPath = _this.networks[network].path;
     return _this;
   }
+
+  var _proto = Dashcoin.prototype;
+
+  _proto.isValidAddress = function isValidAddress(address, format) {
+    if (!address) {
+      return false;
+    }
+
+    return addressValidator.validate(address, 'DASH');
+  };
 
   return Dashcoin;
 }(BitcoinBase);

@@ -1,6 +1,7 @@
 import { BitcoinBase } from './bitcoin-base'
 import { dogecoin } from '../network-configs'
 import { Network, Blockchain } from '../types'
+import addressValidator from 'wallet-address-validator'
 
 export class Dogecoin extends BitcoinBase {
     protected networks = {
@@ -21,5 +22,11 @@ export class Dogecoin extends BitcoinBase {
         super(network)
         this.networkConfig = this.networks[network].config
         this.defaultPath = this.networks[network].path
+    }
+    isValidAddress(address: string, format?: string): boolean {
+        if (!address) {
+            return false
+        }
+        return addressValidator.validate(address, 'DOGE')
     }
 }

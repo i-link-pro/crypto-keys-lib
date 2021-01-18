@@ -16,4 +16,5 @@ export declare class Emercoin extends BitcoinBase {
         };
     };
     constructor(network: Network);
+    isValidAddress(address: string, format?: string): boolean;
 }
