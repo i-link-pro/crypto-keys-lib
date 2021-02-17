@@ -1,3 +1,24 @@
+# crypto keys lib
+
+features:
+- generate seed phrase
+- derivate keys
+- sign
+- verify sign and address
+- safe encrypt and decrypt with sodium 
+
+blockchains:
+ - Bitcoin
+ - BitcoinSV
+ - BitcoinCash
+ - Litecoin
+ - Dogecoin
+ - Ethereum
+ - EOS
+ - Ripple
+ - Emercoin
+ - Dashcoin
+
 # install
 
 npm i git+ssh://git@gitlab.i-link.pro:crypto-api/crypto-api-keys-lib
